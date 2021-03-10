@@ -9,7 +9,7 @@ import com.mindfultrader.webapp.models.User;
  
 public class CustomUserDetails implements UserDetails {
  
-    private User user;
+    private static User user;
      
     public CustomUserDetails(User user) {
         this.user = user;
@@ -28,6 +28,10 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public String getUsername() {
         return user.getEmail();
+    }
+    
+    public static Long getUserId() {
+        return user.getId();
     }
  
     @Override
