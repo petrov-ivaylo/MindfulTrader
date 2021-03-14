@@ -17,7 +17,8 @@ import com.mindfultrader.webapp.services.CustomUserDetails;
 public class TestDatabase {
 	
 	
-	
+	//This should be the pool representation
+	//The link to the tutorial I have watched for this is: https://www.youtube.com/watch?v=3UpUG7puGzA
 	@Bean
 	public static BasicDataSource getDataSource() {
 		BasicDataSource ds = new BasicDataSource();
@@ -26,7 +27,7 @@ public class TestDatabase {
 		ds.setUsername("b2374bc2da749a");
 		ds.setPassword("5a7dbb13");
 		ds.setMaxTotal(10);
-		ds.setInitialSize(10);
+		ds.setInitialSize(1);
 		ds.setTestOnBorrow(true);
 		ds.setValidationQuery("SELECT 1");
 		ds.setDefaultAutoCommit(true);
