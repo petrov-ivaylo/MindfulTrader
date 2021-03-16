@@ -48,6 +48,11 @@ public class AppController {
         return "users";
     }
     
+    @GetMapping("/theory")
+    public String strategy(Model model) {
+    	return "theory";
+    }
+    
 //	@RequestMapping("/users/run")
 //	public ModelAndView run()
 //	{
