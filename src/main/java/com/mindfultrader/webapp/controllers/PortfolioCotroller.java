@@ -4,8 +4,9 @@ import java.sql.SQLException;
 
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+//import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mindfultrader.webapp.data.TestDatabase;
@@ -15,7 +16,7 @@ public class PortfolioCotroller {
 	
 	@GetMapping(value = "/portfolio", produces = MediaType.TEXT_HTML_VALUE)
     @ResponseBody
-    public String listUsers(Model model) throws SQLException {
+    public String listUsers() throws SQLException {
 		
 		//System.out.println(TestDatabase.getDataSource());
 		//TestDatabase.getData();
@@ -24,7 +25,7 @@ public class PortfolioCotroller {
 		
 			   String sb = new String();
 			   sb += "<select>";
-			   for(String name:TestDatabase.getData()) {
+			   for(String name:TestDatabase.getCompaniesNames()) {
 				   //System.out.println("<option value=\""+name+"\">"+name+"</option>");
 			      sb += "<option value=\""+name+"\">"+name+"</option>";}
 			   sb += "</select>";	
@@ -35,25 +36,15 @@ public class PortfolioCotroller {
 			   		+ "required minlength=\"2\" maxlength=\"20\" />\r\n"
 			   		+ "</div>\r\n"
 			   		+ "</div>";*/
-			   sb += "<form>\r\n"
-			   		+ "      <fieldset>\r\n"
-			   		+ "        <legend>Text input</legend>\r\n"
-			   		+ "        <p>\r\n"
-			   		+ "<div><label> Company: <input type=\"company\" name=\"company\"/> </label></div>"
-			   		+ "        </p>\r\n"
-			   		+ "<form th:action=\"@{/process_portfolio}\" th:object=\"${user}\"\r\n"
-			   		+ "method=\"post\" style=\"max-width: 600px; margin: 0 auto;\">"
-			   		+ "<div>\r\n"
-			   		+ "<button type=\"submit\" class=\"btn btn-primary\">Sign Up</button>\r\n"
-			   		+ "</div>"
-			   		+ "</form>"
-			   		+ "</fieldset>\r\n"
+			   
+			   sb += "<form action=\"/process_portfolio\">"
+			   		+ "<div><label> Company Name: <input type=\"name\" name=\"name\"/> </label></div>\r\n"
+			   		+ "<div><label> Company Symbol: <input type=\"symbol1\" name=\"symbol1\"/> </label></div>\r\n"
+			   		+ "<div><input type=\"submit\" value=\"Submit\"/></div>"
 			   		+ "</form>";
-			   /*sb += "<form th:action=\"@{/process_portfolio}\" th:object=\"${user}\"\r\n"
-			   		+ "method=\"post\" style=\"max-width: 600px; margin: 0 auto;\">"
-			   		+ "<div>\r\n"
-			   		+ "<button type=\"submit\" class=\"btn btn-primary\">Sign Up</button>\r\n"
-			   		+ "</div>"
+			   
+			   /*sb +=  "<form action=\"/process_portfolio\">"
+			   		+ "<input type=\"submit\" value=\"Submit\">"
 			   		+ "</form>";*/
 			   
 			   return sb;
@@ -61,16 +52,76 @@ public class PortfolioCotroller {
 			   
 	}
 
-	/*@PostMapping("/process_portfolio")
-    public String processRegister(User user) {
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
-         
-        userRepo.save(user);
-         
-        return "register_success";
-    }*/
+	//@RequestMapping(value = "/process_portfolio", produces = MediaType.TEXT_HTML_VALUE)
+    //@ResponseBody
+	@RequestMapping("/process_portfolio")
+    public String processPortfolio(String name, String symbol1) throws SQLException {
+		
+		TestDatabase.insert_data(name, symbol1);
+        
+		return "portfolio_update";
+    }
+	
+	@GetMapping(value = "/port", produces = MediaType.TEXT_HTML_VALUE)
+    @ResponseBody
+	//@GetMapping("/port")
+    public String listPortfolioCompanies(/*Model model*/) throws SQLException {
+		/*List<ArrayList<String>> listCompanies = new ArrayList<ArrayList<String>>();
+		int i = 0;
+		List<String> companies_names = TestDatabase.getCompaniesNames();
+		List<String> companies_symbols = TestDatabase.getCompaniesSymbols();
+		while (i<companies_names.size()){
+			ArrayList<String> elem = new ArrayList<String>();
+			elem.add(companies_names.get(i));
+			elem.add(companies_symbols.get(i));
+			listCompanies.add(elem);
+			i+=1;
+		}*/
+        //List<String> listCompanies = TestDatabase.getCompaniesNames();
+        //model.addAttribute("listCompanies", listCompanies);
+		
+		
+		String sb = new String();
+			sb+= "<form action=\"/delete\">";
+		   sb += "<select name=\"cmp_name\" id=\"cmp_name\">";
+		   for(String name:TestDatabase.getCompaniesNames()) {
+			   //System.out.println("<option value=\""+name+"\">"+name+"</option>");
+		      sb += "<option value=\""+name+"\">"+name+"</option>";}
+		   sb += "</select>";	
+		   /*sb += "<div class=\"form-group row\">\r\n"
+		   		+ "<label class=\"col-4 col-form-label\">Last Name: </label>\r\n"
+		   		+ "<div class=\"col-8\">\r\n"
+		   		+ "<input type=\"text\" th:field=\"*{lastName}\" class=\"form-control\"\r\n"
+		   		+ "required minlength=\"2\" maxlength=\"20\" />\r\n"
+		   		+ "</div>\r\n"
+		   		+ "</div>";*/
+		   
+		   sb += ""
+		   	//	+ "<div><label> Company Name: <input type=\"name\" name=\"name\"/> </label></div>\r\n"
+		   	//	+ "<div><label> Company Symbol: <input type=\"symbol1\" name=\"symbol1\"/> </label></div>\r\n"
+		   		+ "<div><input type=\"submit\" value=\"Delete\"/></div>"
+		   		+ "<div><input type=\"submit\" value=\"Users\" formaction=\"/users\"/></div>"
+		   		+ "</form>";
+		   
+		   /*sb +=  "<form action=\"/process_portfolio\">"
+		   		+ "<input type=\"submit\" value=\"Submit\">"
+		   		+ "</form>";*/
+		   
+		   return sb;
+		
+        //return "port";
+    }
+	
+	
+	@RequestMapping(value = "/delete")
+	private String deleteCompanyPortfolio(String cmp_name){
+	    //return "redirect:/port";
+		String cmp_id = TestDatabase.getCompanyIdByName(cmp_name);
+		TestDatabase.delete_company_port(cmp_id);
+		//System.out.println(cmp_name);
+	    return "portfolio_update";
+	}
+	
 	
 	/*public ModelAndView save_company(String company) 
     {

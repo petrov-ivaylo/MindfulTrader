@@ -17,7 +17,7 @@
             <input type="submit" value="Sign Out" />
         </form>
     </div>
-    <!--<div>
+    <div>
         <h1>List of Users</h1>
     </div>
      
@@ -37,11 +37,12 @@
                     <td th:text="${user.email}">E-mail</td>
                     <td th:text="${user.firstName}">First Name</td>
                     <td th:text="${user.lastName}">Last Name</td>
+                    <td> <input type="submit" value="Submit"> </td>
                 </tr>
             </tbody>
         </table>
     </div>
--->
+
     <div>
 	    <h2>Algorithm</h2>
 		<p>Here you will be able to run the algorithm, currently we have 2 analysis functions and run on test data</p>
@@ -75,7 +76,7 @@
     <div>
 	    <h1>Click the button below to go to your portfolio</h1>		
 		
-		<form action="/portfolio">
+		<form action="/port">
 			<input type="submit" value="Your portfolio">		
 		</form>
     </div>
