@@ -2,7 +2,12 @@ package com.mindfultrader.webapp.controllers;
 
 import java.sql.SQLException;
 
+import javax.sql.DataSource;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.http.MediaType;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 //import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +30,7 @@ public class PortfolioCotroller {
 		
 			   String sb = new String();
 			   sb += "<select>";
-			   for(String name:TestDatabase.getCompaniesNames()) {
+			   for(String name:TestDatabase.getCompaniesNamesPortfolio()) {
 				   //System.out.println("<option value=\""+name+"\">"+name+"</option>");
 			      sb += "<option value=\""+name+"\">"+name+"</option>";}
 			   sb += "</select>";	
@@ -57,14 +62,13 @@ public class PortfolioCotroller {
 	@RequestMapping("/process_portfolio")
     public String processPortfolio(String name, String symbol1) throws SQLException {
 		
-		TestDatabase.insert_data(name, symbol1);
+		TestDatabase.insert_data_to_portfolio(name, symbol1);
         
 		return "portfolio_update";
     }
 	
 	@GetMapping(value = "/port", produces = MediaType.TEXT_HTML_VALUE)
     @ResponseBody
-	//@GetMapping("/port")
     public String listPortfolioCompanies(/*Model model*/) throws SQLException {
 		/*List<ArrayList<String>> listCompanies = new ArrayList<ArrayList<String>>();
 		int i = 0;
@@ -82,9 +86,9 @@ public class PortfolioCotroller {
 		
 		
 		String sb = new String();
-			sb+= "<form action=\"/delete\">";
+			sb+= "<form action=\"/delete_company_from_portfolio\">";
 		   sb += "<select name=\"cmp_name\" id=\"cmp_name\">";
-		   for(String name:TestDatabase.getCompaniesNames()) {
+		   for(String name:TestDatabase.getCompaniesNamesPortfolio()) {
 			   //System.out.println("<option value=\""+name+"\">"+name+"</option>");
 		      sb += "<option value=\""+name+"\">"+name+"</option>";}
 		   sb += "</select>";	
@@ -100,12 +104,27 @@ public class PortfolioCotroller {
 		   	//	+ "<div><label> Company Name: <input type=\"name\" name=\"name\"/> </label></div>\r\n"
 		   	//	+ "<div><label> Company Symbol: <input type=\"symbol1\" name=\"symbol1\"/> </label></div>\r\n"
 		   		+ "<div><input type=\"submit\" value=\"Delete\"/></div>"
-		   		+ "<div><input type=\"submit\" value=\"Users\" formaction=\"/users\"/></div>"
+		   		+ "<div><input type=\"submit\" value=\"Move to your watchlist\" formaction=\"/add_to_watchlist\"/></div>"
+		   		+ "<div><input type=\"submit\" value=\"Run the algorithm\" formaction=\"/requestdata2/run\"/></div>"
 		   		+ "</form>";
 		   
 		   /*sb +=  "<form action=\"/process_portfolio\">"
 		   		+ "<input type=\"submit\" value=\"Submit\">"
 		   		+ "</form>";*/
+		   
+		   sb+= "<form action=\"/delete_company_from_watchlist\">";
+		   sb += "<select name=\"cmp_name\" id=\"cmp_name\">";
+		   for(String name:TestDatabase.getCompaniesNamesWatchlist()) {
+			   //System.out.println("<option value=\""+name+"\">"+name+"</option>");
+		      sb += "<option value=\""+name+"\">"+name+"</option>";}
+		   sb += "</select>";		   
+		   sb += ""
+		   	//	+ "<div><label> Company Name: <input type=\"name\" name=\"name\"/> </label></div>\r\n"
+		   	//	+ "<div><label> Company Symbol: <input type=\"symbol1\" name=\"symbol1\"/> </label></div>\r\n"
+		   		+ "<div><input type=\"submit\" value=\"Delete\"/></div>"
+		   		+ "<div><input type=\"submit\" value=\"Move to your portfolio\" formaction=\"/add_to_portfolio\"/></div>"
+		   		+ "<div><input type=\"submit\" value=\"Run the algorithm\" formaction=\"/requestdata2/run\"/></div>"
+		   		+ "</form>";
 		   
 		   return sb;
 		
@@ -113,18 +132,50 @@ public class PortfolioCotroller {
     }
 	
 	
-	@RequestMapping(value = "/delete")
+	@RequestMapping(value = "/delete_company_from_portfolio")
 	private String deleteCompanyPortfolio(String cmp_name){
 	    //return "redirect:/port";
 		String cmp_id = TestDatabase.getCompanyIdByName(cmp_name);
-		TestDatabase.delete_company_port(cmp_id);
+		TestDatabase.delete_company_from_portfolio(cmp_id);
 		//System.out.println(cmp_name);
 	    return "portfolio_update";
 	}
 	
+	@RequestMapping("/add_to_watchlist")
+    public String processWatchlist(String cmp_name) throws SQLException {
+		
+		TestDatabase.insert_data_to_watchlist(cmp_name);
+        
+		return "portfolio_update";
+    }
 	
-	/*public ModelAndView save_company(String company) 
+	@RequestMapping("/add_to_portfolio")
+    public String addToPortfolio(String cmp_name) throws SQLException {
+		
+		ApplicationContext ctx = new AnnotationConfigApplicationContext(TestDatabase.class);
+		 
+		DataSource ds = ctx.getBean(DataSource.class);
+		JdbcTemplate jt = new JdbcTemplate(ds);
+		String cmp_symbol = jt.queryForObject("select Company_Symbol from companies where Company_Name = ?", String.class, cmp_name);
+
+		TestDatabase.insert_data_to_portfolio(cmp_name,cmp_symbol);
+        //return listPortfolioCompanies();
+		return "portfolio_update";
+    }
+	
+	@RequestMapping(value = "/delete_company_from_watchlist")
+	private String deleteCompanyWatchlist(String cmp_name){
+	    //return "redirect:/port";
+		String cmp_id = TestDatabase.getCompanyIdByName(cmp_name);
+		TestDatabase.delete_company_from_watchlist(cmp_id);
+		//System.out.println(cmp_name);
+	    return "portfolio_update";
+	}
+	
+	/*@RequestMapping("/requestdata2/run")
+    public ModelAndView run(String cmp_name) 
     {
+		String symbol = TestDatabase.getCompanySymbolByName(cmp_name);
         String uri = "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v3/get-historical-data?symbol=" + symbol + "&region=US";
         HttpResponse<JsonNode> response = null;
         try {
@@ -138,7 +189,9 @@ public class PortfolioCotroller {
         }
         
         System.out.println("Algorithm has run :) ");
-        System.out.println(response.getBody());
+
+        
+        System.out.println(response.getBody().getArray());
         
         //Create MVC object for webapp
                 ModelAndView mv = new ModelAndView();
@@ -147,50 +200,9 @@ public class PortfolioCotroller {
                 
                 
         return mv;
-		Connection connection = null;
-        try
-        {
-        	//connection = TestDatabase.
-          // create a mysql database connection
-          String myDriver = "com.mysql.jdbc.Driver";
-          String serverName = "eu-cdbr-west-03.cleardb.net";
-          String schema = "heroku_03b3862830df1d7";
-          String MyUrl = "jdbc:mysql://" + serverName +  "/" + schema;
-          Class.forName(myDriver);
-          String username = "b2374bc2da749a";
-          String password = "5a7dbb13";
-          connection = DriverManager.getConnection(MyUrl, username, password);
         
-          // create a sql date object so we can use it in our INSERT statement
-          //Calendar calendar = Calendar.getInstance();
-          //java.sql.Date startDate = new java.sql.Date(calendar.getTime().getTime());
-
-          // the mysql insert statement
-          String query = " insert into watchlistportfolio (User_ID, Company_ID, Type)"
-            + " values (?, ?, ?)";
-
-          // create the mysql insert preparedstatement
-          PreparedStatement preparedStmt = conn.prepareStatement(query);
-          preparedStmt.setString (1, "Barney");
-          preparedStmt.setString (2, "Rubble");
-          preparedStmt.setDate   (3, startDate);
-          preparedStmt.setBoolean(4, false);
-          preparedStmt.setInt    (5, 5000);
-
-          // execute the preparedstatement
-          preparedStmt.execute();
-          
-          conn.close();
-        }
-        catch (Exception e)
-        {
-          System.err.println("Got an exception!");
-          System.err.println(e.getMessage());
-        }
-      }
 
     }*/
-	
 	
 }
 

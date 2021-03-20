@@ -9,6 +9,7 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import com.mindfultrader.webapp.data.TestDatabase;
 
 
 
@@ -17,9 +18,11 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 
 @Controller 
 public class Data2Controller {
+	
     @RequestMapping("/requestdata2/run")
-    public ModelAndView run(String symbol) 
+    public ModelAndView run(String cmp_name)
     {
+    	String symbol = TestDatabase.getCompanySymbolByName(cmp_name);
         String uri = "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v3/get-historical-data?symbol=" + symbol + "&region=US";
         HttpResponse<JsonNode> response = null;
         try {
@@ -33,7 +36,9 @@ public class Data2Controller {
         }
         
         System.out.println("Algorithm has run :) ");
-        System.out.println(response.getBody());
+
+        
+        System.out.println(response.getBody().getArray());
         
         //Create MVC object for webapp
                 ModelAndView mv = new ModelAndView();
