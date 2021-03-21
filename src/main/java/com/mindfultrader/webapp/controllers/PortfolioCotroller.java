@@ -160,7 +160,8 @@ public class PortfolioCotroller {
 
 		TestDatabase.insert_data_to_portfolio(cmp_name,cmp_symbol);
         //return listPortfolioCompanies();
-		return "portfolio_update";
+		return "redirect:port";
+		//return "portfolio_update";
     }
 	
 	@RequestMapping(value = "/delete_company_from_watchlist")
