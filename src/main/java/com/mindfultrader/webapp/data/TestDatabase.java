@@ -114,6 +114,24 @@ public class TestDatabase {
 	    return id;
 	}
   
+//A function to return a company's id by having its symbol
+  public static String getCompanyIdBySymbol(String symbol) {
+	  
+	  ApplicationContext ctx = new AnnotationConfigApplicationContext(TestDatabase.class);
+		 
+	  DataSource ds = ctx.getBean(DataSource.class);
+	  JdbcTemplate jt = new JdbcTemplate(ds);
+	  
+	    String sql = "SELECT companies.Company_ID\r\n"
+	    		+ "FROM companies\r\n"
+	    		+ "WHERE (companies.Company_Symbol = ?)";
+
+	    String id = (String) jt.queryForObject(
+	            sql, String.class, symbol);
+
+	    return id;
+	}
+  
 //A function to return a company's Symbol by having its name
   public static String getCompanySymbolByName(String name) {
 	  
@@ -146,15 +164,19 @@ public class TestDatabase {
 	  
 	  companies = jt.queryForList("select Company_ID from watchlistportfolio where User_ID = " + "\"" + CustomUserDetails.getUserId().toString() + "\"" + " and Type = " + "\"" + "p" + "\"",Integer.class);
 	  String cmp_id = getCompanyIdByName(cmp_name);
-	  System.out.println(companies);
-	  System.out.println(cmp_id);
+	  //System.out.println(companies.get(0).toString().getClass());
+	  //System.out.println(cmp_id.getClass());
 	  int bl = 0;
 	  for(int i=0;i<companies.size();i++) {
-		  if (companies.get(i).toString()==cmp_id) {
+		  //System.out.println(companies.get(i).toString());
+		  //System.out.println(cmp_id);
+		  if (companies.get(i).toString().equals(cmp_id)) {
 			  bl =1;
+			  System.out.println("YES");
 			  break;
 		  }
 	  }
+	  
 	  if (bl==0){
 	  String sql = "Insert into watchlistportfolio(User_ID,Company_ID,Type) values(?,?,?)";
 	  //String cmp_id = getCompanyIdByName(cmp_name);
@@ -182,8 +204,9 @@ public class TestDatabase {
 
 	  int bl = 0;
 	  for(int i=0;i<companies.size();i++) {
-		  if (companies.get(i).toString()==jt.queryForObject("select Company_ID from companies where Company_Name = ?", String.class, cmp_name)) {
+		  if (companies.get(i).toString().equals(jt.queryForObject("select Company_ID from companies where Company_Name = ?", String.class, cmp_name))) {
 			  bl = 1;
+			  System.out.println("YES");
 			  break;
 		  }
 	  }
