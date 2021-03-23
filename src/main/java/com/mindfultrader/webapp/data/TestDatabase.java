@@ -26,7 +26,7 @@ public class TestDatabase {
 		ds.setUrl("jdbc:mysql://eu-cdbr-west-03.cleardb.net:3306/heroku_03b3862830df1d7");
 		ds.setUsername("b2374bc2da749a");
 		ds.setPassword("5a7dbb13");
-		ds.setMaxTotal(9);
+		ds.setMaxTotal(10);
 		ds.setInitialSize(1);
 		ds.setTestOnBorrow(true);
 		ds.setValidationQuery("SELECT 1");
@@ -74,6 +74,21 @@ public class TestDatabase {
 	  return names;
 	  }
   
+//A function to return all the companies in our database
+  public static List<String> getAllDBCompanies() throws SQLException {
+	  
+	  ApplicationContext ctx = new AnnotationConfigApplicationContext(TestDatabase.class);
+		 
+	  DataSource ds = ctx.getBean(DataSource.class);
+	  JdbcTemplate jt = new JdbcTemplate(ds);
+
+	  String sql = "SELECT companies.Company_Name\r\n"
+		  		+ "FROM companies\r\n";
+	  
+		return jt.queryForList(sql,String.class);
+	  }
+  
+  //A function to return the symbols of the companies in the user's portfolio
   public static List<String> getCompaniesSymbols() throws SQLException {
 	  
 	  List<String> symbols = new ArrayList<String>();

@@ -126,6 +126,19 @@ public class PortfolioCotroller {
 		   		+ "<div><input type=\"submit\" value=\"Run the algorithm\" formaction=\"/requestdata2/run\"/></div>"
 		   		+ "</form>";
 		   
+		   sb+= "<form action=\"/add_to_portfolio\">";
+		   sb += "<select name=\"cmp_name\" id=\"cmp_name\">";
+		   for(String name:TestDatabase.getAllDBCompanies()) {
+			   //System.out.println("<option value=\""+name+"\">"+name+"</option>");
+		      sb += "<option value=\""+name+"\">"+name+"</option>";}
+		   sb += "</select>";		   
+		   sb += ""
+		   	//	+ "<div><label> Company Name: <input type=\"name\" name=\"name\"/> </label></div>\r\n"
+		   	//	+ "<div><label> Company Symbol: <input type=\"symbol1\" name=\"symbol1\"/> </label></div>\r\n"
+		   		+ "<div><input type=\"submit\" value=\"Move to your portfolio\"/></div>"
+		   		+ "<div><input type=\"submit\" value=\"Move to your watchlist\" formaction=\"/add_to_watchlist\"/></div>"
+		   		+ "</form>";
+		   
 		   return sb;
 		
         //return "port";
@@ -173,37 +186,13 @@ public class PortfolioCotroller {
 	    return "portfolio_update";
 	}
 	
-	/*@RequestMapping("/requestdata2/run")
-    public ModelAndView run(String cmp_name) 
-    {
-		String symbol = TestDatabase.getCompanySymbolByName(cmp_name);
-        String uri = "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v3/get-historical-data?symbol=" + symbol + "&region=US";
-        HttpResponse<JsonNode> response = null;
-        try {
-            response = Unirest.get(uri)
-                    .header("x-rapidapi-key", "71c138c430msh94f21a0e7d20608p1bab39jsnfc8e8fcb1aab")
-                    .header("x-rapidapi-host", "apidojo-yahoo-finance-v1.p.rapidapi.com")
-                    .asJson();
-        } catch (UnirestException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        
-        System.out.println("Algorithm has run :) ");
-
-        
-        System.out.println(response.getBody().getArray());
-        
-        //Create MVC object for webapp
-                ModelAndView mv = new ModelAndView();
-                mv.setViewName("dataresult");
-                mv.addObject("conclusion1", response.getBody());
-                
-                
-        return mv;
-        
-
+	/*@RequestMapping("/move_to_portfolio")
+    public String moveToPortfolio(String cmp_name) throws SQLException {
+		
+		String cmp_symbol = 
+		TestDatabase.insert_data_to_portfolio(cmp_name, cmp_symbol);
+		
+		return "redirect:port";
     }*/
 	
 }
-
