@@ -7,9 +7,9 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSource;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.mindfultrader.webapp.services.CustomUserDetails;
@@ -39,7 +39,7 @@ public class TestDatabase {
 	  
   List<String> names = new ArrayList<String>();
   
-  ApplicationContext ctx = new AnnotationConfigApplicationContext(TestDatabase.class);
+  AbstractApplicationContext ctx = new AnnotationConfigApplicationContext(TestDatabase.class);
 	 
   DataSource ds = ctx.getBean(DataSource.class);
   JdbcTemplate jt = new JdbcTemplate(ds);
@@ -51,6 +51,7 @@ public class TestDatabase {
   		+ "WHERE (watchlistportfolio.User_ID=" + "\"" + user_id + "\"" + "and watchlistportfolio.Type = \"p\")";
   names = jt.queryForList(sql,String.class);
   System.out.println(names);
+  ctx.close();
   return names;
   }
   
@@ -59,7 +60,7 @@ public class TestDatabase {
 	  
 	  List<String> names = new ArrayList<String>();
 	  
-	  ApplicationContext ctx = new AnnotationConfigApplicationContext(TestDatabase.class);
+	  AbstractApplicationContext ctx = new AnnotationConfigApplicationContext(TestDatabase.class);
 		 
 	  DataSource ds = ctx.getBean(DataSource.class);
 	  JdbcTemplate jt = new JdbcTemplate(ds);
@@ -71,21 +72,25 @@ public class TestDatabase {
 	  		+ "WHERE (watchlistportfolio.User_ID=" + "\"" + user_id + "\"" + "and watchlistportfolio.Type = \"w\")";
 	  names = jt.queryForList(sql,String.class);
 	  System.out.println(names);
+	  ctx.close();
 	  return names;
 	  }
   
 //A function to return all the companies in our database
   public static List<String> getAllDBCompanies() throws SQLException {
 	  
-	  ApplicationContext ctx = new AnnotationConfigApplicationContext(TestDatabase.class);
+	  AbstractApplicationContext ctx = new AnnotationConfigApplicationContext(TestDatabase.class);
 		 
 	  DataSource ds = ctx.getBean(DataSource.class);
 	  JdbcTemplate jt = new JdbcTemplate(ds);
 
+	  List<String> names = new ArrayList<String>();
 	  String sql = "SELECT companies.Company_Name\r\n"
 		  		+ "FROM companies\r\n";
 	  
-		return jt.queryForList(sql,String.class);
+	  names = jt.queryForList(sql,String.class);
+	  ctx.close();
+		return names;
 	  }
   
   //A function to return the symbols of the companies in the user's portfolio
@@ -93,7 +98,7 @@ public class TestDatabase {
 	  
 	  List<String> symbols = new ArrayList<String>();
 	  
-	  ApplicationContext ctx = new AnnotationConfigApplicationContext(TestDatabase.class);
+	  AbstractApplicationContext ctx = new AnnotationConfigApplicationContext(TestDatabase.class);
 		 
 	  DataSource ds = ctx.getBean(DataSource.class);
 	  JdbcTemplate jt = new JdbcTemplate(ds);
@@ -108,13 +113,15 @@ public class TestDatabase {
 		  symbols.add(jt.queryForObject(sql, String.class));
 		  i+=1;
 	  }
+	  
+	  ctx.close();
 	  return symbols;
 	  }
   
   //A function to return a company's id by having its name
   public static String getCompanyIdByName(String name) {
 	  
-	  ApplicationContext ctx = new AnnotationConfigApplicationContext(TestDatabase.class);
+	  AbstractApplicationContext ctx = new AnnotationConfigApplicationContext(TestDatabase.class);
 		 
 	  DataSource ds = ctx.getBean(DataSource.class);
 	  JdbcTemplate jt = new JdbcTemplate(ds);
@@ -126,13 +133,14 @@ public class TestDatabase {
 	    String id = (String) jt.queryForObject(
 	            sql, String.class, name);
 
+	    ctx.close();
 	    return id;
 	}
   
 //A function to return a company's id by having its symbol
   public static String getCompanyIdBySymbol(String symbol) {
 	  
-	  ApplicationContext ctx = new AnnotationConfigApplicationContext(TestDatabase.class);
+	  AbstractApplicationContext ctx = new AnnotationConfigApplicationContext(TestDatabase.class);
 		 
 	  DataSource ds = ctx.getBean(DataSource.class);
 	  JdbcTemplate jt = new JdbcTemplate(ds);
@@ -144,13 +152,14 @@ public class TestDatabase {
 	    String id = (String) jt.queryForObject(
 	            sql, String.class, symbol);
 
+	    ctx.close();
 	    return id;
 	}
   
 //A function to return a company's Symbol by having its name
   public static String getCompanySymbolByName(String name) {
 	  
-	  ApplicationContext ctx = new AnnotationConfigApplicationContext(TestDatabase.class);
+	  AbstractApplicationContext ctx = new AnnotationConfigApplicationContext(TestDatabase.class);
 		 
 	  DataSource ds = ctx.getBean(DataSource.class);
 	  JdbcTemplate jt = new JdbcTemplate(ds);
@@ -161,13 +170,14 @@ public class TestDatabase {
 
 	    String id = (String) jt.queryForObject(
 	            sql, String.class, name);
-
+	    
+	    ctx.close();
 	    return id;
 	}
   
   //A function to insert a company into the user's portfolio
   public static void insert_data_to_portfolio(String cmp_name, String cmp_symbol) {
-	  ApplicationContext ctx = new AnnotationConfigApplicationContext(TestDatabase.class);
+	  AbstractApplicationContext ctx = new AnnotationConfigApplicationContext(TestDatabase.class);
 		 
 	  DataSource ds = ctx.getBean(DataSource.class);
 	  JdbcTemplate jt = new JdbcTemplate(ds);
@@ -199,11 +209,12 @@ public class TestDatabase {
 	  
 	  jt.update(sql, CustomUserDetails.getUserId().toString(), cmp_id, type);
 	  }
+	  ctx.close();
   }
   
 //A function to insert a company into the user's watchlist
   public static void insert_data_to_watchlist(String cmp_name) {
-	  ApplicationContext ctx = new AnnotationConfigApplicationContext(TestDatabase.class);
+	  AbstractApplicationContext ctx = new AnnotationConfigApplicationContext(TestDatabase.class);
 		 
 	  DataSource ds = ctx.getBean(DataSource.class);
 	  JdbcTemplate jt = new JdbcTemplate(ds);
@@ -232,11 +243,12 @@ public class TestDatabase {
 	  
 	  jt.update(sql, CustomUserDetails.getUserId().toString(), cmp_id, type);
 	  }
+	  ctx.close();
   }
   
   //A function to delete a company from the user's portfolio by the company's name
   public static void delete_company_from_portfolio(String id) {
-	  ApplicationContext ctx = new AnnotationConfigApplicationContext(TestDatabase.class);
+	  AbstractApplicationContext ctx = new AnnotationConfigApplicationContext(TestDatabase.class);
 		 
 	  DataSource ds = ctx.getBean(DataSource.class);
 	  JdbcTemplate jt = new JdbcTemplate(ds);
@@ -244,11 +256,12 @@ public class TestDatabase {
 	  String sql = "delete from watchlistportfolio where Company_ID = ? and Type = ?";
 	  Object[] record = new Object[] {id, "p"};
 	  jt.update(sql, record);
+	  ctx.close();
   }
   
   //A function to delete a company from the user's watchlist by the company's name
   public static void delete_company_from_watchlist(String id) {
-	  ApplicationContext ctx = new AnnotationConfigApplicationContext(TestDatabase.class);
+	  AbstractApplicationContext ctx = new AnnotationConfigApplicationContext(TestDatabase.class);
 		 
 	  DataSource ds = ctx.getBean(DataSource.class);
 	  JdbcTemplate jt = new JdbcTemplate(ds);
@@ -256,6 +269,7 @@ public class TestDatabase {
 	  String sql = "delete from watchlistportfolio where Company_ID = ? and Type = ?";
 	  Object[] record = new Object[] {id, "w"};
 	  jt.update(sql, record);
+	  ctx.close();
   }
   
 }

@@ -4,8 +4,8 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
@@ -84,7 +84,6 @@ public class PortfolioCotroller {
         //List<String> listCompanies = TestDatabase.getCompaniesNames();
         //model.addAttribute("listCompanies", listCompanies);
 		
-		
 		String sb = new String();
 			sb+= "<form action=\"/delete_company_from_portfolio\">";
 		   sb += "<select name=\"cmp_name\" id=\"cmp_name\">";
@@ -151,27 +150,33 @@ public class PortfolioCotroller {
 		String cmp_id = TestDatabase.getCompanyIdByName(cmp_name);
 		TestDatabase.delete_company_from_portfolio(cmp_id);
 		//System.out.println(cmp_name);
-	    return "portfolio_update";
+	    return "redirect:port";
 	}
 	
 	@RequestMapping("/add_to_watchlist")
     public String processWatchlist(String cmp_name) throws SQLException {
 		
+		String cmp_id = TestDatabase.getCompanyIdByName(cmp_name);
+		TestDatabase.delete_company_from_portfolio(cmp_id);
 		TestDatabase.insert_data_to_watchlist(cmp_name);
         
-		return "portfolio_update";
+		return "redirect:port";
     }
 	
 	@RequestMapping("/add_to_portfolio")
     public String addToPortfolio(String cmp_name) throws SQLException {
 		
-		ApplicationContext ctx = new AnnotationConfigApplicationContext(TestDatabase.class);
+		AbstractApplicationContext ctx = new AnnotationConfigApplicationContext(TestDatabase.class);
 		 
 		DataSource ds = ctx.getBean(DataSource.class);
 		JdbcTemplate jt = new JdbcTemplate(ds);
 		String cmp_symbol = jt.queryForObject("select Company_Symbol from companies where Company_Name = ?", String.class, cmp_name);
 
+		String cmp_id = TestDatabase.getCompanyIdByName(cmp_name);
+		TestDatabase.delete_company_from_watchlist(cmp_id);
+		
 		TestDatabase.insert_data_to_portfolio(cmp_name,cmp_symbol);
+		ctx.close();
         //return listPortfolioCompanies();
 		return "redirect:port";
 		//return "portfolio_update";
@@ -183,7 +188,7 @@ public class PortfolioCotroller {
 		String cmp_id = TestDatabase.getCompanyIdByName(cmp_name);
 		TestDatabase.delete_company_from_watchlist(cmp_id);
 		//System.out.println(cmp_name);
-	    return "portfolio_update";
+	    return "redirect:port";
 	}
 	
 	/*@RequestMapping("/move_to_portfolio")
