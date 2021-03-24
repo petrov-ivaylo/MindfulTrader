@@ -54,6 +54,8 @@ public class EditAccountController {
 	public String editPassword()
 	{
 		//CODE HERE
+		
+		
 		return "accountManagement/change_password";
 	}
 

@@ -1,16 +1,20 @@
 <!-- 
 	View for seeing and editing account details
+	
+	Tutorial used: https://www.codejava.net/frameworks/spring-boot/get-logged-in-user-details
  -->
 
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="ISO-8859-1">
 <title>Account Management</title>
 </head>
 <body>
 <div>
-	<h2>USERNAME HERE</h2>
+	<!-- sec:authentication="principal.fullName" accesses principal object (user in spring security) and getter in custom user details -->
+	<h2><span sec:authentication="principal.fullName">Fullname</span></h2>
 	<p> Hello! You can view and edit your account below </p>
 </div>
 
@@ -18,7 +22,7 @@
 
 <div>
 	<h3>Email</h3>
-	<p>Your current email is: need some email here</p>
+	<p>Your current email is: <span sec:authentication="principal.username">email</span></p>
 	<p>If you wish to change your email, click the button below</p>
 	<form action="account/editEmail">
 		<input type="email" value="input email">
@@ -32,7 +36,7 @@
 <div>
 	<h3>Password</h3>
 	<p>You can change your password below</p>
-	<form th:action="@{account/changePassword}">
+	<form action="/account/changePassword">
 		<div>
 			<label>Current password:</label>
 				<div>
