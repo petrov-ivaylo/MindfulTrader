@@ -1,0 +1,26 @@
+<!-- 
+	View for account deletion confirmation
+ -->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Delete Account</title>
+</head>
+<body>
+
+We are sorry to see you go! If you are sure you wish to delete your account, click the button below.
+This will delete all information connected to you in our system and cannot be reversed. 
+
+<form action="delete/submit">
+	<input type="submit" value="delete account">
+</form>
+
+<form action="/account">
+	<input type="submit" value="Return to account page">	
+</form>
+
+
+</body>
+</html>
