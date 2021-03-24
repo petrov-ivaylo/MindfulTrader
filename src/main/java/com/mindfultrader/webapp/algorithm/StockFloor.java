@@ -1,6 +1,6 @@
 package com.mindfultrader.webapp.algorithm;
 
-public class StockFloor extends AnalysisFunction {
+public class StockFloor {
 
 	public StockFloor() {
 		// TODO Auto-generated constructor stub

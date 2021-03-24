@@ -1,6 +1,6 @@
 package com.mindfultrader.webapp.algorithm;
 
-public class Wedge extends AnalysisFunction {
+public class Wedge {
 
 	public Wedge() {
 		// TODO Auto-generated constructor stub

@@ -31,7 +31,7 @@ public class SampleData {
 		
 		public double[][] data3   = {opens3,maxs3,mins3,closes3};
 		
-		public int[] torun = {1,2};
+		public int[] torun = {1,2,3,4};
 	
 	
 	
