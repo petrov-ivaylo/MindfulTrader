@@ -1,5 +1,7 @@
 package com.mindfultrader.webapp.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 /*
  * Controller for user account management functionality
  * 
@@ -20,12 +22,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.mindfultrader.webapp.models.User;
+import com.mindfultrader.webapp.repositories.UserRepository;
 import com.mindfultrader.webapp.services.CustomUserDetails;
 
 
 
 @Controller
 public class EditAccountController {
+	
+	@Autowired
+	UserRepository userRepo;
 	
 	// Main page for account edits
 	@RequestMapping("/account")
@@ -65,7 +72,7 @@ public class EditAccountController {
 	
 	@RequestMapping(value="/account/editEmail", method=RequestMethod.POST)
 	public String processEmail(
-			@AuthenticationPrincipal CustomUserDetails user, 
+			@AuthenticationPrincipal CustomUserDetails principal, 
 			@RequestParam("email") String email, 
 			@RequestParam("email_confirm") String email_confirm,
 			Model model)
@@ -88,7 +95,45 @@ public class EditAccountController {
 		
 		System.out.println("printing...." + email + " and again: " + email_confirm);
 		
+		User user = userRepo.findByEmail(principal.getUsername());
+		
+		System.out.println(user.getEmail());
+		
+		user.setEmail(email);
+		
+		System.out.println(user.getEmail());
+		
+		userRepo.save(user);
+		
 		return "accountManagement/email_confirmation";
+		
+//		THE PAIN OF ATTEMPTING TO TEST BEFORE WE CHANGE!
+//		
+//		email.trim();
+//		email_confirm.trim();
+//		
+//		System.out.println(email.getClass());
+//		System.out.println(email_confirm.getClass());
+//		System.out.println(email==email_confirm);
+//		System.out.println(email.trim()==email_confirm.trim());
+//		System.out.println(email==email);
+//		System.out.println(email);
+//		System.out.println(email_confirm);
+//		
+//		User user = userRepo.findByEmail(principal.getUsername());
+//		if (email==email_confirm) 
+//		{
+//			user.setEmail(email);
+//			System.out.println("new email is: " + user.getEmail());
+//			return "accountManagement/email_confirmation";
+//		}
+//		else
+//		{
+//			System.out.println("Emails mismatch");
+//			System.out.println(user.getEmail());
+//			return "accountManagement/account";
+//		}
+		
 	}
 	
 	// Edit password
