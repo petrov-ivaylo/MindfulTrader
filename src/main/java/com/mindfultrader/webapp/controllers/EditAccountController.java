@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -90,21 +91,22 @@ public class EditAccountController {
 		 * https://stackoverflow.com/questions/24671221/unable-to-get-thymeleaf-form-data-in-spring-mvc
 		 */
 		
-		//		model.addAttribute("email", email);
-		//		model.addAttribute("email_confirm", email_confirm);
-		
 		System.out.println("printing...." + email + " and again: " + email_confirm);
 		
+		//Pull user from database
 		User user = userRepo.findByEmail(principal.getUsername());
 		
 		System.out.println(user.getEmail());
 		
+		//Change user email to value received in PUSH request
 		user.setEmail(email);
 		
-		System.out.println(user.getEmail());
+		System.out.println("New email: " + user.getEmail());
 		
+		//Save user to database
 		userRepo.save(user);
 		
+		//Return confirmation page
 		return "accountManagement/email_confirmation";
 		
 //		THE PAIN OF ATTEMPTING TO TEST BEFORE WE CHANGE!
@@ -136,30 +138,70 @@ public class EditAccountController {
 		
 	}
 	
-	// Edit password
-	@RequestMapping("/account/changePassword")
-	public String editPassword(@AuthenticationPrincipal CustomUserDetails user, Model model)
+	// Edit password - recieves password values from form via POST request and @RequestParam
+	@RequestMapping(value="/account/changePassword", method=RequestMethod.POST)
+	public String editPassword(
+			@AuthenticationPrincipal CustomUserDetails principal,
+			@RequestParam("old_password") String old_password,
+			@RequestParam("password") String password,
+			@RequestParam("confirm_password") String confirm_password,			
+			Model model)
 	{
-//		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		
+		//pull user from db and get a password encoder object
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		User user = userRepo.findByEmail(principal.getUsername());
+		
+		//Access user password in database
+		String dbPassword = user.getPassword();
+		
+		if (passwordEncoder.matches(old_password, dbPassword)) {
+		    // Encode new password and store it
+			user.setPassword(passwordEncoder.encode(password));
+			userRepo.save(user);
+			
+			// return confirmation page	
+			return "accountManagement/change_password";
+			
+		} else {
+		    // Report error on error page
+			return "accountManagement/password_error";
+		}
+
+		
+//		Conditional to test if new passwords identical not working. No clue why
 //		
-//		//Access user password inputed in form, access user password in database
-//		String existingPassword = null;
-//		String dbPassword       = user.getPassword();
+//		if (password.trim() == confirm_password.trim())
+//		{
 //		
-//		if (passwordEncoder.matches(existingPassword, dbPassword)) {
-//		    // Encode new password and store it
+//			//pull user from db and get a password encoder object
+//			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//			User user = userRepo.findByEmail(principal.getUsername());
 //			
+//			//Access user password in database
+//			String dbPassword = user.getPassword();
 //			
-//			// return confirmation page	
-//			return "accountManagement/change_password";
-//			
-//		} else {
-//		    // Report error on error page
+//			if (passwordEncoder.matches(old_password, dbPassword)) {
+//			    // Encode new password and store it
+//				System.out.println(password + " " + confirm_password);
+//				user.setPassword(passwordEncoder.encode(password));
+//				userRepo.save(user);
+//				
+//				// return confirmation page	
+//				return "accountManagement/change_password";
+//				
+//			} else {
+//			    // Report error on error page
+//				return "accountManagement/password_error";
+//			}
+//		}
+//		else 
+//		{
+//			System.out.println("password mismatch...");
+//			System.out.println(password);
+//			System.out.println(confirm_password);
 //			return "accountManagement/password_error";
 //		}
-		return "accountManagement/change_password";
-		
-		
 		
 	}
 

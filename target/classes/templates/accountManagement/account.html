@@ -36,23 +36,23 @@
 <div>
 	<h3>Password</h3>
 	<p>You can change your password below</p>
-	<form action="/account/changePassword">
+	<form th:action="@{account/changePassword}" method="post">
 		<div>
 			<label>Current password:</label>
 				<div>
-				<input type="password">
+				<input type="password" name="old_password">
 				</div>
 		</div>
 		<div>
 			<label>New password:</label>
 				<div>
-				<input type="password">
+				<input type="password" name="password">
 				</div>
 		</div>
 		<div>
 			<label>Confirm new password:</label>
 				<div>
-				<input type="password">
+				<input type="password" name="confirm_password">
 				</div>
 		</div>
 		<div>
