@@ -2,10 +2,14 @@ package com.mindfultrader.webapp.algorithm;
 
 /* 
  * Class with function to analyze data for shooting stars
+ * The first function reads the last day of data, and if it presents an important pattern, the Shooting star, it gives advice accordingly.
+ * If the close is lower than the open and is located in the bottom third of the candle, it is a shooting star. Otherwise no answer is given.
+ * (WORK DONE)
+ * 
  */
 
 
-public class ShootingStar extends AnalysisFunction {
+public class ShootingStar {
 	
 	static int weight = 10;
 	

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="ISO-8859-1">
+<title>Mindful Trader App</title>
+</head>
+<body>
+	Your email was changed successfully to <span sec:authentication="principal.username">email</span>
+	
+	<form action="/account">
+		<input type="submit" value="Return to account page">	
+	</form>
+	
+	<form action="/users">
+		<input type="submit" value="return to main page">		
+	</form>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!-- 
+	View for seeing and editing account details
+	
+	Tutorial used: https://www.codejava.net/frameworks/spring-boot/get-logged-in-user-details
+ -->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="ISO-8859-1">
+<title>Account Management</title>
+</head>
+<body>
+<div>
+	<!-- sec:authentication="principal.fullName" accesses principal object (user in spring security) and getter in custom user details -->
+	<h2><span sec:authentication="principal.fullName">Fullname</span></h2>
+	<p> Hello! You can view and edit your account below </p>
+</div>
+
+<br>
+
+<div>
+	<h3>Email</h3>
+	<p>Your current email is: <span sec:authentication="principal.username">email</span></p>
+	<p>If you wish to change your email, click the button below</p>
+	<form th:action="@{account/editEmail}" method="post">
+		<input type="email" value="email" name="email">
+		<input type="email" value="confirm email" name="email_confirm">
+		<input type="submit" value="change email">
+	</form>
+</div>
+
+<br>
+
+<div>
+	<h3>Password</h3>
+	<p>You can change your password below</p>
+	<form th:action="@{account/changePassword}" method="post">
+		<div>
+			<label>Current password:</label>
+				<div>
+				<input type="password" name="old_password">
+				</div>
+		</div>
+		<div>
+			<label>New password:</label>
+				<div>
+				<input type="password" name="password">
+				</div>
+		</div>
+		<div>
+			<label>Confirm new password:</label>
+				<div>
+				<input type="password" name="confirm_password">
+				</div>
+		</div>
+		<div>
+			<input type="submit" value="change password">
+		</div>
+		
+	</form>
+</div>
+
+<br>
+
+<div>
+	<h3>Delete Account</h3>
+	<p>If you wish to delete your account, click the button below. A warning page will be shown, on which you can 
+	confirm your account deletion and then all your data will be deleted.</p>
+	
+	<form action="account/delete">
+		<input type="submit" value="delete account">
+	</form>
+</div>
+
+<br><br>
+
+<div>
+<form action="/users">
+	<input type="submit" value="return to main page">		
+</form>
+</div>
+</body>
+</html>

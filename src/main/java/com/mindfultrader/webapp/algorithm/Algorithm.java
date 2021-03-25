@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
  * 
  * 
  * Note: Access modifiers need to be changed for info hiding and general good practice...
+ * Note: we need to work with autowiring instead
  */
 
 @Component
@@ -30,11 +31,21 @@ public class Algorithm
 		for (int i = 0; i < functionsToRun.length; i++) {
 			if (functionsToRun[i] == 1) {
 				Trend.readTrend(data, solution);
+				System.out.println("Running trend analysis...");
 			}
 			if (functionsToRun[i] == 2) {
 				ShootingStar.readShootingStar(this.data, this.solution);
+				System.out.println("Running shooting star analysis...");
 			}
-			if (functionsToRun[i] > 2) {
+			if (functionsToRun[i] == 3) {
+				Hammers.readHammer(this.data, this.solution);
+				System.out.println("Running hammer analysis...");
+			}
+			if (functionsToRun[i] == 4) {
+				BouncingCurve.readBouncing(this.data, this.solution);
+				System.out.println("Running bouncing curve analysis...");
+			}			
+			if (functionsToRun[i] > 4) {
 				System.out.println("Sorry, we don't have so many functions implemented yet.");
 			}
 		}

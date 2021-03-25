@@ -55,48 +55,9 @@ public class AppController {
     	return "theory";
     }
     
-//	@RequestMapping("/users/run")
-//	public ModelAndView run()
-//	{
-//		
-//		//Run algorithm and print to console
-//		System.out.println("Creating Data object...");
-//		SampleData sdata = new SampleData();
-//		
-//		
-//		System.out.println("Creating algorithm objects...");
-//		Algorithm algo1 = new Algorithm(sdata.data1);
-//		Algorithm algo2 = new Algorithm(sdata.data2);
-//		Algorithm algo3 = new Algorithm(sdata.data3);
-//		
-//		algo1.runAlgo(sdata.torun);
-//		System.out.println("Algo1 run.");
-//		System.out.println(algo1.solution.getListOfResults());
-//		System.out.println(algo1.solution.getFinalAdvice());
-//		
-//		algo2.runAlgo(sdata.torun);
-//		System.out.println("Algo2 run.");
-//		System.out.println(algo2.solution.getListOfResults());
-//		System.out.println(algo2.solution.getFinalAdvice());
-//
-//		algo3.runAlgo(sdata.torun);
-//		System.out.println("Algo3 run.");
-//		System.out.println(algo3.solution.getListOfResults());
-//		System.out.println(algo3.solution.getFinalAdvice());
-//		
-//		
-//		System.out.println("Algorithm has run :) ");
-//		
-//		
-//		//Create MVC object for webapp
-//		ModelAndView mv = new ModelAndView();
-//		mv.setViewName("result");
-//		mv.addObject("conclusion", algo1.solution.getFinalAdvice());
-//		mv.addObject("advice", algo1.solution.getListOfResults());
-//		
-//		
-//		//Return to previous Page
-//		return mv;
-//	}
-//    
+    @GetMapping("/account")
+    public String editAccount()
+    {
+    	return "accountManagement/account";
+    }
 }
