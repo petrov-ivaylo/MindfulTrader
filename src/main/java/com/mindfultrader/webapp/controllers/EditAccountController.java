@@ -1,8 +1,14 @@
 package com.mindfultrader.webapp.controllers;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,7 +46,7 @@ public class EditAccountController {
 	}
 	
 	
-	// Warning message for account deletion
+	// On first click of delete, user gets warning message for account deletion
 	@RequestMapping("/account/delete")
 	public String confirmAccountDeletion()
 	{
@@ -50,12 +56,25 @@ public class EditAccountController {
 	
 	// Delete account and all details
 	@RequestMapping("/account/delete/submit")
-	public String deleteAccount()	
+	public String deleteAccount(
+			@AuthenticationPrincipal CustomUserDetails principal, 
+			HttpServletRequest request, 
+			HttpServletResponse response)	
 	{
-		//CODE HERE
+		//Find user and delete using repository
+		User user = userRepo.findByEmail(principal.getUsername());
+		userRepo.delete(user);
+		
+		//Ensure we are logged in and then log out
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (auth != null){
+			new SecurityContextLogoutHandler().logout(request, response, auth);  
+        }  
 		
 		return "accountManagement/bye";
 	}
+		
+
 	
 
 	@RequestMapping(value="/account/editEmail", method=RequestMethod.POST)

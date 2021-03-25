@@ -10,17 +10,23 @@
 </head>
 <body>
 
-We are sorry to see you go! If you are sure you wish to delete your account, click the button below.
-This will delete all information connected to you in our system and cannot be reversed. 
+<div>
+	We are sorry to see you go! If you are sure you wish to delete your account, click the button below.
+	This will delete all information connected to you in our system and cannot be reversed. 
+	
+	<form action="delete/submit">
+		<input type="submit" value="delete account">
+	</form>
+</div>
 
-<form action="delete/submit">
-	<input type="submit" value="delete account">
-</form>
+<br>
 
-<form action="/account">
-	<input type="submit" value="Return to account page">	
-</form>
-
+<div>
+	Changed your mind? Don't worry you can return to your account page by clicking the button below.
+	<form action="/account">
+		<input type="submit" value="Return to account page">	
+	</form>
+</div>
 
 </body>
 </html>
