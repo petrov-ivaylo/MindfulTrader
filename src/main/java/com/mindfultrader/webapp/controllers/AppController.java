@@ -54,4 +54,10 @@ public class AppController {
     public String strategy(Model model) {
     	return "theory";
     }
+    
+    @GetMapping("/account")
+    public String editAccount()
+    {
+    	return "accountManagement/account";
+    }
 }

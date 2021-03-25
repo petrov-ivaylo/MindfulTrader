@@ -1,20 +1,6 @@
 package com.mindfultrader.webapp.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
-/*
- * Controller for user account management functionality
- * 
- * User must be able to delete their account
- * User must be able to change their email
- * User must be able to change their password
- * 
- * Tutorials used: 
- * https://www.codejava.net/frameworks/spring-boot/get-logged-in-user-details
- * 
- */
-
-
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -27,7 +13,17 @@ import com.mindfultrader.webapp.models.User;
 import com.mindfultrader.webapp.repositories.UserRepository;
 import com.mindfultrader.webapp.services.CustomUserDetails;
 
-
+/*
+ * Controller for user account management functionality
+ * 
+ * User must be able to delete their account
+ * User must be able to change their email
+ * User must be able to change their password
+ * 
+ * Tutorials used: 
+ * https://www.codejava.net/frameworks/spring-boot/get-logged-in-user-details
+ * 
+ */
 
 @Controller
 public class EditAccountController {
@@ -61,16 +57,7 @@ public class EditAccountController {
 		return "accountManagement/bye";
 	}
 	
-//	// Edit email
-//	@RequestMapping(value="/account/editEmail", method=RequestMethod.GET)
-//	public String editEmail(@AuthenticationPrincipal CustomUserDetails user, Model model)
-//	{
-//		// html page accesses user info directly using thymeleaf extra for Spring Security, 
-//		// so only purpose of this is to give client side the correct html page.. which we do from 
-//		// account so no purpose of this controller?
-//		return "accountManagement/change_email";
-//	}
-	
+
 	@RequestMapping(value="/account/editEmail", method=RequestMethod.POST)
 	public String processEmail(
 			@AuthenticationPrincipal CustomUserDetails principal, 
@@ -161,7 +148,7 @@ public class EditAccountController {
 			userRepo.save(user);
 			
 			// return confirmation page	
-			return "accountManagement/change_password";
+			return "accountManagement/password_confirmation";
 			
 		} else {
 		    // Report error on error page
