@@ -1,10 +1,19 @@
+<!-- https://stackoverflow.com/questions/17669212/send-datas-from-html-to-controller-in-thymeleaf -->
+<!-- Not sure this actually works. Redundant? -->
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="ISO-8859-1">
 <title>Update your email</title>
 </head>
 <body>
+
+<form action="#" th:action="@{/account/prossesEditEmail}" method="post">
+	<input type="text" th:field="*{user.username}">
+
+</form>
+
 
 <form action="/account">
 	<input type="submit" value="Return to account page">	
