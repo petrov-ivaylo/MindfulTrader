@@ -112,17 +112,7 @@
                 	<appName>mysql-customers</appName>
                 </configuration>
             </plugin>
-            <plugin>
-				<inherited>true</inherited>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>${maven-war-plugin.version}</version>
-				<configuration>
-				<failOnMissingWebXml>false</failOnMissingWebXml>
-				<warName>${project.artifactId}</warName>
-				<attachClasses>true</attachClasses>
-				</configuration>
-			</plugin>
+            
 			
 			<plugin>
             <groupId>org.apache.maven.plugins</groupId>
