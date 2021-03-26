@@ -47,31 +47,19 @@
 	    <h1>Algorithm</h1>
 		<p>Here you will be able to run the algorithm, currently we have 2 analysis functions and run on test data</p>
 		
-		<!-- <p>To run the algorithm on the company A (a doomed company), click the following button:</p>
-		<form action="/users/run">
-			<input type="submit" value="run algorithm">
-		</form>
-		-->
 		
-		
-		<form action="/algorithm">
-			<input type="submit" value="go to algorithm">		
-		</form>
-    </div>
-    
-    <h2>Click here to see the requested data</h2>
-    
-    <div>
-    
-    <form action="requestdata/run">
-    <input type="submit" value="request">
-    </form>
-    <form th:action="@{/requestdata2/run}" method="post">
-            
-            <div><label> Symbol: <input type="symbol" name="cmp_name"/> </label></div>
+		<form th:action="@{/algorithm/run}" method="post">
+            <div><label> Enter company name: <input type="cmp_name" name="cmp_name"/> </label></div>
             <div><input type="submit" value="Make a request for a specific stock"/></div>
-        </form>
+    </form>
+		
+    
     </div>
+    
+    
+    
+    
+    
     
     <div>
 	    <h1>Click the button below to go to your portfolio</h1>		

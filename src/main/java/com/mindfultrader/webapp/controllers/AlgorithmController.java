@@ -1,46 +1,85 @@
 package com.mindfultrader.webapp.controllers;
 
+import org.json.JSONArray;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import com.mindfultrader.webapp.algorithm.Algorithm;
-import com.mindfultrader.webapp.algorithm.SampleData;
+import com.mindfultrader.webapp.data.TestDatabase;
+
+
+
+
+
 
 @Controller
 public class AlgorithmController {
 	
 	@RequestMapping("/algorithm/run")
-	public ModelAndView run()
+	public ModelAndView run(String cmp_name)
 	{
 		
-		//Run algorithm and print to console
-		System.out.println("Creating Data object...");
-		SampleData sdata = new SampleData();
+		String symbol = TestDatabase.getCompanySymbolByName(cmp_name);
+        String uri = "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v3/get-historical-data?symbol=" + symbol + "&region=US";
+        HttpResponse<JsonNode> response = null;
+        try {
+            response = Unirest.get(uri)
+                    .header("x-rapidapi-key", "71c138c430msh94f21a0e7d20608p1bab39jsnfc8e8fcb1aab")
+                    .header("x-rapidapi-host", "apidojo-yahoo-finance-v1.p.rapidapi.com")
+                    .asJson();
+        } catch (UnirestException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+        
+        JSONArray jSonPrices = (JSONArray) response.getBody().getObject().get("prices");
+        
+        
+        
+         double[] opens =  new double[90]; 
+         double[] highs =  new double[90];
+         double[] lows = new double[90];
+         double[] closes = new double[90];
+         
+        
+        
+        Double x =1.0;
+        for(int i=90; i>0 ; i-- ) {
+            x = jSonPrices.getJSONObject(i).getDouble("open");
+            opens[90-i] = x;
+            x = jSonPrices.getJSONObject(i).getDouble("high");
+            highs[90-i] = x;
+            x = jSonPrices.getJSONObject(i).getDouble("low");
+            lows[90-i] = x;
+            x = jSonPrices.getJSONObject(i).getDouble("close");
+            closes[90-i] = x;
+        }
+     
+        double[][] data = {opens, highs, lows, closes};
+		
 		
 		
 		System.out.println("Creating algorithm objects...");
-		Algorithm algo1 = new Algorithm(sdata.data1);
-		Algorithm algo2 = new Algorithm(sdata.data2);
-		Algorithm algo3 = new Algorithm(sdata.data3);
+		Algorithm algo1 = new Algorithm(data);
 		
-		algo1.runAlgo(sdata.torun);
+		int[] torun = {1,2,3,4};
+		
+		
+		algo1.runAlgo(torun);
 		System.out.println("Algo1 run.");
 		System.out.println(algo1.solution.getListOfResults());
 		System.out.println(algo1.solution.getFinalAdvice());
-		
-		algo2.runAlgo(sdata.torun);
-		System.out.println("Algo2 run.");
-		System.out.println(algo2.solution.getListOfResults());
-		System.out.println(algo2.solution.getFinalAdvice());
-
-		algo3.runAlgo(sdata.torun);
-		System.out.println("Algo3 run.");
-		System.out.println(algo3.solution.getListOfResults());
-		System.out.println(algo3.solution.getFinalAdvice());
+		System.out.println(data[0][89]);
 		
 		
-		System.out.println("Algorithm has run :) ");
+		
+		
 		
 		
 		//Create MVC object for webapp
@@ -49,11 +88,6 @@ public class AlgorithmController {
 		mv.addObject("conclusion1", algo1.solution.getFinalAdvice());
 		mv.addObject("advice1", algo1.solution.getListOfResults());
 		
-		mv.addObject("conclusion2", algo2.solution.getFinalAdvice());
-		mv.addObject("advice2", algo2.solution.getListOfResults());
-		
-		mv.addObject("conclusion3", algo3.solution.getFinalAdvice());
-		mv.addObject("advice3", algo3.solution.getListOfResults());
 		
 		return mv;
 	}
