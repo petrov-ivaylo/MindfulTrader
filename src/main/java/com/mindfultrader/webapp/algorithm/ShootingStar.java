@@ -25,9 +25,11 @@ public class ShootingStar {
 		if ( (close < open) && (close < (2*min + max)/3 ) ){
 			solution.modifyCounter(weight, false);
 			solution.addResultToList("There is a shooting star, this is a simple indicator that the price will likely go down");
+			System.out.println("-10");
 					}
 		else {
 			solution.addResultToList("There is no shooting star");
+			System.out.println("0");
 		}
 			
 	}

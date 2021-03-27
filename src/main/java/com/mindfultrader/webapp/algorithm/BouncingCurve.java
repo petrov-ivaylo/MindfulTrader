@@ -12,8 +12,8 @@ public class BouncingCurve {
 	
 	//(WORK UNFINISHED 70% I'd say but my opinion is often worth peanuts when I look at it in retrospective)
 	public static Limits bouncing1 (double[][] data){
-		int[] indexsummits = new int[10];
-		int[] indexlow = new int[10];
+		int[] indexsummits = new int[90];
+		int[] indexlow = new int[90];
 		int nbsummits = 0;
 		int nblow = 0;
 		Limits limit = new Limits();

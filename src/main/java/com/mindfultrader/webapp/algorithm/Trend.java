@@ -24,6 +24,7 @@ public class Trend {
 		}
 		
 		//Modify result of full stock analysis according to findings
+		System.out.println(totalDerivatives);
 		solution.modifyCounter(totalDerivatives, true);
 		
 	}
