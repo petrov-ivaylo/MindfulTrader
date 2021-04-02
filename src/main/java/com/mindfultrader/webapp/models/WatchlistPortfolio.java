@@ -1,5 +1,9 @@
 package com.mindfultrader.webapp.models;
 
+/*
+ * ORM (Spring JPA) representation of watchlistportfolio table 
+ */
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "watchlistportfolio")
-public class Portfolio {
+public class WatchlistPortfolio {
      
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
