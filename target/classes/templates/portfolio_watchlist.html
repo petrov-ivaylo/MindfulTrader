@@ -1,10 +1,37 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
     xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+
 <head>
-<meta charset="ISO-8859-1">
-<title>Watchlist and Portfolio</title>
+	<meta charset="ISO-8859-1">
+	<title>Watchlist and Portfolio</title>
 </head>
+
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+th, td {
+  text-align: center;
+}
+
+th {
+  padding: 15px;
+}
+
+.table-text{
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+</style>
+
+
+
+
 <body>
 
 <h1><span sec:authentication="principal.fullName">Full Name</span>'s Portfolio and Watchlist Page</h1>
@@ -25,24 +52,28 @@
 				<th>Move to Watchlist</th>
 			</tr>
 			<tr th:each="portentry: ${portfolio}">
-				<td th:text="${portentry.companyName}">Company</td>
-				<td th:text="${portentry.companySymbol}">Symbol</td>
+				<td th:text="${portentry.companyName}" class="table-text">Company</td>
+				<td th:text="${portentry.companySymbol}" class="table-text">Symbol</td>
 				<td>
 					<form th:action="@{/deleteFromWP}" method="post">
 						<input type="hidden" th:value="${portentry.Company_ID}" name="Company_ID">
-						<button type="submit">Del</button>
+						<button type="submit" style="width:100%">Del</button>
 					</form>
 				</td>
 				<td>
 					<form th:action="@{/movePtoW}" method="post">
 						<input type="hidden" th:value="${portentry.Company_ID}" name="Company_ID">
-						<button type="submit">W</button>
+						<button type="submit" style="width:100%">Move</button>
 					</form>
 				</td>
 			</tr>
-		
 		</table>
-	
+	</div>
+	<br>
+	<div>
+		<form action="#">
+			<input type="submit" value="Analyse my portfolio and give me advice!">
+		</form>
 	</div>
 </div>
 <div>
@@ -56,26 +87,33 @@
 				<th>Move to Portfolio</th>
 			</tr>
 			<tr th:each="watchentry: ${watchlist}">
-				<td th:text="${watchentry.companyName}">Company</td>
-				<td th:text="${watchentry.companySymbol}">Symbol</td>
+				<td th:text="${watchentry.companyName}" class="table-text">Company</td>
+				<td th:text="${watchentry.companySymbol}" class="table-text">Symbol</td>
 				<td>
 					<form th:action="@{/deleteFromWP}" method="post">
 						<input type="hidden" th:value="${watchentry.Company_ID}" name="Company_ID">
-						<button type="submit">Del</button>
+						<button type="submit" style="width:100%">Del</button>
 					</form>
 				</td>
 				<td>
 					<form th:action="@{/moveWtoP}" method="post">
 						<input type="hidden" th:value="${watchentry.Company_ID}" name="Company_ID">
-						<button type="submit">P</button>
+						<button type="submit" style="width:100%">Move</button>
 					</form>
 				</td>
 			</tr>
-		
 		</table>
+	</div>
 	
+	<br>
+	
+	<div>
+		<form action="#">
+			<input type="submit" value="Analyse my watchlist and give me advice!">
+		</form>
 	</div>
 </div>
+
 <div>
 	<h2>All Available Companies</h2>
 	<div>
@@ -87,8 +125,8 @@
 				<th>Add to Portfolio</th>
 			</tr>
 			<tr th:each="company: ${allCompanies}">
-				<td th:text="${company.companyName}">Company</td>
-				<td th:text="${company.companySymbol}">Symbol</td>
+				<td th:text="${company.companyName}" class="table-text">Company</td>
+				<td th:text="${company.companySymbol}" class="table-text">Symbol</td>
 				<td>
 					<!-- th:action -> defines controller we are going for. method="post" states that we are sending info to server -->
 					<form th:action="@{/addToWatchlist}" method="post">
@@ -100,13 +138,13 @@
 						-->
 						
 						<input type="hidden" th:value="${company.Company_ID}" name="Company_ID">
-						<button type="submit">W</button>
+						<button type="submit" style="width:100%">W</button>
 					</form>
 				</td>
 				<td> 
 					<form th:action="@{/addToPortfolio}" method="post">
 						<input type="hidden" th:value="${company.Company_ID}" name="Company_ID">
-						<button type="submit">P</button>
+						<button type="submit" style="width:100%">P</button>
 					</form>
 					
 				</td>
