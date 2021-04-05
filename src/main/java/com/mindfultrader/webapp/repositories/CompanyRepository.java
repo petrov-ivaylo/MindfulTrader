@@ -4,7 +4,7 @@ package com.mindfultrader.webapp.repositories;
  * Repository to work with company entity, ie access companies table in database
  * 
  * Created: 5th April 2021
- * Updated:
+ * Updated: 5th April 2021
  * Author: Emma
  * 
  */

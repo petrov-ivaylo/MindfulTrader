@@ -1,5 +1,14 @@
 package com.mindfultrader.webapp.models;
 
+/*
+ * Entity class to represent the companies table in our code
+ * 
+ * Created: 5th April 2021
+ * Updated: 5th April 2021
+ * 
+ * Author: Emma
+ * 
+ */
 
 import javax.persistence.Column;
 

@@ -1,13 +1,19 @@
 package com.mindfultrader.webapp.models;
 
 /*
- * ORM (Spring JPA) representation of customers table
+ * JPA representation of customers table
  * 
  * Notes:
  *  - Name parameter inside @Column annotation must match DB attribute name
  *  - The name specified after Private <type> <name> is the field name we work with in the java code - ie can be set arbitrarily as suits our purpose
  *  - for id, email and password the name of the java object field matches the name of the db relation attribute, and so spring JPA figures out the db name 
  *     from that. 	
+ *     
+ *     Created: 5th Mar 2021
+ *     Updated: 5th Apr 2021
+ *     
+ *     Author: Ivaylo
+ *     Updated-by: Emma
  * 
  */
 

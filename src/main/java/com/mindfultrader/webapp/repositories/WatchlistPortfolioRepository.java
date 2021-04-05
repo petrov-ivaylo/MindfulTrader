@@ -2,6 +2,12 @@ package com.mindfultrader.webapp.repositories;
 
 /*
  * Repository to work with watchlistPortfolio entity (WatchlistPortfolio table)
+ * 
+ * created: 5th April 2021
+ * updated: 5th April 2021
+ * 
+ * Author: Emma
+ * 
  */
 
 import java.util.List;
@@ -23,7 +29,7 @@ public interface WatchlistPortfolioRepository extends JpaRepository<WatchlistPor
 	// Source: https://www.baeldung.com/spring-data-exists-query
 	public boolean existsWatchlistPortfolioByUseridAndCompanyid(long userid, long companyid);
 
-	//temporary query - to be deleted when a company cannot be added to both watchlist and portfolio
+	//technically not necessary as a company cannot be on both portfolio and watchlist for the same user, but keeping in case the is an error and it happens anyways
 	public WatchlistPortfolio findByUseridAndCompanyidAndType(long userid, long companyid, String type);
 	
 }
