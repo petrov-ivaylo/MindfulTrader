@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.mindfultrader.webapp.models.Company;
 import com.mindfultrader.webapp.models.User;
@@ -101,6 +103,8 @@ public class WatchlistPortfolioController {
 		//Add watchlist as list of company objects to model
 		model.addAttribute("watchlist", watchlist);
 		
+		
+		
 		/*
 		 * ***************************************************************************
 		 * Get All companies
@@ -113,8 +117,17 @@ public class WatchlistPortfolioController {
 		//Add allCompanies to model so it is accessible in view
 		model.addAttribute("allCompanies", allCompanies);
 		
-		
 		return "portfolio_watchlist";
+	}
+	
+	@RequestMapping(value="/addToWatchlist", method=RequestMethod.POST)
+	public String addToWatchlist(
+			@ModelAttribute("company") Company company)
+	{
+		
+		System.out.println(company.getCompanyName());
+		
+		return "redirect:/portfolio_watchlist";
 	}
 	
 }

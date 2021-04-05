@@ -20,6 +20,7 @@
 			<tr th:each="portentry: ${portfolio}">
 				<td th:text="${portentry.companyName}">Company</td>
 				<td th:text="${portentry.companySymbol}">Symbol</td>
+				
 			</tr>
 		
 		</table>
@@ -50,10 +51,18 @@
 			<tr>
 				<th>Company Name</th>
 				<th>Company Symbol</th>
+				<th>Add to Watchlist</th>
+				<th>Add to Portfolio</th>
 			</tr>
 			<tr th:each="company: ${allCompanies}">
 				<td th:text="${company.companyName}">Company</td>
 				<td th:text="${company.companySymbol}">Symbol</td>
+				<td>
+					<form th:action="@{/addToWatchlist}" th:object="${company}" method="post">
+						<input type="submit" value="W"> 
+					</form>
+				</td>
+				<td> <input type="submit" value="P"> </td>
 			</tr>
 		
 		</table>
