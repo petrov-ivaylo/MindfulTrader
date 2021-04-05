@@ -42,6 +42,7 @@ public class WatchlistPortfolioController {
 	@Autowired
 	CompanyRepository companyRepo;
 	
+	
 	//Main page for portfolio watchlist management
 	@RequestMapping("/portfolio_watchlist")
 	public String viewPortWatch(
@@ -120,16 +121,124 @@ public class WatchlistPortfolioController {
 		return "portfolio_watchlist";
 	}
 	
+	
+	//Controller to handle requests to move company from master companies list to watchlist
 	@RequestMapping(value="/addToWatchlist", method=RequestMethod.POST)
 	public String addToWatchlist(
+			@AuthenticationPrincipal CustomUserDetails principal,
 			@RequestParam("Company_ID") Company company)
 	{
 		
-		//Note: we are sending the company id through from the view, but behind the scenes the server is using the id to look up the company through the repo, meaning we get an object 
-		// of type company. In thymeleaf the variables and other stuff get represented as strings, so if we try to send the company through instead of the id, we get a conversion error
-		// because it doesn't know how to convert the string representing the company object in the view to an actual company object in the model.
+		/* Note: we are sending the company id through from the view, but behind the scenes the server is using the id to look up the company through the repo, meaning we get an object 
+		 * of type company. In thymeleaf the variables and other stuff get represented as strings, so if we try to send the company through instead of the id, we get a conversion error
+		 * because it doesn't know how to convert the string representing the company object in the view to an actual company object in the model.
+		 */
+
+		//get current user
+		User user = userRepo.findByEmail(principal.getUsername());
 		
-		System.out.println(company.getCompanyName());
+		//create new watchlist object and set fields according to received company, then save to database via repository - remember list id automatically generated when created
+		WatchlistPortfolio wpEntry = new WatchlistPortfolio();
+		
+		wpEntry.setCompanyid(company.getCompany_ID());
+		wpEntry.setUserid(user.getId());
+		wpEntry.setType("w");
+		
+		wpRepo.save(wpEntry);
+		
+		System.out.println(company.getCompanyName() + " added to watchlist");
+		
+		//reload the page - you will see the company on the watchlist
+		return "redirect:/portfolio_watchlist";
+	}
+	
+	
+	//Controller to handle requests to move company from master companies list to portfolio - again repeated code, can we move to service where we simply add the company, user? and the type as params?
+	@RequestMapping(value="/addToPortfolio", method=RequestMethod.POST)
+	public String addToPortfolio(
+			@AuthenticationPrincipal CustomUserDetails principal,
+			@RequestParam("Company_ID") Company company)
+	{
+		
+		/* Note: we are sending the company id through from the view, but behind the scenes the server is using the id to look up the company through the repo, meaning we get an object 
+		 * of type company. In thymeleaf the variables and other stuff get represented as strings, so if we try to send the company through instead of the id, we get a conversion error
+		 * because it doesn't know how to convert the string representing the company object in the view to an actual company object in the model.
+		 */
+
+		//get current user
+		User user = userRepo.findByEmail(principal.getUsername());
+		
+		//create new watchlist object and set fields according to received company, then save to database via repository - remember list id automatically generated when created
+		WatchlistPortfolio wpEntry = new WatchlistPortfolio();
+		
+		wpEntry.setCompanyid(company.getCompany_ID());
+		wpEntry.setUserid(user.getId());
+		wpEntry.setType("p");
+		
+		wpRepo.save(wpEntry);
+		
+		System.out.println(company.getCompanyName() + " added to portfolio");
+		
+		//reload the page - you will see the company on the watchlist
+		return "redirect:/portfolio_watchlist";
+	}
+	
+	//Controller to handle requests to delete entry from either portfolio or watchlist. 
+	@RequestMapping(value="/deleteFromWP", method=RequestMethod.POST)
+	public String deteleFromWP(
+			@AuthenticationPrincipal CustomUserDetails principal,
+			@RequestParam("Company_ID") Company company)
+	{
+		User user = userRepo.findByEmail(principal.getUsername());
+		
+		//find the entry in the WatchlistPortfolio table that we want to delete
+		List<WatchlistPortfolio> entry = wpRepo.findByUseridAndCompanyid(user.getId(), company.getCompany_ID());
+		
+		
+		//delete the entry - deletes all entries in both watchlist and portfolio. Once implemented so company can only be on one, change to wpRepo.delete(entry) and change 
+		// repository return type to single entry.
+		wpRepo.deleteAll(entry);
+		
+		System.out.println(company.getCompanyName() + " deleted from portfolio and/or watchlist");
+		
+		return "redirect:/portfolio_watchlist";
+	}
+	
+	//Controller to handle request to move entry from watchlist to portfolio
+	@RequestMapping(value="/moveWtoP", method=RequestMethod.POST)
+	public String moveWtoP(
+			@AuthenticationPrincipal CustomUserDetails principal,
+			@RequestParam("Company_ID") Company company
+			)
+	{
+		User user = userRepo.findByEmail(principal.getUsername());
+		
+		//find the entry in the WatchlistPortfolio table that we want to delete - remove cast when condition to only have in either watchlist or portfolio
+		WatchlistPortfolio entry = wpRepo.findByUseridAndCompanyidAndType(user.getId(), company.getCompany_ID(), "w");
+		
+		//Change type and save entry back to db
+		entry.setType("p");
+		wpRepo.save(entry);
+		
+		return "redirect:/portfolio_watchlist";
+	}
+	
+	
+	//Controller to handle request to move entry from portfolio to watchlist
+	@RequestMapping(value="/movePtoW", method=RequestMethod.POST)
+	public String movePtoW(
+			@AuthenticationPrincipal CustomUserDetails principal,
+			@RequestParam("Company_ID") Company company
+			)
+	{
+		User user = userRepo.findByEmail(principal.getUsername());
+		
+		//find the entry in the WatchlistPortfolio table that we want to delete - remove cast when condition to only have in either watchlist or portfolio
+		WatchlistPortfolio entry = wpRepo.findByUseridAndCompanyidAndType(user.getId(), company.getCompany_ID(), "p");
+		
+		//Change type and save entry back to db
+		entry.setType("w");
+		wpRepo.save(entry);
 		
 		return "redirect:/portfolio_watchlist";
 	}
