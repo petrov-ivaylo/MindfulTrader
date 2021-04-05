@@ -133,20 +133,29 @@ public class WatchlistPortfolioController {
 		 * of type company. In thymeleaf the variables and other stuff get represented as strings, so if we try to send the company through instead of the id, we get a conversion error
 		 * because it doesn't know how to convert the string representing the company object in the view to an actual company object in the model.
 		 */
-
+		
 		//get current user
 		User user = userRepo.findByEmail(principal.getUsername());
 		
-		//create new watchlist object and set fields according to received company, then save to database via repository - remember list id automatically generated when created
-		WatchlistPortfolio wpEntry = new WatchlistPortfolio();
 		
-		wpEntry.setCompanyid(company.getCompany_ID());
-		wpEntry.setUserid(user.getId());
-		wpEntry.setType("w");
+		//Check if company already exists in portfolio or watchlist
+		if(wpRepo.existsWatchlistPortfolioByUseridAndCompanyid(user.getId(), company.getCompany_ID())==false) {
+			
+			//create new watchlist object and set fields according to received company, then save to database via repository - remember list id automatically generated when created
+			WatchlistPortfolio wpEntry = new WatchlistPortfolio();
+			
+			wpEntry.setCompanyid(company.getCompany_ID());
+			wpEntry.setUserid(user.getId());
+			wpEntry.setType("w");
+			
+			wpRepo.save(wpEntry);
+			
+			System.out.println(company.getCompanyName() + " added to watchlist");
+		} 
 		
-		wpRepo.save(wpEntry);
-		
-		System.out.println(company.getCompanyName() + " added to watchlist");
+		else {
+			System.out.println(company.getCompanyName() + " is already in portfolio or watchlist");
+		}
 		
 		//reload the page - you will see the company on the watchlist
 		return "redirect:/portfolio_watchlist";
@@ -168,19 +177,30 @@ public class WatchlistPortfolioController {
 		//get current user
 		User user = userRepo.findByEmail(principal.getUsername());
 		
-		//create new watchlist object and set fields according to received company, then save to database via repository - remember list id automatically generated when created
-		WatchlistPortfolio wpEntry = new WatchlistPortfolio();
-		
-		wpEntry.setCompanyid(company.getCompany_ID());
-		wpEntry.setUserid(user.getId());
-		wpEntry.setType("p");
-		
-		wpRepo.save(wpEntry);
-		
-		System.out.println(company.getCompanyName() + " added to portfolio");
-		
+		//Check if company is already in watchlist or portfolio
+		if(wpRepo.existsWatchlistPortfolioByUseridAndCompanyid(user.getId(), company.getCompany_ID())==false)
+		{
+			//create new watchlist object and set fields according to received company, then save to database via repository - remember list id automatically generated when created
+			WatchlistPortfolio wpEntry = new WatchlistPortfolio();
+			
+			wpEntry.setCompanyid(company.getCompany_ID());
+			wpEntry.setUserid(user.getId());
+			wpEntry.setType("p");
+			
+			wpRepo.save(wpEntry);
+			
+			System.out.println(company.getCompanyName() + " added to portfolio");
+			
+		} 
+		else {
+			System.out.println(company.getCompanyName() + " is already in portfolio or watchlist");
+			//Do something so the same message is shown in view...
+		}
+			
+			
 		//reload the page - you will see the company on the watchlist
 		return "redirect:/portfolio_watchlist";
+		
 	}
 	
 	//Controller to handle requests to delete entry from either portfolio or watchlist. 

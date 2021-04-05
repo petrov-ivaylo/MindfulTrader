@@ -18,7 +18,12 @@ public interface WatchlistPortfolioRepository extends JpaRepository<WatchlistPor
 	
 	// Want to look up entries by company id and user id
 	public List<WatchlistPortfolio> findByUseridAndCompanyid(long userid, long companyid);
+	
+	// Query to check if user has already added company to either watchlist or portfolio
+	// Source: https://www.baeldung.com/spring-data-exists-query
+	public boolean existsWatchlistPortfolioByUseridAndCompanyid(long userid, long companyid);
 
 	//temporary query - to be deleted when a company cannot be added to both watchlist and portfolio
 	public WatchlistPortfolio findByUseridAndCompanyidAndType(long userid, long companyid, String type);
+	
 }
