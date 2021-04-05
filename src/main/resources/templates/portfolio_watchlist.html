@@ -43,12 +43,40 @@
 	
 	</div>
 </div>
+<div>
+	<h2>All Available Companies</h2>
+	<div>
+		<table>
+			<tr>
+				<th>Company Name</th>
+				<th>Company Symbol</th>
+			</tr>
+			<tr th:each="company: ${allCompanies}">
+				<td th:text="${company.companyName}">Company</td>
+				<td th:text="${company.companySymbol}">Symbol</td>
+			</tr>
+		
+		</table>
+	
+	</div>
+</div>
+
+<br>
+
+<div style="font-style:italic;">
+	<p>Don't see a company you need? Click the button below and submit a request to have the company added.
+	(Button has no function. Ability to request new companies is to be implemented in a later version)</p>
+	<form action="#">
+		<input type="submit" value="Request new company">		
+	</form>
+	
+</div>
 
 <br>
 
 <div>
 	<form action="/users">
-		<input type="submit" value="return to main page">		
+		<input type="submit" value="Return to main page">		
 	</form>
 
 </div>

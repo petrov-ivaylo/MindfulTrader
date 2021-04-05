@@ -50,7 +50,11 @@ public class WatchlistPortfolioController {
 		//Pull current user from database by using spring security principal object to search in user repository
 		User user = userRepo.findByEmail(principal.getUsername());
 		
-		//GET PORTFOLIO 
+		/*
+		 * **********************************************************************
+		 * GET PORTFOLIO 
+		 * **********************************************************************
+		 */
 		//Pull a list of all entries in the portfolio for user
 		List<WatchlistPortfolio> portfolio_temp = wpRepo.findByUseridAndType(user.getId(), "p");
 		
@@ -71,9 +75,14 @@ public class WatchlistPortfolioController {
 		
 		
 		
-		//REPEATED CODE - should be doable by creating a service function... interface? or Bean?
 		
-		//GET WATCHLIST
+		
+		/*
+		 * **********************************************************************
+		 * GET WATCHLIST
+		 * **********************************************************************
+		 * REPEATED CODE - should be doable by creating a service function... interface? or Bean?
+		 */
 		//Pull a list of all entries in the watchlist for user
 		List<WatchlistPortfolio> watchlist_temp = wpRepo.findByUseridAndType(user.getId(), "w");
 		
@@ -92,7 +101,17 @@ public class WatchlistPortfolioController {
 		//Add watchlist as list of company objects to model
 		model.addAttribute("watchlist", watchlist);
 		
+		/*
+		 * ***************************************************************************
+		 * Get All companies
+		 * ***************************************************************************
+		 */
 		
+		//Pull all companies in company table into list
+		List<Company> allCompanies = companyRepo.findAll();
+		
+		//Add allCompanies to model so it is accessible in view
+		model.addAttribute("allCompanies", allCompanies);
 		
 		
 		return "portfolio_watchlist";
