@@ -44,7 +44,7 @@ public class WatchlistPortfolioController {
 	
 	
 	//Main page for portfolio watchlist management
-	@RequestMapping("/portfolio_watchlist")
+	@RequestMapping("/portfoliowatchlist")
 	public String viewPortWatch(
 			@AuthenticationPrincipal CustomUserDetails principal,
 			Model model)
@@ -118,7 +118,7 @@ public class WatchlistPortfolioController {
 		//Add allCompanies to model so it is accessible in view
 		model.addAttribute("allCompanies", allCompanies);
 		
-		return "portfolio_watchlist";
+		return "portfoliowatchlist";
 	}
 	
 	
@@ -158,7 +158,7 @@ public class WatchlistPortfolioController {
 		}
 		
 		//reload the page - you will see the company on the watchlist
-		return "redirect:/portfolio_watchlist";
+		return "redirect:/portfoliowatchlist";
 	}
 	
 	
@@ -199,7 +199,7 @@ public class WatchlistPortfolioController {
 			
 			
 		//reload the page - you will see the company on the watchlist
-		return "redirect:/portfolio_watchlist";
+		return "redirect:/portfoliowatchlist";
 		
 	}
 	
@@ -221,7 +221,7 @@ public class WatchlistPortfolioController {
 		
 		System.out.println(company.getCompanyName() + " deleted from portfolio and/or watchlist");
 		
-		return "redirect:/portfolio_watchlist";
+		return "redirect:/portfoliowatchlist";
 	}
 	
 	//Controller to handle request to move entry from watchlist to portfolio
@@ -240,7 +240,7 @@ public class WatchlistPortfolioController {
 		entry.setType("p");
 		wpRepo.save(entry);
 		
-		return "redirect:/portfolio_watchlist";
+		return "redirect:/portfoliowatchlist";
 	}
 	
 	
@@ -260,7 +260,7 @@ public class WatchlistPortfolioController {
 		entry.setType("w");
 		wpRepo.save(entry);
 		
-		return "redirect:/portfolio_watchlist";
+		return "redirect:/portfoliowatchlist";
 	}
 	
 }
