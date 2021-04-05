@@ -58,10 +58,26 @@
 				<td th:text="${company.companyName}">Company</td>
 				<td th:text="${company.companySymbol}">Symbol</td>
 				<td>
+					<!-- th:action -> defines controller we are going for. method="post" states that we are sending info to server -->
 					<form th:action="@{/addToWatchlist}" method="post">
+						<!-- type="hidden" means we do not see this, something is being inputted behind the scenes.
+							 th:value="..." is the info we are inputting/sending to server, ie the company id. name="..." is the name of the param we are 
+							 sending to server, ie the name by which we access it in the controller. The button 'executes' the form -->
 						<input type="hidden" th:value="${company.Company_ID}" name="Company_ID">
 						<button type="submit">W</button>
 					</form>
+					
+					<!-- -------------A BIT OF PLAYING AROUND----------------- -->
+					<!-- 
+					<form th:action="@{/addToWatchlist}" method="post">
+						<input type="hidden" th:value="${company}" name="Company_ID">
+						<button type="submit">W</button>
+					</form>
+					
+					Sends the company to the controller - however gets a conversion error, as we cannot convert from the string that the company is represented from 
+					to a object of type Company. Hence we use id. Saw something about either creating a converter or using the repo, so maybe adding queries to the repo will answer
+					 -->
+					<!-- ------------------------------------------------- -->
 				</td>
 				<td> <input type="submit" value="P"> </td>
 			</tr>

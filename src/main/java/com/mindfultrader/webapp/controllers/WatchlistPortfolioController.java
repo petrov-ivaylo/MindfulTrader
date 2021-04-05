@@ -122,10 +122,14 @@ public class WatchlistPortfolioController {
 	
 	@RequestMapping(value="/addToWatchlist", method=RequestMethod.POST)
 	public String addToWatchlist(
-			@RequestParam Long Company_ID)
+			@RequestParam("Company_ID") Company company)
 	{
 		
-		System.out.println(Company_ID);
+		//Note: we are sending the company id through from the view, but behind the scenes the server is using the id to look up the company through the repo, meaning we get an object 
+		// of type company. In thymeleaf the variables and other stuff get represented as strings, so if we try to send the company through instead of the id, we get a conversion error
+		// because it doesn't know how to convert the string representing the company object in the view to an actual company object in the model.
+		
+		System.out.println(company.getCompanyName());
 		
 		return "redirect:/portfolio_watchlist";
 	}
