@@ -123,7 +123,7 @@ public class WatchlistPortfolioController {
 	
 	
 	//Controller to handle requests to move company from master companies list to watchlist
-	@RequestMapping(value="/addToWatchlist", method=RequestMethod.POST)
+	@RequestMapping(value="/portfoliowatchlist/addToWatchlist", method=RequestMethod.POST)
 	public String addToWatchlist(
 			@AuthenticationPrincipal CustomUserDetails principal,
 			@RequestParam("Company_ID") Company company)
@@ -163,7 +163,7 @@ public class WatchlistPortfolioController {
 	
 	
 	//Controller to handle requests to move company from master companies list to portfolio - again repeated code, can we move to service where we simply add the company, user? and the type as params?
-	@RequestMapping(value="/addToPortfolio", method=RequestMethod.POST)
+	@RequestMapping(value="/portfoliowatchlist/addToPortfolio", method=RequestMethod.POST)
 	public String addToPortfolio(
 			@AuthenticationPrincipal CustomUserDetails principal,
 			@RequestParam("Company_ID") Company company)
@@ -204,7 +204,7 @@ public class WatchlistPortfolioController {
 	}
 	
 	//Controller to handle requests to delete entry from either portfolio or watchlist. 
-	@RequestMapping(value="/deleteFromWP", method=RequestMethod.POST)
+	@RequestMapping(value="/portfoliowatchlist/deleteFromWP", method=RequestMethod.POST)
 	public String deteleFromWP(
 			@AuthenticationPrincipal CustomUserDetails principal,
 			@RequestParam("Company_ID") Company company)
@@ -225,7 +225,7 @@ public class WatchlistPortfolioController {
 	}
 	
 	//Controller to handle request to move entry from watchlist to portfolio
-	@RequestMapping(value="/moveWtoP", method=RequestMethod.POST)
+	@RequestMapping(value="/portfoliowatchlist/moveWtoP", method=RequestMethod.POST)
 	public String moveWtoP(
 			@AuthenticationPrincipal CustomUserDetails principal,
 			@RequestParam("Company_ID") Company company
@@ -245,7 +245,7 @@ public class WatchlistPortfolioController {
 	
 	
 	//Controller to handle request to move entry from portfolio to watchlist
-	@RequestMapping(value="/movePtoW", method=RequestMethod.POST)
+	@RequestMapping(value="/portfoliowatchlist/movePtoW", method=RequestMethod.POST)
 	public String movePtoW(
 			@AuthenticationPrincipal CustomUserDetails principal,
 			@RequestParam("Company_ID") Company company

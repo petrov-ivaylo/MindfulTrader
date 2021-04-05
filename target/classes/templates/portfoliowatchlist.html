@@ -57,13 +57,13 @@ th {
 				<td th:text="${portentry.companyName}" class="table-text">Company</td>
 				<td th:text="${portentry.companySymbol}" class="table-text">Symbol</td>
 				<td>
-					<form th:action="@{/deleteFromWP}" method="post">
+					<form th:action="@{portfoliowatchlist/deleteFromWP}" method="post">
 						<input type="hidden" th:value="${portentry.Company_ID}" name="Company_ID">
 						<button type="submit" style="width:100%">Del</button>
 					</form>
 				</td>
 				<td>
-					<form th:action="@{/movePtoW}" method="post">
+					<form th:action="@{portfoliowatchlist/movePtoW}" method="post">
 						<input type="hidden" th:value="${portentry.Company_ID}" name="Company_ID">
 						<button type="submit" style="width:100%">Move</button>
 					</form>
@@ -92,13 +92,13 @@ th {
 				<td th:text="${watchentry.companyName}" class="table-text">Company</td>
 				<td th:text="${watchentry.companySymbol}" class="table-text">Symbol</td>
 				<td>
-					<form th:action="@{/deleteFromWP}" method="post">
+					<form th:action="@{portfoliowatchlist/deleteFromWP}" method="post">
 						<input type="hidden" th:value="${watchentry.Company_ID}" name="Company_ID">
 						<button type="submit" style="width:100%">Del</button>
 					</form>
 				</td>
 				<td>
-					<form th:action="@{/moveWtoP}" method="post">
+					<form th:action="@{portfoliowatchlist/moveWtoP}" method="post">
 						<input type="hidden" th:value="${watchentry.Company_ID}" name="Company_ID">
 						<button type="submit" style="width:100%">Move</button>
 					</form>
@@ -131,7 +131,7 @@ th {
 				<td th:text="${company.companySymbol}" class="table-text">Symbol</td>
 				<td>
 					<!-- th:action -> defines controller we are going for. method="post" states that we are sending info to server -->
-					<form th:action="@{/addToWatchlist}" method="post">
+					<form th:action="@{portfoliowatchlist/addToWatchlist}" method="post">
 						
 						<!-- type="hidden" means we do not see this, something is being inputted behind the scenes.
 							 th:value="..." is the info we are inputting/sending to server, ie the company id. name="..." is the name of the param we are 
@@ -144,7 +144,7 @@ th {
 					</form>
 				</td>
 				<td> 
-					<form th:action="@{/addToPortfolio}" method="post">
+					<form th:action="@{portfoliowatchlist/addToPortfolio}" method="post">
 						<input type="hidden" th:value="${company.Company_ID}" name="Company_ID">
 						<button type="submit" style="width:100%">P</button>
 					</form>
