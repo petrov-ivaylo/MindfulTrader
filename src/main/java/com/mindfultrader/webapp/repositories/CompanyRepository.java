@@ -16,5 +16,7 @@ import com.mindfultrader.webapp.models.Company;
 
 public interface CompanyRepository extends JpaRepository<Company, Long> {
 	
+	// Do not need any manually defined access methods, but the interface is still necessary
+	// to access the companies.
 	
 }

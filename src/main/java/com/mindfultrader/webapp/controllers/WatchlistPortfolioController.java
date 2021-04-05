@@ -1,5 +1,6 @@
 package com.mindfultrader.webapp.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.mindfultrader.webapp.models.Company;
 import com.mindfultrader.webapp.models.User;
 import com.mindfultrader.webapp.models.WatchlistPortfolio;
+import com.mindfultrader.webapp.repositories.CompanyRepository;
 import com.mindfultrader.webapp.repositories.UserRepository;
 import com.mindfultrader.webapp.repositories.WatchlistPortfolioRepository;
 import com.mindfultrader.webapp.services.CustomUserDetails;
@@ -34,6 +37,9 @@ public class WatchlistPortfolioController {
 	@Autowired
 	UserRepository userRepo;
 	
+	@Autowired
+	CompanyRepository companyRepo;
+	
 	//Main page for portfolio watchlist management
 	@RequestMapping("/portfolio_watchlist")
 	public String viewPortWatch(
@@ -44,10 +50,24 @@ public class WatchlistPortfolioController {
 		User user = userRepo.findByEmail(principal.getUsername());
 		
 		//Pull a list of all entries in the portfolio for user
-		List<WatchlistPortfolio> portfolio = wpRepo.findByUserIDAndType(user.getId(), 'p');
+		List<WatchlistPortfolio> portfolio = wpRepo.findByUseridAndType(user.getId(), "p");
 		
-		//Add portfolio (list of WatchlistPortfolio objects) to model
-		model.addAttribute("portfolio", portfolio);
+		
+		//Access company ids in portfolio
+		List<Long> companyids = new ArrayList<Long>();
+		for (WatchlistPortfolio entry : portfolio)
+		{
+			companyids.add(entry.getCompanyid());
+		}
+		
+		//pull companies in portfolio
+		//Lookup companies by id
+		List<Company> companies = companyRepo.findAllById(companyids);
+		
+		//Add portfolio as list of company objects to model
+		model.addAttribute("portfolio", companies);
+		
+		
 		
 		
 		return "portfolio_watchlist";

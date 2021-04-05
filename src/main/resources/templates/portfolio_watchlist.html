@@ -10,6 +10,21 @@
 <h1><span sec:authentication="principal.fullName">Full Name</span>'s Portfolio and Watchlist Page</h1>
 
 <div>
+	<h2>Portfolio</h2>
+	<div>
+		<table>
+			<tr>
+				<th>Company Name</th>
+				<th>Company Symbol</th>
+			</tr>
+			<tr th:each="portentry: ${portfolio}">
+				<td th:text="${portentry.companyName}">Company</td>
+				<td th:text="${portentry.companySymbol}">Symbol</td>
+			</tr>
+		
+		</table>
+	
+	</div>
 	
 
 

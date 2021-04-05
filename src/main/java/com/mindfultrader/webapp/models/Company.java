@@ -34,6 +34,26 @@ public class Company {
 	
 	@Column(name = "Company_Symbol", nullable = false, unique = true, length = 64)
 	private String companySymbol;
+
+	public Long getCompany_ID() {
+		return Company_ID;
+	}
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+
+	public String getCompanySymbol() {
+		return companySymbol;
+	}
+
+	public void setCompanySymbol(String companySymbol) {
+		this.companySymbol = companySymbol;
+	}
 	
 	
 }
