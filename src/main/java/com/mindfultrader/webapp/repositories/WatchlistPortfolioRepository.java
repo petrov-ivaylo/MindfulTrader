@@ -12,7 +12,8 @@ import com.mindfultrader.webapp.models.WatchlistPortfolio;
 
 public interface WatchlistPortfolioRepository extends JpaRepository<WatchlistPortfolio, Long>{
 	
-	// Want to look up entries for specific user by 'username' of either portfolio or watchlist
+	// Want to look up entries for specific user by 'userid' of either portfolio or watchlist
 	// as defined in 'type'
-	public List<WatchlistPortfolio> findByUsernameAndType(String username, String type);
+	public List<WatchlistPortfolio> findByUserIDAndType(long userid, String type);
+
 }

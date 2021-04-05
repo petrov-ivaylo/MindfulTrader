@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.mindfultrader.webapp.services.CustomUserDetails;
 
 @Controller
-public class PortfolioCotroller {
+public class PortfolioCotrollerOLD {
 	
 	@Autowired
 	JdbcTemplate jt;
