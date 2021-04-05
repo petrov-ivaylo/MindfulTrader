@@ -25,11 +25,26 @@
 		</table>
 	
 	</div>
+</div>
+<div>
+	<h2>Watchlist</h2>
+	<div>
+		<table>
+			<tr>
+				<th>Company Name</th>
+				<th>Company Symbol</th>
+			</tr>
+			<tr th:each="watchentry: ${watchlist}">
+				<td th:text="${watchentry.companyName}">Company</td>
+				<td th:text="${watchentry.companySymbol}">Symbol</td>
+			</tr>
+		
+		</table>
 	
-
-
+	</div>
 </div>
 
+<br>
 
 <div>
 	<form action="/users">

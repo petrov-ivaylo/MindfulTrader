@@ -46,26 +46,51 @@ public class WatchlistPortfolioController {
 			@AuthenticationPrincipal CustomUserDetails principal,
 			Model model)
 	{	
+		
 		//Pull current user from database by using spring security principal object to search in user repository
 		User user = userRepo.findByEmail(principal.getUsername());
 		
+		//GET PORTFOLIO 
 		//Pull a list of all entries in the portfolio for user
-		List<WatchlistPortfolio> portfolio = wpRepo.findByUseridAndType(user.getId(), "p");
+		List<WatchlistPortfolio> portfolio_temp = wpRepo.findByUseridAndType(user.getId(), "p");
 		
 		
 		//Access company ids in portfolio
-		List<Long> companyids = new ArrayList<Long>();
-		for (WatchlistPortfolio entry : portfolio)
+		List<Long> companyids_p = new ArrayList<Long>();
+		for (WatchlistPortfolio entry : portfolio_temp)
 		{
-			companyids.add(entry.getCompanyid());
+			companyids_p.add(entry.getCompanyid());
 		}
 		
 		//pull companies in portfolio
 		//Lookup companies by id
-		List<Company> companies = companyRepo.findAllById(companyids);
+		List<Company> portfolio = companyRepo.findAllById(companyids_p);
 		
 		//Add portfolio as list of company objects to model
-		model.addAttribute("portfolio", companies);
+		model.addAttribute("portfolio", portfolio);
+		
+		
+		
+		//REPEATED CODE - should be doable by creating a service function... interface? or Bean?
+		
+		//GET WATCHLIST
+		//Pull a list of all entries in the watchlist for user
+		List<WatchlistPortfolio> watchlist_temp = wpRepo.findByUseridAndType(user.getId(), "w");
+		
+		
+		//Access company ids in watchlist
+		List<Long> companyids_w = new ArrayList<Long>();
+		for (WatchlistPortfolio entry : watchlist_temp)
+		{
+			companyids_w.add(entry.getCompanyid());
+		}
+		
+		//pull companies in watchlist
+		//Lookup companies by id
+		List<Company> watchlist = companyRepo.findAllById(companyids_w);
+		
+		//Add watchlist as list of company objects to model
+		model.addAttribute("watchlist", watchlist);
 		
 		
 		
