@@ -58,8 +58,9 @@
 				<td th:text="${company.companyName}">Company</td>
 				<td th:text="${company.companySymbol}">Symbol</td>
 				<td>
-					<form th:action="@{/addToWatchlist}" th:object="${company}" method="post">
-						<input type="submit" value="W"> 
+					<form th:action="@{/addToWatchlist}" method="post">
+						<input type="hidden" th:value="${company.Company_ID}" name="Company_ID">
+						<button type="submit">W</button>
 					</form>
 				</td>
 				<td> <input type="submit" value="P"> </td>

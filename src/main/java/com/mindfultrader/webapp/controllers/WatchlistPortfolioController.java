@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mindfultrader.webapp.models.Company;
 import com.mindfultrader.webapp.models.User;
@@ -122,10 +122,10 @@ public class WatchlistPortfolioController {
 	
 	@RequestMapping(value="/addToWatchlist", method=RequestMethod.POST)
 	public String addToWatchlist(
-			@ModelAttribute("company") Company company)
+			@RequestParam Long Company_ID)
 	{
 		
-		System.out.println(company.getCompanyName());
+		System.out.println(Company_ID);
 		
 		return "redirect:/portfolio_watchlist";
 	}
