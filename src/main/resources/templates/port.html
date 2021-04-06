@@ -1,0 +1,32 @@
+<html>
+
+<head>
+	<title>title</title>
+</head>
+
+<body>
+	<div>
+        <table class="table table-striped table-bordered" id="Portfolio_Table">
+            <thead class="thead-dark">
+                <tr>
+					<th>Company Name</th>
+					<th>Company Symbol</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="cmp: ${listCompanies}">
+					<form th:action="@{delete}" method="post">
+					<td th:text="${cmp.get(0)}">Company Name</td>
+					<td th:text="${cmp.get(1)}">Company Symbol</td>
+					
+					<!--	<a th:href="@{delete/__${cmp.get(0)}__}" class="btn btn-danger">Delete</a> -->
+					<!--  <td ><input type="submit" value="Delete" class="btn btn-danger" /> </td> -->
+					<button type="submit" name="Submit" value=""></button>
+						</form>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

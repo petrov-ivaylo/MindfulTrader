@@ -60,4 +60,16 @@ public class AppController {
     {
     	return "accountManagement/account";
     }
+    @GetMapping("/loginuser")
+    public String UserLoginPage(Model model) {
+    	return "loginuser";
+    }
+    @GetMapping("/loginadmin")
+    public String AdminLoginPage(Model model) {
+    	return "loginadmin";
+    }
+    @GetMapping("/loginAdmin?error=loginError")
+    public String LoginPageFail(Model model) {
+    	return "loginerror";
+    }
 }

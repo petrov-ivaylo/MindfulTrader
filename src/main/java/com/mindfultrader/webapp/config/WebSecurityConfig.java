@@ -1,4 +1,4 @@
-package com.mindfultrader.webapp.config;
+/*package com.mindfultrader.webapp.config;
 
 import javax.sql.DataSource;
 
@@ -51,8 +51,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         	.antMatchers("/users").authenticated()
         	.antMatchers("/algorithm").authenticated()
         	.antMatchers("/algorithm/*").authenticated()
-        	.antMatchers("/portfoliowatchlist").authenticated()
-        	.antMatchers("/portfoliowatchlist/*").authenticated()
+        	.antMatchers("/portfolio").authenticated()
+        	.antMatchers("/portfolio/*").authenticated()
         	.antMatchers("/theory").authenticated()
         	.antMatchers("/account").authenticated()
         	.antMatchers("/account/*").authenticated()
@@ -67,4 +67,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
      
      
-}
+}*/
