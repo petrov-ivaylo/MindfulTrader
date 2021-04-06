@@ -18,7 +18,7 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 
 
 @Controller 
-public class Data2Controller {
+public class DataController {
 	
 	@Autowired
 	JdbcTemplate jt;

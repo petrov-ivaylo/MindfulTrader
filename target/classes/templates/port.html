@@ -1,31 +1,42 @@
-<html>
-
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>title</title>
+	<meta charset="ISO-8859-1">
+	<taglib prefix="form" uri="http://www.springframework.org/tags/form">
+    <title>List Users</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </head>
 
 <body>
+	<p>
+                Welcome <b>[[${#request.userPrincipal.principal.fullName}]]</b>
+            </p>
 	<div>
-        <table class="table table-striped table-bordered" id="Portfolio_Table">
-            <thead class="thead-dark">
-                <tr>
-					<th>Company Name</th>
-					<th>Company Symbol</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="cmp: ${listCompanies}">
-					<form th:action="@{delete}" method="post">
-					<td th:text="${cmp.get(0)}">Company Name</td>
-					<td th:text="${cmp.get(1)}">Company Symbol</td>
-					
-					<!--	<a th:href="@{delete/__${cmp.get(0)}__}" class="btn btn-danger">Delete</a> -->
-					<!--  <td ><input type="submit" value="Delete" class="btn btn-danger" /> </td> -->
-					<button type="submit" name="Submit" value=""></button>
-						</form>
+		<!--<form action="/delete_company_from_portfolio"></form>
+		<select name="cmp_name" id="cmp_name">-->
+			<form:form method="POST" commandName="customerForm">
+        <table>
+
+            <tr>
+				<tbody>
+                <tr th:each="user: ${referenceData}">
+					<td><form:select path="referenceData" items="${referenceData}"/></td>
+                    <td th:text="${user}">User ID</td>
                 </tr>
             </tbody>
+				<td>Country :</td>
+				<td><form:select path="referenceData" items="${referenceData}"/></td>
+                <!--<td><form:select path="listCompaniesPortfolio">
+                      <form:option value="NONE" label="--- Select ---" />
+                      <form:options items="${listCompaniesPortfolio}" />
+                       </form:select>
+                                </td>-->
+            </tr>
         </table>
+    </form:form>
+
     </div>
 </body>
 
