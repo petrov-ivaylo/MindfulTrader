@@ -29,6 +29,11 @@ import com.mindfultrader.webapp.services.CustomUserDetails;
  * Tutorials used: 
  * https://www.codejava.net/frameworks/spring-boot/get-logged-in-user-details
  * 
+ * Created: 24 Mar 2021
+ * Updated 26 Mar 2021
+ * 
+ * Author: Emma
+ * 
  */
 
 @Controller
