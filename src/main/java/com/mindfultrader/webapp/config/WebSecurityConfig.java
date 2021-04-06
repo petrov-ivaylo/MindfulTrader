@@ -48,14 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-        	.antMatchers("/users").authenticated()
-        	.antMatchers("/algorithm").authenticated()
-        	.antMatchers("/algorithm/*").authenticated()
-        	.antMatchers("/portfoliowatchlist").authenticated()
-        	.antMatchers("/portfoliowatchlist/*").authenticated()
-        	.antMatchers("/theory").authenticated()
-        	.antMatchers("/account").authenticated()
-        	.antMatchers("/account/*").authenticated()
+        	.antMatchers("/users", "/portfoliowatchlist", "/algorithm", "/algorithm/*", "/portfoliowatchlist/*", "/theory", "/account","/account/*").authenticated()
         	.anyRequest().permitAll()
             .and()
             .formLogin()
