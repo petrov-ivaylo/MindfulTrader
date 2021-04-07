@@ -60,4 +60,10 @@ public class AppController {
     {
     	return "accountManagement/account";
     }
+    
+    @GetMapping("/403")
+    public String accessDenied()
+    {
+    	return "403";
+    }
 }
