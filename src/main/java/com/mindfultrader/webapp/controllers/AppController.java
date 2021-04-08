@@ -82,7 +82,6 @@ public class AppController {
     public String subscription1(@AuthenticationPrincipal CustomUserDetails principal) {
     	
     	User user = userRepo.findByEmail(principal.getUsername());
-    	
     	Roles role = new Roles();
         role.setName("SUBSCRIBER1");
         role.setId(user.getId());
