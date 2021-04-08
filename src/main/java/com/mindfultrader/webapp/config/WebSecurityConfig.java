@@ -51,7 +51,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         
         	.antMatchers("/users", "/portfoliowatchlist", "/algorithm", "/algorithm/*", "/portfoliowatchlist/*", "/theory", "/account","/account/*").authenticated()
         	.antMatchers("/theory").hasAnyAuthority("SUBSCRIBER1")
-        	
         	//.anyRequest().authenticated()
         	//.anyRequest().permitAll()
             .and()
