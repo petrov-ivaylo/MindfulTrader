@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<!-- 
+	Created: 8th April 2021
+	Updated: -
+	
+	Author: Ivaylo
+ -->
+
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Subscription page</title>
+</head>
+
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+th, td {
+  text-align: center;
+}
+
+th {
+  padding: 15px;
+}
+
+.table-text{
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+</style>
+
+<body>
+		&nbsp;
+		&nbsp;
+		&nbsp;
+		&nbsp;
+		&nbsp;
+		&nbsp;
+		&nbsp;
+		&nbsp;
+		&nbsp;
+	<div>
+	
+		<table align="center" width=25%>
+		
+		<tr>
+		<td align="center" width=75%>
+		<b>Press the below button if you would like to have access to our <i>theory</i> page where you will learn what information we use to make our predictions as accurate as possible! (Plan 1)</b>
+		</td>
+		
+		<td align="center" width=25%>
+		<form th:action="@{subscription1}" method="post">
+			<!-- <input type="hidden" th:value="${portentry.Company_ID}" name="Company_ID"> -->
+			<button type="submit" style="width:100%">Subscribe</button>
+		</form>
+		</td>
+		</tr>
+		
+		</table>
+		
+		&nbsp;
+		&nbsp;
+		&nbsp;
+		&nbsp;
+		&nbsp;
+		&nbsp;
+		&nbsp;
+		&nbsp;
+		&nbsp;
+		
+		<table align="center" width=25%>
+		<tr>
+		<td align="center" width=75%>
+		<b>Press the below button if you would like to have access to our theory page where you will learn what information we use to make our predictions as accurate as possible! (Plan 2)</b>
+		</td>
+		<td align="center" width=25%>
+		<form th:action="@{subscription2}" method="post">
+			<!-- <input type="hidden" th:value="${portentry.Company_ID}" name="Company_ID"> -->
+			<button type="submit" style="width:100%">Subscribe</button>
+		</form>
+		</td>
+		</tr>
+		
+		</table>
+		
+	</div>
+</body>
+
+</html>
