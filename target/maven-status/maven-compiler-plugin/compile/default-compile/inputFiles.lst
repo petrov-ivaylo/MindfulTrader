@@ -7,8 +7,10 @@ C:\Users\user\git\MindfulTrader\src\main\java\com\mindfultrader\webapp\algorithm
 C:\Users\user\git\MindfulTrader\src\main\java\com\mindfultrader\webapp\models\WatchlistPortfolio.java
 C:\Users\user\git\MindfulTrader\src\main\java\com\mindfultrader\webapp\WebApplication.java
 C:\Users\user\git\MindfulTrader\src\main\java\com\mindfultrader\webapp\algorithm\AnalysisFunction.java
+C:\Users\user\git\MindfulTrader\src\main\java\com\mindfultrader\webapp\models\Roles.java
 C:\Users\user\git\MindfulTrader\src\main\java\com\mindfultrader\webapp\controllers\PortfolioCotroller.java
 C:\Users\user\git\MindfulTrader\src\main\java\com\mindfultrader\webapp\config\WebSecurityConfig.java
+C:\Users\user\git\MindfulTrader\src\main\java\com\mindfultrader\webapp\repositories\RolesRepository.java
 C:\Users\user\git\MindfulTrader\src\main\java\com\mindfultrader\webapp\services\CustomUserDetailsService.java
 C:\Users\user\git\MindfulTrader\src\main\java\com\mindfultrader\webapp\controllers\DataController.java
 C:\Users\user\git\MindfulTrader\src\main\java\com\mindfultrader\webapp\repositories\UserRepository.java

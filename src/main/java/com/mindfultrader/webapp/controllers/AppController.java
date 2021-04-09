@@ -1,6 +1,5 @@
 package com.mindfultrader.webapp.controllers;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.mindfultrader.webapp.models.Roles;
 import com.mindfultrader.webapp.models.User;
+import com.mindfultrader.webapp.repositories.RolesRepository;
 import com.mindfultrader.webapp.repositories.UserRepository;
 import com.mindfultrader.webapp.services.CustomUserDetails;
 
@@ -25,6 +25,9 @@ public class AppController {
  
     @Autowired
     private UserRepository userRepo;
+    
+    @Autowired
+	private RolesRepository rolesRepo;
      
     @GetMapping("/home")
     public String viewHomePage() {
@@ -46,15 +49,28 @@ public class AppController {
          
         //userRepo.save(user);
         
-        Roles role = new Roles();
+        /*Roles role = new Roles();
         role.setName("USER");
         role.setId(user.getId());
         Set<Roles> roles = new HashSet();
         roles.add(role);
         user.setRoles(roles);
         
-        userRepo.save(user);
+        userRepo.save(user);*/
         //rolesRepo.save(role);
+        
+    	Roles role = new Roles();
+        //role.setName("SUBSCRIBER1");
+        //role.setId(user.getId());
+        Set<Roles> roles = user.getRoles();
+        //roles = principal.getAuthorities();
+        role = rolesRepo.findByname("USER");
+    	//roles = user.getRoles();
+    	
+        roles.add(role);
+        user.setRoles(roles);
+        
+        userRepo.save(user);
         
          
         return "register_success";
@@ -83,10 +99,13 @@ public class AppController {
     	
     	User user = userRepo.findByEmail(principal.getUsername());
     	Roles role = new Roles();
-        role.setName("SUBSCRIBER1");
-        role.setId(user.getId());
-        Set<Roles> roles = new HashSet();
-        roles = user.getRoles();
+        //role.setName("SUBSCRIBER1");
+        //role.setId(user.getId());
+        Set<Roles> roles = user.getRoles();
+        //roles = principal.getAuthorities();
+        role = rolesRepo.findByname("SUBSCRIBER1");
+    	//roles = user.getRoles();
+    	
         roles.add(role);
         user.setRoles(roles);
         
