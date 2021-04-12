@@ -98,6 +98,7 @@ public class AppController {
             mailMessage.setFrom("mindfultraderproject@gmail.com");
             mailMessage.setText("To confirm your account, please click here: "
             +"https://mindful-trader.herokuapp.com/confirm-account?token="+confirmationToken.getConfirmationToken());
+            
 
             //emailSenderService.sendEmail(mailMessage);
             
