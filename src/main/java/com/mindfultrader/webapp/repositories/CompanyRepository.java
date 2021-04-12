@@ -15,6 +15,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.mindfultrader.webapp.models.Company;
 
 public interface CompanyRepository extends JpaRepository<Company, Long> {
+
+	public Company findByCompanyName(String name);
 	
 	// Do not need any manually defined access methods, but the interface is still necessary
 	// to access the companies.

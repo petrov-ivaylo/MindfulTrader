@@ -72,8 +72,16 @@ public class User {
             )
     private Set<Roles> roles = new HashSet<>();
     
+    private boolean isEnabled;
     
-    
+	public boolean isEnabled() {
+		return isEnabled;
+	}
+
+	public void setEnabled(boolean isEnabled) {
+		this.isEnabled = isEnabled;
+	}
+
 	public Set<Roles> getRoles() {
 		return roles;
 	}

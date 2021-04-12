@@ -2,7 +2,6 @@ package com.mindfultrader.webapp.controllers;
 
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -12,6 +11,8 @@ import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.mindfultrader.webapp.algorithm.Algorithm;
+import com.mindfultrader.webapp.models.Company;
+import com.mindfultrader.webapp.repositories.CompanyRepository;
 
 
 
@@ -22,17 +23,14 @@ import com.mindfultrader.webapp.algorithm.Algorithm;
 public class AlgorithmController {
 	
 	@Autowired
-	JdbcTemplate jt;
+	private CompanyRepository companyRepo;
 	
 	@RequestMapping("/algorithm/run")
 	public ModelAndView run(String cmp_name)
 	{
-		String sql = "SELECT companies.Company_Symbol\r\n"
-	    		+ "FROM companies\r\n"
-	    		+ "WHERE (companies.Company_Name = ?)";
-
-	    String symbol = (String) jt.queryForObject(
-	            sql, String.class, cmp_name);
+		
+		Company cmp = companyRepo.findByCompanyName(cmp_name);
+		String symbol = cmp.getCompanySymbol();
 		
         String uri = "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v3/get-historical-data?symbol=" + symbol + "&region=US";
         HttpResponse<JsonNode> response = null;

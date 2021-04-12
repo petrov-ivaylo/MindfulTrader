@@ -5,19 +5,22 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.mindfultrader.webapp.models.ConfirmationToken;
 import com.mindfultrader.webapp.models.Roles;
 import com.mindfultrader.webapp.models.User;
+import com.mindfultrader.webapp.repositories.ConfirmationTokenRepository;
 import com.mindfultrader.webapp.repositories.RolesRepository;
 import com.mindfultrader.webapp.repositories.UserRepository;
 import com.mindfultrader.webapp.services.CustomUserDetails;
+import com.mindfultrader.webapp.services.EmailSenderService;
 
  
 @Controller
@@ -28,52 +31,95 @@ public class AppController {
     
     @Autowired
 	private RolesRepository rolesRepo;
+    
+    @Autowired
+    private ConfirmationTokenRepository confirmationTokenRepo;
+    
+    @Autowired
+    private EmailSenderService emailSenderService;
+
      
     @GetMapping("/home")
     public String viewHomePage() {
         return "index";
     }
     
-    @GetMapping("/register")
+    /*@GetMapping("/register")
     public String showRegistrationForm(Model model) {
         model.addAttribute("user", new User());
          
         return "signup_form";
+    }*/
+    
+    @RequestMapping(value="/register", method = RequestMethod.GET)
+    public ModelAndView displayRegistration(ModelAndView modelAndView, User user)
+    {
+        modelAndView.addObject("user", user);
+        modelAndView.setViewName("register");
+        return modelAndView;
     }
     
-    @PostMapping("/process_register")
+    /*@PostMapping("/process_register")
     public String processRegister(User user) {
+    	
+    	User existingUser = userRepo.findByEmail(user.getEmail());
+        if(existingUser != null)
+        {
+            return "exisiting_user";
+        }
+        else
+        {
+            userRepo.save(user);
+
+            ConfirmationToken confirmationToken = new ConfirmationToken(user);
+
+            confirmationTokenRepo.save(confirmationToken);
+
+            SimpleMailMessage mailMessage = new SimpleMailMessage();
+            mailMessage.setTo(user.getEmail());
+            mailMessage.setSubject("Complete Registration!");
+            mailMessage.setFrom("mindfultraderproject@gmail.com");
+            mailMessage.setText("To confirm your account, please click here : "
+            +"https://mindful-trader.herokuapp.com//confirm-account?token="+confirmationToken.getConfirmationToken());
+
+            emailSenderService.sendEmail(mailMessage);
+        
+    	
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
-         
-        //userRepo.save(user);
-        
-        /*Roles role = new Roles();
-        role.setName("USER");
-        role.setId(user.getId());
-        Set<Roles> roles = new HashSet();
-        roles.add(role);
-        user.setRoles(roles);
-        
-        userRepo.save(user);*/
-        //rolesRepo.save(role);
         
     	Roles role = new Roles();
-        //role.setName("SUBSCRIBER1");
-        //role.setId(user.getId());
         Set<Roles> roles = user.getRoles();
-        //roles = principal.getAuthorities();
         role = rolesRepo.findByname("USER");
-    	//roles = user.getRoles();
-    	
         roles.add(role);
         user.setRoles(roles);
-        
         userRepo.save(user);
         
          
         return "register_success";
+        }
+    }*/
+    
+    @RequestMapping(value="/confirm-account", method= {RequestMethod.GET, RequestMethod.POST})
+    public ModelAndView confirmUserAccount(ModelAndView modelAndView, @RequestParam("token")String confirmationToken)
+    {
+        ConfirmationToken token = confirmationTokenRepo.findByConfirmationToken(confirmationToken);
+
+        if(token != null)
+        {
+            User user = userRepo.findByEmail(token.getUser().getEmail());
+            user.setEnabled(true);
+            userRepo.save(user);
+            modelAndView.setViewName("accountVerified");
+        }
+        else
+        {
+            modelAndView.addObject("message","The link is invalid or broken!");
+            modelAndView.setViewName("error");
+        }
+
+        return modelAndView;
     }
     
     @GetMapping("/users")
