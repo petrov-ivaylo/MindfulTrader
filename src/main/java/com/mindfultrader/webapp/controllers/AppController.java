@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -59,47 +61,56 @@ public class AppController {
         return modelAndView;
     }
     
-    /*@PostMapping("/process_register")
-    public String processRegister(User user) {
+    @RequestMapping(value="/register", method = RequestMethod.POST)
+    public ModelAndView registerUser(ModelAndView modelAndView, User user) {
     	
     	User existingUser = userRepo.findByEmail(user.getEmail());
         if(existingUser != null)
         {
-            return "exisiting_user";
+        	modelAndView.addObject("message","This email already exists!");
+            modelAndView.setViewName("existenceError");
         }
         else
         {
+        	BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            String encodedPassword = passwordEncoder.encode(user.getPassword());
+            user.setPassword(encodedPassword);
+            
+        	Roles role = new Roles();
+            Set<Roles> roles = user.getRoles();
+            role = rolesRepo.findByname("USER");
+            roles.add(role);
+            user.setRoles(roles);
+            //userRepo.save(user);
             userRepo.save(user);
 
             ConfirmationToken confirmationToken = new ConfirmationToken(user);
+            
+            System.out.println(user.getFirstName());
+            System.out.println(confirmationToken.getUser().getId());
 
+            
             confirmationTokenRepo.save(confirmationToken);
 
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             mailMessage.setTo(user.getEmail());
             mailMessage.setSubject("Complete Registration!");
             mailMessage.setFrom("mindfultraderproject@gmail.com");
-            mailMessage.setText("To confirm your account, please click here : "
-            +"https://mindful-trader.herokuapp.com//confirm-account?token="+confirmationToken.getConfirmationToken());
+            mailMessage.setText("To confirm your account, please click here: "
+            +"http://mindful-trader.herokuapp.com/confirm-account?token="+confirmationToken.getConfirmationToken());
 
+            //emailSenderService.sendEmail(mailMessage);
+            
             emailSenderService.sendEmail(mailMessage);
+
+            modelAndView.addObject("email", user.getEmail());
+
+            modelAndView.setViewName("successfulRegisteration");
         
-    	
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
-        
-    	Roles role = new Roles();
-        Set<Roles> roles = user.getRoles();
-        role = rolesRepo.findByname("USER");
-        roles.add(role);
-        user.setRoles(roles);
-        userRepo.save(user);
-        
-         
-        return "register_success";
+        //return "register_success";
         }
-    }*/
+        return modelAndView;
+    }
     
     @RequestMapping(value="/confirm-account", method= {RequestMethod.GET, RequestMethod.POST})
     public ModelAndView confirmUserAccount(ModelAndView modelAndView, @RequestParam("token")String confirmationToken)
@@ -116,7 +127,7 @@ public class AppController {
         else
         {
             modelAndView.addObject("message","The link is invalid or broken!");
-            modelAndView.setViewName("error");
+            modelAndView.setViewName("existenceError");
         }
 
         return modelAndView;
@@ -145,12 +156,8 @@ public class AppController {
     	
     	User user = userRepo.findByEmail(principal.getUsername());
     	Roles role = new Roles();
-        //role.setName("SUBSCRIBER1");
-        //role.setId(user.getId());
         Set<Roles> roles = user.getRoles();
-        //roles = principal.getAuthorities();
         role = rolesRepo.findByname("SUBSCRIBER1");
-    	//roles = user.getRoles();
     	
         roles.add(role);
         user.setRoles(roles);

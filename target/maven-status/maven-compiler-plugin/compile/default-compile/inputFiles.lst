@@ -16,10 +16,13 @@ C:\Users\user\git\MindfulTrader\src\main\java\com\mindfultrader\webapp\controlle
 C:\Users\user\git\MindfulTrader\src\main\java\com\mindfultrader\webapp\repositories\UserRepository.java
 C:\Users\user\git\MindfulTrader\src\main\java\com\mindfultrader\webapp\controllers\EditAccountController.java
 C:\Users\user\git\MindfulTrader\src\main\java\com\mindfultrader\webapp\algorithm\StockFloor.java
+C:\Users\user\git\MindfulTrader\src\main\java\com\mindfultrader\webapp\repositories\ConfirmationTokenRepository.java
 C:\Users\user\git\MindfulTrader\src\main\java\com\mindfultrader\webapp\controllers\AlgorithmController.java
 C:\Users\user\git\MindfulTrader\src\main\java\com\mindfultrader\webapp\models\Company.java
 C:\Users\user\git\MindfulTrader\src\main\java\com\mindfultrader\webapp\repositories\WatchlistPortfolioRepository.java
 C:\Users\user\git\MindfulTrader\src\main\java\com\mindfultrader\webapp\algorithm\Trend.java
+C:\Users\user\git\MindfulTrader\src\main\java\com\mindfultrader\webapp\models\ConfirmationToken.java
+C:\Users\user\git\MindfulTrader\src\main\java\com\mindfultrader\webapp\services\EmailSenderService.java
 C:\Users\user\git\MindfulTrader\src\main\java\com\mindfultrader\webapp\controllers\AppController.java
 C:\Users\user\git\MindfulTrader\src\main\java\com\mindfultrader\webapp\algorithm\Algorithm.java
 C:\Users\user\git\MindfulTrader\src\main\java\com\mindfultrader\webapp\algorithm\Temp.java
