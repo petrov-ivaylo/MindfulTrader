@@ -1,21 +1,22 @@
 package com.mindfultrader.webapp.controllers;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Set;
 
+import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
-import com.mindfultrader.webapp.models.ConfirmationToken;
 import com.mindfultrader.webapp.models.Roles;
 import com.mindfultrader.webapp.models.User;
 import com.mindfultrader.webapp.repositories.ConfirmationTokenRepository;
@@ -23,6 +24,7 @@ import com.mindfultrader.webapp.repositories.RolesRepository;
 import com.mindfultrader.webapp.repositories.UserRepository;
 import com.mindfultrader.webapp.services.CustomUserDetails;
 import com.mindfultrader.webapp.services.EmailSenderService;
+import com.mindfultrader.webapp.services.UserServices;
 
  
 @Controller
@@ -39,6 +41,9 @@ public class AppController {
     
     @Autowired
     private EmailSenderService emailSenderService;
+    
+    @Autowired
+    private UserServices service;
 
      
     @GetMapping("/home")
@@ -46,14 +51,27 @@ public class AppController {
         return "index";
     }
     
-    /*@GetMapping("/register")
+    @GetMapping("/register")
     public String showRegistrationForm(Model model) {
         model.addAttribute("user", new User());
          
-        return "signup_form";
-    }*/
+        return "register";
+    }
     
-    @RequestMapping(value="/register", method = RequestMethod.GET)
+    
+    @PostMapping("/register_success")
+    public String processRegister(User user, HttpServletRequest request)
+            throws UnsupportedEncodingException, MessagingException {
+        service.register(user, getSiteURL(request));       
+        return "register_success";
+    }
+    
+    private String getSiteURL(HttpServletRequest request) {
+        String siteURL = request.getRequestURL().toString();
+        return siteURL.replace(request.getServletPath(), "");
+    } 
+    
+    /*@RequestMapping(value="/register", method = RequestMethod.GET)
     public ModelAndView displayRegistration(ModelAndView modelAndView, User user)
     {
         modelAndView.addObject("user", user);
@@ -97,7 +115,7 @@ public class AppController {
             mailMessage.setSubject("Complete Registration!");
             mailMessage.setFrom("mindfultraderproject@gmail.com");
             mailMessage.setText("To confirm your account, please click here: "
-            +"https://mindful-trader.herokuapp.com/confirm-account?token="+confirmationToken.getConfirmationToken());
+            +"http://localhost:8080/confirm-account?token="+confirmationToken.getConfirmationToken());
             
 
             //emailSenderService.sendEmail(mailMessage);
@@ -132,6 +150,15 @@ public class AppController {
         }
 
         return modelAndView;
+    }*/
+    
+    @GetMapping("/verify")
+    public String verifyUser(@Param("code") String code) {
+        if (service.verify(code)) {
+            return "verify_success";
+        } else {
+            return "verify_fail";
+        }
     }
     
     @GetMapping("/users")

@@ -6,4 +6,6 @@ import com.mindfultrader.webapp.models.ConfirmationToken;
 
 public interface ConfirmationTokenRepository extends JpaRepository<ConfirmationToken, Long> {
     ConfirmationToken findByConfirmationToken(String confirmationToken);
+    
+    //ConfirmationToken findById(Long id);
 }
