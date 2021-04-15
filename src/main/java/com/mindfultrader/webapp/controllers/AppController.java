@@ -1,15 +1,12 @@
 package com.mindfultrader.webapp.controllers;
 
-import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import javax.mail.MessagingException;
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,8 +55,23 @@ public class AppController {
         return "register";
     }
     
-    
     @PostMapping("/register_success")
+    public String processRegister(User user) {
+    	BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+        
+    	Roles role = new Roles();
+        Set<Roles> roles = user.getRoles();
+        role = rolesRepo.findByname("USER");
+        roles.add(role);
+        user.setRoles(roles);
+        userRepo.save(user);
+
+        return "register_success";
+    }
+    
+    /*@PostMapping("/register_success")
     public String processRegister(User user, HttpServletRequest request)
             throws UnsupportedEncodingException, MessagingException {
         service.register(user, getSiteURL(request));       
@@ -69,7 +81,7 @@ public class AppController {
     private String getSiteURL(HttpServletRequest request) {
         String siteURL = request.getRequestURL().toString();
         return siteURL.replace(request.getServletPath(), "");
-    } 
+    } */
     
     /*@RequestMapping(value="/register", method = RequestMethod.GET)
     public ModelAndView displayRegistration(ModelAndView modelAndView, User user)
@@ -152,21 +164,32 @@ public class AppController {
         return modelAndView;
     }*/
     
-    @GetMapping("/verify")
+    /*@GetMapping("/verify")
     public String verifyUser(@Param("code") String code) {
         if (service.verify(code)) {
             return "verify_success";
         } else {
             return "verify_fail";
         }
-    }
+    }*/
     
     @GetMapping("/users")
-    public String listUsers(Model model) {
+    public String listUsers(
+    		@AuthenticationPrincipal CustomUserDetails principal,
+    		Model model) {
         List<User> listUsers = userRepo.findAll();
         model.addAttribute("listUsers", listUsers);
-         
-        return "users";
+        User user = userRepo.findByEmail(principal.getUsername());
+        Roles role = new Roles();
+        role = rolesRepo.findByname("ADMIN");
+        
+        if(user.getRoles().contains(role)) {
+        	//System.out.println("YES, ADMIN");
+        	return "usersAdmin";
+        }
+        else {
+        	return "users";
+        }
     }
     
     @GetMapping("/theory")

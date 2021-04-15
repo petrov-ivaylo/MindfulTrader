@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<!-- 
+	Created: 5th April 2021
+	Updated: 15th April 2021
+	
+	Author: Emma
+	Modifier: Ivaylo
+ -->
+
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Watchlist and Portfolio</title>
+</head>
+
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+th, td {
+  text-align: center;
+}
+
+th {
+  padding: 15px;
+}
+
+.table-text{
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+</style>
+
+
+
+
+<body>
+
+<h1><span sec:authentication="principal.fullName">Full Name</span>'s Portfolio and Watchlist Page</h1>
+<div>
+	<form action="/users">
+		<input type="submit" value="Return to main page">		
+	</form>
+</div>
+
+<br>
+
+<div>
+	<h2>Portfolio</h2>
+	<div>
+		<table>
+			<tr>
+				<th>Company Name</th>
+				<th>Company Symbol</th>
+				<th>Delete Entry</th>
+				<th>Move to Watchlist</th>
+			</tr>
+			<tr th:each="portentry: ${portfolio}">
+				<td th:text="${portentry.companyName}" class="table-text">Company</td>
+				<td th:text="${portentry.companySymbol}" class="table-text">Symbol</td>
+				<td>
+					<form th:action="@{portfoliowatchlist/deleteFromWPAdmin}" method="post">
+						<input type="hidden" th:value="${portentry.Company_ID}" name="Company_ID">
+						<button type="submit" style="width:100%">Del</button>
+					</form>
+				</td>
+				<td>
+					<form th:action="@{portfoliowatchlist/movePtoWAdmin}" method="post">
+						<input type="hidden" th:value="${portentry.Company_ID}" name="Company_ID">
+						<button type="submit" style="width:100%">Move</button>
+					</form>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<br>
+	<div>
+		<form action="#">
+			<input type="submit" value="Analyse my portfolio and give me advice!">
+		</form>
+	</div>
+</div>
+<div>
+	<h2>Watchlist</h2>
+	<div>
+		<table>
+			<tr>
+				<th>Company Name</th>
+				<th>Company Symbol</th>
+				<th>Delete Entry</th>
+				<th>Move to Portfolio</th>
+			</tr>
+			<tr th:each="watchentry: ${watchlist}">
+				<td th:text="${watchentry.companyName}" class="table-text">Company</td>
+				<td th:text="${watchentry.companySymbol}" class="table-text">Symbol</td>
+				<td>
+					<form th:action="@{portfoliowatchlist/deleteFromWPAdmin}" method="post">
+						<input type="hidden" th:value="${watchentry.Company_ID}" name="Company_ID">
+						<button type="submit" style="width:100%">Del</button>
+					</form>
+				</td>
+				<td>
+					<form th:action="@{portfoliowatchlist/moveWtoPAdmin}" method="post">
+						<input type="hidden" th:value="${watchentry.Company_ID}" name="Company_ID">
+						<button type="submit" style="width:100%">Move</button>
+					</form>
+				</td>
+			</tr>
+		</table>
+	</div>
+	
+	<br>
+	
+	<div>
+		<form action="#">
+			<input type="submit" value="Analyse my watchlist and give me advice!">
+		</form>
+	</div>
+</div>
+
+<div>
+	<h2>All Available Companies</h2>
+	<div>
+		<table>
+			<tr>
+				<th>Company Name</th>
+				<th>Company Symbol</th>
+				<th>Add to Watchlist</th>
+				<th>Add to Portfolio</th>
+				<th>Delete Company</th>
+			</tr>
+			<tr th:each="company: ${allCompanies}">
+				<td th:text="${company.companyName}" class="table-text">Company</td>
+				<td th:text="${company.companySymbol}" class="table-text">Symbol</td>
+				<td>
+					<!-- th:action -> defines controller we are going for. method="post" states that we are sending info to server -->
+					<form th:action="@{portfoliowatchlist/addToWatchlistAdmin}" method="post">
+						
+						<!-- type="hidden" means we do not see this, something is being inputted behind the scenes.
+							 th:value="..." is the info we are inputting/sending to server, ie the company id. name="..." is the name of the param we are 
+							 sending to server, ie the name by which we access it in the controller. The button 'executes' the form.
+							 Note: we are sending the company id through. It will be used to look up the company object in the repository when the controller recieves it 
+						-->
+						
+						<input type="hidden" th:value="${company.Company_ID}" name="Company_ID">
+						<button type="submit" style="width:100%">W</button>
+					</form>
+				</td>
+				<td> 
+					<form th:action="@{portfoliowatchlist/addToPortfolioAdmin}" method="post">
+						<input type="hidden" th:value="${company.Company_ID}" name="Company_ID">
+						<button type="submit" style="width:100%">P</button>
+					</form>
+					
+				</td>
+				
+				<td> 
+					<form th:action="@{deleteCompanyFromDatabase}" method="post">
+						<input type="hidden" th:value="${company.Company_ID}" name="Company_ID">
+						<button type="submit" style="width:100%">Delete</button>
+					</form>
+					
+				</td>
+								
+			</tr>
+		
+		</table>
+	
+	<table>
+			
+			<tr>
+				&nbsp;
+		&nbsp;
+		&nbsp;
+		&nbsp;
+		&nbsp;
+		&nbsp;
+		&nbsp;
+		&nbsp;
+		&nbsp;
+		
+		
+		<table align="center" width=25%>
+		
+		<tr>
+		<td align="center" width=75%>
+		<b>If you would like to add a new company to the database, please press the following button</b>
+		</td>
+		
+		<td align="center" width=25%>
+		<form th:action="@{addCompanyToDatabase}" method="post">
+			<!-- <input type="hidden" th:value="${portentry.Company_ID}" name="Company_ID"> -->
+			<button type="submit" style="width:100%">Add a new company to the database</button>
+		</form>
+		</td>
+		</tr>
+	
+	</div>
+</div>
+
+<br>
+
+<!-- 
+<div style="font-style:italic;">
+	<p>Don't see a company you need? Click the button below and submit a request to have the company added.
+	(Button has no function. Ability to request new companies is to be implemented in a later version)</p>
+	<form action="#">
+		<input type="submit" value="Request new company">		
+	</form>
+	
+</div>
+
+-->
+
+</body>
+</html>

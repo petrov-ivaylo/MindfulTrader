@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<!-- 
+	Created: 15th April 2021
+	Updated: 15th April 2021
+	
+	Author: Ivaylo
+ -->
+<head>
+	<meta charset="ISO-8859-1">
+	<taglib prefix="form" uri="http://www.springframework.org/tags/form">
+    <title>Adding a new company to the database</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+	<p>
+                Welcome <b>[[${#request.userPrincipal.principal.fullName}]]</b>
+            </p>
+	<div>
+		
+		<table>
+		
+		<tr>
+		<td>
+			<form th:action="@{/addingCompany}" method="post">
+            <div><label> Enter company name: <input type="cmp_name" name="cmp_name"/> </label></div>
+           	<div><label> Enter company symbol: <input type="cmp_symbol" name="cmp_symbol"/> </label></div>
+            <div><input type="submit" value="Submit"/></div>
+        	</form>
+        </td>
+        </tr>
+        
+		
+		</table>
+		
+    </div>
+</body>
+
+</html>
