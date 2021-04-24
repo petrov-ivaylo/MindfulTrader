@@ -17,31 +17,13 @@
             <input type="submit" value="Sign Out" />
         </form>
     </div>
-    <div>
-        <h1>List of Users</h1>
-    </div>
-     
-    <div>
-        <table class="table table-striped table-bordered">
-            <thead class="thead-dark">
-                <tr>
-                    <th>User ID</th>
-                    <th>E-mail</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="user: ${listUsers}">
-                    <td th:text="${user.id}">User ID</td>
-                    <td th:text="${user.email}">E-mail</td>
-                    <td th:text="${user.firstName}">First Name</td>
-                    <td th:text="${user.lastName}">Last Name</td>
-                    <td> <input type="submit" value="Submit"> </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    
+    <div> 
+    <form action="/listUsers">
+		<p><b> Click here to see check all the registered users</b></p>
+		<input type="submit" value="List of users">		
+	</form>
+	</div>
 
     <div>
 	    <h1>Algorithm</h1>
@@ -56,6 +38,7 @@
     
     </div>
     
+    <!-- 
     <div>
 	    <h1>Click the button below if you want to subscribe and to get an exclusive access!</h1>		
 		
@@ -63,15 +46,27 @@
 			<input type="submit" value="Subscription page">		
 		</form>
     </div>
+    -->
+    
+    <div>
+	    <h1>Click the button below to go to change the available companies</h1>		
+		
+		<form action="/changeCompanies">
+			<input type="submit" value="Change companies">		
+		</form>
+		
+    </div>
     
     <div>
 	    <h1>Click the button below to go to your portfolio and watchlist page</h1>		
 		
-		<form action="/portfoliowatchlistAdmin">
+		<form action="/portfoliowatchlist">
 			<input type="submit" value="View/edit your portfolio and watchlist">		
 		</form>
 		
     </div>
+    
+    
     
     <div>
     	<h1>Click the button below to go to theory behind the advices</h1>

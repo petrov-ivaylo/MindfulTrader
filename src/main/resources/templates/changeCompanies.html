@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<!-- 
+	Created: 5th April 2021
+	Updated: 15th April 2021
+	
+	Author: Emma
+	Modifier: Ivaylo
+ -->
+
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Watchlist and Portfolio</title>
+</head>
+
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+th, td {
+  text-align: center;
+}
+
+th {
+  padding: 15px;
+}
+
+.table-text{
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+</style>
+
+
+
+
+<body>
+
+<h1><span sec:authentication="principal.fullName">Full Name</span>'s Portfolio and Watchlist Page</h1>
+<div>
+	<form action="/users">
+		<input type="submit" value="Return to main page">		
+	</form>
+</div>
+
+<br>
+
+<div>
+	<h2>All Available Companies</h2>
+	<div>
+		<table>
+			<tr>
+				<th>Company Name</th>
+				<th>Company Symbol</th>
+				<th>Delete Company</th>
+			</tr>
+			<tr th:each="company: ${allCompanies}">
+				<td th:text="${company.companyName}" class="table-text">Company</td>
+				<td th:text="${company.companySymbol}" class="table-text">Symbol</td>
+				
+				<td> 
+					<form th:action="@{deleteCompanyFromDatabase}" method="post">
+						<input type="hidden" th:value="${company.Company_ID}" name="Company_ID">
+						<button type="submit" style="width:100%">Delete</button>
+					</form>
+					
+				</td>
+								
+			</tr>
+		
+		</table>
+	
+	<table>
+			
+			<tr>
+				&nbsp;
+		&nbsp;
+		&nbsp;
+		&nbsp;
+		&nbsp;
+		&nbsp;
+		&nbsp;
+		&nbsp;
+		&nbsp;
+		
+		
+		<table align="center" width=25%>
+		
+		<tr>
+		<td align="center" width=75%>
+		<b>If you would like to add a new company to the database, please press the following button</b>
+		</td>
+		
+		<td align="center" width=25%>
+		<form th:action="@{addCompanyToDatabase}" method="post">
+			<!-- <input type="hidden" th:value="${portentry.Company_ID}" name="Company_ID"> -->
+			<button type="submit" style="width:100%">Add a new company to the database</button>
+		</form>
+		</td>
+		</tr>
+	
+	</div>
+</div>
+
+<br>
+
+<!-- 
+<div style="font-style:italic;">
+	<p>Don't see a company you need? Click the button below and submit a request to have the company added.
+	(Button has no function. Ability to request new companies is to be implemented in a later version)</p>
+	<form action="#">
+		<input type="submit" value="Request new company">		
+	</form>
+	
+</div>
+
+-->
+
+</body>
+</html>
