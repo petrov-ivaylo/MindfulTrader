@@ -327,4 +327,25 @@ public class WatchlistPortfolioController {
 			model.setViewName("redirect:/portfoliowatchlist");
 			return model;
 		}
+		
+		@RequestMapping(value="/runAlgoWatchlist", method=RequestMethod.POST)
+		public ModelAndView runAlgoWatchlist(ModelAndView model)
+		{
+			System.out.println("Algo run on Watchlist");
+			
+			model.setViewName("redirect:/portfoliowatchlist");
+			
+			return model;
+		}
+		
+		@RequestMapping(value="runAlgoPortfolio", method=RequestMethod.POST)
+		public ModelAndView runAlgoPortfolio(ModelAndView model)
+		{
+			System.out.println("Algo run on portfolio");
+			
+			model.setViewName("redirect:/portfoliowatchlist");
+			
+			return model;
+			
+		}
 }
