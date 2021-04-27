@@ -115,6 +115,10 @@ public class EditAccountController {
 		//Pull user from database
 		User user = userRepo.findByEmail(principal.getUsername());
 		
+		//Inputted emails should not be case sensitive, nor do we want any whitespace to mess things up
+		email = email.strip().toLowerCase();
+		email_confirm = email.strip().toLowerCase();
+		
 		if (email.contains("@") != true) {
 			// make sure email format is valid - spring checks for @ automatically, however not for a empty entry
 			mv.addObject("message", "The email was not valid. Please enter a valid email.");
@@ -125,7 +129,7 @@ public class EditAccountController {
 			mv.addObject("message", "This user email already exists. Please enter another email.");
 			mv.setViewName("accountManagement/error");
 		}
-		else if (email.matches(email_confirm)) {
+		else if (email.equals(email_confirm)) { //use email.equalsIgnoreCase(email_confirm) if we do not care about case.
 			//Change user email to value received in PUSH request
 			user.setEmail(email);
 			
@@ -173,7 +177,7 @@ public class EditAccountController {
 		//Access user password in database
 		String dbPassword = user.getPassword();
 		
-		if (password.matches(confirm_password) != true) {
+		if (password.equals(confirm_password) != true) {
 			mv.addObject("message", "The new passwords did not match. Please try again.");
 			mv.setViewName("accountManagement/error");
 		}
