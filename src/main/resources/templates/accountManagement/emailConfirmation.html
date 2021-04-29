@@ -6,7 +6,7 @@
 <title>Mindful Trader App</title>
 </head>
 <body>
-	Your email was changed successfully to <span sec:authentication="principal.username">email</span>
+	Your email was successfully changed to <span th:text="${email}">your chosen email</span>. Click below to log in again.
 	
 	<form action="/account">
 		<input type="submit" value="Return to account page">	

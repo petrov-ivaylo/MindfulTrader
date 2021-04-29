@@ -92,6 +92,8 @@ public class AppController {
         return modelAndView;
     }
     
+    
+    
     /*@PostMapping("/register_success")
     public String processRegister(User user) {
     	BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();

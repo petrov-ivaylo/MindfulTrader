@@ -15,5 +15,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	// I am fairly sure it means to only pull obj if the email exists. CAN WE CHANGE THIS TO MYSQL?!)
 	@Query("SELECT u FROM User u WHERE u.email = ?1")
     public User findByEmail(String email);
- 
+	
+	public boolean existsUserByEmail(String email);
 }

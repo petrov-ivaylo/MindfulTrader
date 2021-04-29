@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.mindfultrader.webapp.models.User;
 import com.mindfultrader.webapp.repositories.UserRepository;
@@ -30,10 +31,16 @@ import com.mindfultrader.webapp.services.CustomUserDetails;
  * https://www.codejava.net/frameworks/spring-boot/get-logged-in-user-details
  * 
  * Created: 24 Mar 2021
- * Updated 26 Mar 2021
+ * Updated 27 Apr 2021
  * 
- * Author: Emma
  * 
+ * BB Tested 27-04-2021
+ * 		User cannot change email to an email already existing in db
+ * 		User cannot change email with mismatching confirmation entry
+ * 
+ * For future development:
+ * 		Email must be a valid email address
+ * 		Password must be above some length
  */
 
 @Controller
@@ -81,13 +88,15 @@ public class EditAccountController {
 		
 
 	
-
+	// Edit email request
 	@RequestMapping(value="/account/editEmail", method=RequestMethod.POST)
-	public String processEmail(
+	public ModelAndView processEmail(
 			@AuthenticationPrincipal CustomUserDetails principal, 
 			@RequestParam("email") String email, 
 			@RequestParam("email_confirm") String email_confirm,
-			Model model)
+			HttpServletRequest request, 
+			HttpServletResponse response,
+			ModelAndView mv)
 	{
 		/* Accept information sent by user via POST request, by submitting form in account.html
 		 * page. 
@@ -102,61 +111,63 @@ public class EditAccountController {
 		 * https://stackoverflow.com/questions/24671221/unable-to-get-thymeleaf-form-data-in-spring-mvc
 		 */
 		
-		System.out.println("printing...." + email + " and again: " + email_confirm);
 		
 		//Pull user from database
 		User user = userRepo.findByEmail(principal.getUsername());
 		
-		System.out.println(user.getEmail());
+		//Inputted emails should not be case sensitive, nor do we want any whitespace to mess things up
+		email = email.strip().toLowerCase();
+		email_confirm = email.strip().toLowerCase();
 		
-		//Change user email to value received in PUSH request
-		user.setEmail(email);
+		if (email.contains("@") != true) {
+			// make sure email format is valid - spring checks for @ automatically, however not for a empty entry
+			mv.addObject("message", "The email was not valid. Please enter a valid email.");
+			mv.setViewName("accountManagement/error");
+		}
+		else if (userRepo.existsUserByEmail(email) != false) {
+			// email must not already exist in system - includes case where user inputs their current email
+			mv.addObject("message", "This user email already exists. Please enter another email.");
+			mv.setViewName("accountManagement/error");
+		}
+		else if (email.equals(email_confirm)) { //use email.equalsIgnoreCase(email_confirm) if we do not care about case.
+			//Change user email to value received in PUSH request
+			user.setEmail(email);
+			
+			//Save user to database
+			userRepo.save(user);
+			
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			if (auth != null){
+				new SecurityContextLogoutHandler().logout(request, response, auth);  
+	        }  
+			
+			//Return confirmation page
+			mv.addObject("email", email);
+			mv.setViewName("accountManagement/emailConfirmation");
+			
+			// FOR TESTING PURPOSES
+			System.out.println("\n\nEditAccountController: Email Updated!\n\n");
+		}
+		else {
+			mv.addObject("message", "The emails did not match! Please try again.");
+			mv.setViewName("accountManagement/error");
+		}
 		
-		System.out.println("New email: " + user.getEmail());
-		
-		//Save user to database
-		userRepo.save(user);
-		
-		//Return confirmation page
-		return "accountManagement/email_confirmation";
-		
-//		THE PAIN OF ATTEMPTING TO TEST BEFORE WE CHANGE!
-//		
-//		email.trim();
-//		email_confirm.trim();
-//		
-//		System.out.println(email.getClass());
-//		System.out.println(email_confirm.getClass());
-//		System.out.println(email==email_confirm);
-//		System.out.println(email.trim()==email_confirm.trim());
-//		System.out.println(email==email);
-//		System.out.println(email);
-//		System.out.println(email_confirm);
-//		
-//		User user = userRepo.findByEmail(principal.getUsername());
-//		if (email==email_confirm) 
-//		{
-//			user.setEmail(email);
-//			System.out.println("new email is: " + user.getEmail());
-//			return "accountManagement/email_confirmation";
-//		}
-//		else
-//		{
-//			System.out.println("Emails mismatch");
-//			System.out.println(user.getEmail());
-//			return "accountManagement/account";
-//		}
-		
+		return mv;
+
 	}
 	
-	// Edit password - recieves password values from form via POST request and @RequestParam
+	
+	// Edit password
 	@RequestMapping(value="/account/changePassword", method=RequestMethod.POST)
-	public String editPassword(
+	public ModelAndView editPassword(
 			@AuthenticationPrincipal CustomUserDetails principal,
 			@RequestParam("old_password") String old_password,
 			@RequestParam("password") String password,
-			@RequestParam("confirm_password") String confirm_password,			
-			Model model)
+			@RequestParam("confirm_password") String confirm_password,
+			HttpServletRequest request, 
+			HttpServletResponse response,
+			ModelAndView mv)
 	{
 		
 		//pull user from db and get a password encoder object
@@ -166,54 +177,37 @@ public class EditAccountController {
 		//Access user password in database
 		String dbPassword = user.getPassword();
 		
-		if (passwordEncoder.matches(old_password, dbPassword)) {
+		if (password.equals(confirm_password) != true) {
+			mv.addObject("message", "The new passwords did not match. Please try again.");
+			mv.setViewName("accountManagement/error");
+		}
+		else if (passwordEncoder.matches(old_password, dbPassword) != true) {
+			mv.addObject("message", "Incorrect password. Please make sure to enter your current password in the first box.");
+			mv.setViewName("accountManagement/error");
+		}  
+			
+		else {
+		    // Report error on error page
 		    // Encode new password and store it
 			user.setPassword(passwordEncoder.encode(password));
 			userRepo.save(user);
 			
 			// return confirmation page	
-			return "accountManagement/password_confirmation";
 			
-		} else {
-		    // Report error on error page
-			return "accountManagement/password_error";
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			if (auth != null){
+				new SecurityContextLogoutHandler().logout(request, response, auth); 
+			}
+			
+			mv.setViewName("accountManagement/passwordConfirmation");
+			
+			// FOR TESTING PURPOSES
+			System.out.println("\n\nEditAccountController: Password Updated!\n\n");
 		}
-
 		
-//		Conditional to test if new passwords identical not working. No clue why
-//		
-//		if (password.trim() == confirm_password.trim())
-//		{
-//		
-//			//pull user from db and get a password encoder object
-//			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//			User user = userRepo.findByEmail(principal.getUsername());
-//			
-//			//Access user password in database
-//			String dbPassword = user.getPassword();
-//			
-//			if (passwordEncoder.matches(old_password, dbPassword)) {
-//			    // Encode new password and store it
-//				System.out.println(password + " " + confirm_password);
-//				user.setPassword(passwordEncoder.encode(password));
-//				userRepo.save(user);
-//				
-//				// return confirmation page	
-//				return "accountManagement/change_password";
-//				
-//			} else {
-//			    // Report error on error page
-//				return "accountManagement/password_error";
-//			}
-//		}
-//		else 
-//		{
-//			System.out.println("password mismatch...");
-//			System.out.println(password);
-//			System.out.println(confirm_password);
-//			return "accountManagement/password_error";
-//		}
-		
+		return mv;
 	}
 
+	
+	
 }

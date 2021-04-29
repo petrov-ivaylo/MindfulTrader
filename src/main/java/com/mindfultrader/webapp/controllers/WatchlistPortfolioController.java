@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.mindfultrader.webapp.models.Company;
 import com.mindfultrader.webapp.models.User;
@@ -301,8 +302,11 @@ public class WatchlistPortfolioController {
 				
 		//Controller to handle request to add entry to the database (accessible only for admins)
 		@RequestMapping(value="/addingCompany", method=RequestMethod.POST)
-				public String addingCompany(@AuthenticationPrincipal CustomUserDetails principal,
-						Model model, String cmp_name, String cmp_symbol)
+		public String addingCompany(
+				@AuthenticationPrincipal CustomUserDetails principal,
+				Model model, 
+				String cmp_name, 
+				String cmp_symbol)
 		{				
 			Company cmp = new Company();
 			cmp.setCompanyName(cmp_name);
@@ -310,6 +314,38 @@ public class WatchlistPortfolioController {
 			companyRepo.save(cmp);
 			return "redirect:/changeCompanies";
 			//return viewPortWatch(principal, model);
+			
+		}
+		
+		
+		//Controller to run analysis on single company
+		@RequestMapping(value="/runAlgoCompany", method=RequestMethod.POST)
+		public ModelAndView runAlgoCompany(ModelAndView model)
+		{
+			System.out.println("Algo run on company!");
+			
+			model.setViewName("redirect:/portfoliowatchlist");
+			return model;
+		}
+		
+		@RequestMapping(value="/runAlgoWatchlist", method=RequestMethod.POST)
+		public ModelAndView runAlgoWatchlist(ModelAndView model)
+		{
+			System.out.println("Algo run on Watchlist");
+			
+			model.setViewName("redirect:/portfoliowatchlist");
+			
+			return model;
+		}
+		
+		@RequestMapping(value="runAlgoPortfolio", method=RequestMethod.POST)
+		public ModelAndView runAlgoPortfolio(ModelAndView model)
+		{
+			System.out.println("Algo run on portfolio");
+			
+			model.setViewName("redirect:/portfoliowatchlist");
+			
+			return model;
 			
 		}
 }
