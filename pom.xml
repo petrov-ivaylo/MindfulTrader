@@ -131,16 +131,16 @@
                 </configuration>
             </plugin>
             
-             <!--  <plugin>
+               <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
             <configuration>
                 <source>15</source>
                 <target>15</target>
-                <fork>true</fork>
-                    <executable>C:\Program Files\Java\jdk-15.0.2\bin\javac</executable>
+                <!--<fork>true</fork>
+                    <executable>C:\Program Files\Java\jdk-15.0.2\bin\javac</executable>-->
             </configuration>
-        </plugin> -->
+        </plugin> 
         
         <plugin>
     		<artifactId>maven-assembly-plugin</artifactId>
