@@ -23,7 +23,7 @@ public class ListUsersController {
     //private UsersRolesRepository users_rolesRepo;
     
 	@RequestMapping(value="/deleteUser", method=RequestMethod.POST)
-	public String deleteCompanyFromDB(@RequestParam("user") User user){
+	public String deleteUserFromDB(@RequestParam("user") User user){
 		
 		//Long id = user.getId();
 		Set<Roles> roles = new HashSet<>();
