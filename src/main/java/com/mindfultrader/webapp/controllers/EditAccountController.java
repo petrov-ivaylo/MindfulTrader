@@ -115,8 +115,8 @@ public class EditAccountController {
 		User user = userRepo.findByEmail(principal.getUsername());
 		
 		//Inputted emails should not be case sensitive, nor do we want any whitespace to mess things up
-		email = email.strip().toLowerCase();
-		email_confirm = email.strip().toLowerCase();
+		//email = email.strip().toLowerCase();
+		//email_confirm = email.strip().toLowerCase();
 		
 		if (email.contains("@") != true) {
 			// make sure email format is valid - spring checks for @ automatically, however not for a empty entry
