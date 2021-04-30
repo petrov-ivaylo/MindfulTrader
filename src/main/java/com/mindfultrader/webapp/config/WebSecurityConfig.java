@@ -44,9 +44,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
         
-        	.antMatchers("/users", "/portfoliowatchlist", "/algorithm", "/algorithm/*", "/portfoliowatchlist/*", "/theory", "/account","/account/*").authenticated()
+        	.antMatchers("/users", "/portfoliowatchlist", "/algorithm", "/algorithm/*", "/portfoliowatchlist/*", "/theory", "/account","/account/*", "/changeCompanies", "/listUsers", "/subscription1", "/subscription").authenticated()
         	.antMatchers("/users", "/portfoliowatchlist", "/algorithm", "/algorithm/*", "/portfoliowatchlist/*", "/theory", "/account","/account/*").hasAnyAuthority("SUBSCRIBER1")
-        	.antMatchers("/portfoliowatchlistAdimn", "/addCompanyToDatabase", "/addingCompany").hasAnyAuthority("ADMIN")
+        	.antMatchers("/portfoliowatchlistAdimn", "/addCompanyToDatabase", "/addingCompany", "/changeCompanies", "/listUsers").hasAnyAuthority("ADMIN")
         	//.anyRequest().authenticated()
         	//.anyRequest().permitAll()
             .and()
