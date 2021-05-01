@@ -48,6 +48,23 @@ public class EditAccountController {
 	@Autowired
 	UserRepository userRepo;
 	
+	//A function to remove the whitespaces at the beginning and at the end of a string
+	public String removeSpaces(String s) {
+		String st = new String();
+		int i = 0;
+		while (s.charAt(i)==' ') {
+			i++;
+		}
+		int j = s.length()-1;
+		while (s.charAt(j)==' ') {
+			j--;
+		}
+		for (int k=i;k<=j;k++) {
+			st += s.charAt(k);
+		}
+		return st;
+	}
+	
 	// Main page for account edits
 	@RequestMapping("/account")
 	public String editAccount()
@@ -116,9 +133,11 @@ public class EditAccountController {
 		
 		//Inputted emails should not be case sensitive, nor do we want any whitespace to mess things up
 		//email = email.strip();
-		//email = email.toLowerCase();
+		email = removeSpaces(email);
+		email = email.toLowerCase();
 		//email_confirm = email.strip();
-		//email_confirm = email_confirm.toLowerCase();
+		email_confirm = removeSpaces(email);
+		email_confirm = email_confirm.toLowerCase();
 		
 		if (email.contains("@") != true) {
 			// make sure email format is valid - spring checks for @ automatically, however not for a empty entry
