@@ -1,5 +1,9 @@
 package com.mindfultrader.webapp.controllers;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,8 +19,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mindfultrader.webapp.models.Roles;
 import com.mindfultrader.webapp.models.User;
+import com.mindfultrader.webapp.models.WatchlistPortfolio;
 import com.mindfultrader.webapp.repositories.UserRepository;
+import com.mindfultrader.webapp.repositories.WatchlistPortfolioRepository;
 import com.mindfultrader.webapp.services.CustomUserDetails;
 
 /*
@@ -48,6 +55,9 @@ public class EditAccountController {
 	@Autowired
 	UserRepository userRepo;
 	
+	@Autowired
+	WatchlistPortfolioRepository wpRepo;
+	
 	//A function to remove the whitespaces at the beginning and at the end of a string
 	public String removeSpaces(String s) {
 		String st = new String();
@@ -64,6 +74,17 @@ public class EditAccountController {
 		}
 		return st;
 	}
+	
+	//A function to remove to check for whitespaces in the middle of a string
+		public Boolean checkSpaces(String s) {
+			String st = new String();
+			for (int i=0;i<s.length();i++) {
+				if (s.charAt(i)==' '){
+					return true;
+				}
+			}
+			return false;
+		}
 	
 	// Main page for account edits
 	@RequestMapping("/account")
@@ -91,6 +112,12 @@ public class EditAccountController {
 	{
 		//Find user and delete using repository
 		User user = userRepo.findByEmail(principal.getUsername());
+		Set<Roles> roles = new HashSet<>();
+		user.setRoles(roles);
+		
+		//find the entry in the WatchlistPortfolio table that we want to delete
+		List<WatchlistPortfolio> entry = wpRepo.findByUserid(user.getId());
+		wpRepo.deleteAll(entry);
 		userRepo.delete(user);
 		
 		//Ensure we are logged in and then log out
@@ -149,6 +176,14 @@ public class EditAccountController {
 			mv.addObject("message", "This user email already exists. Please enter another email.");
 			mv.setViewName("accountManagement/error");
 		}
+		
+		//888
+		else if (checkSpaces(email) == true) {
+			// email must not contain any spaces
+			mv.addObject("message", "The email should not contain any spaces. Please enter another email.");
+			mv.setViewName("accountManagement/error");
+		}
+		
 		else if (email.equals(email_confirm)) { //use email.equalsIgnoreCase(email_confirm) if we do not care about case.
 			//Change user email to value received in PUSH request
 			user.setEmail(email);

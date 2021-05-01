@@ -31,5 +31,7 @@ public interface WatchlistPortfolioRepository extends JpaRepository<WatchlistPor
 
 	//technically not necessary as a company cannot be on both portfolio and watchlist for the same user, but keeping in case the is an error and it happens anyways
 	public WatchlistPortfolio findByUseridAndCompanyidAndType(long userid, long companyid, String type);
+
+	public List<WatchlistPortfolio> findByUserid(Long id);
 	
 }
