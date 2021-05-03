@@ -1,24 +1,17 @@
 package com.mindfultrader.webapp.algorithm;
 
-/* Class consisting of ListOfResults and CountYesNo in detailed design combined.
- * Will create an object which holds the counter to determine advice and 
- * the list of advice from the individual analysis functions.
- * 
- * A few references for java:
- * https://www.geeksforgeeks.org/arraylist-in-java/
- */
-
-import java.util.ArrayList;
-
 public class Results {
 
 	int counter;
-	ArrayList<String> ListOfResults;
+	//ArrayList<String> ListOfResults;
+	String ListOfResults;
 	String finalAdvice;
 	
 	public Results () {
 		this.counter = 0;
-		this.ListOfResults = new ArrayList<>();
+		//this.ListOfResults = new ArrayList<>();
+		this.ListOfResults = new String();
+
 	}
 	
 	// method to modify decision counter. Param: i is amount to change, b determines subtract (false) or add (true) 
@@ -28,7 +21,9 @@ public class Results {
 	}
 	
 	public void addResultToList(String adviceToAdd) {
-		ListOfResults.add(adviceToAdd);
+		//ListOfResults.add(adviceToAdd);
+		ListOfResults += adviceToAdd;
+		ListOfResults += ". ";
 	}
 	
 	
@@ -37,7 +32,11 @@ public class Results {
 		return counter;
 	}
 
-	public ArrayList<String> getListOfResults() {
+	/*public ArrayList<String> getListOfResults() {
+		return ListOfResults;
+	}*/
+	
+	public String getListOfResults() {
 		return ListOfResults;
 	}
 

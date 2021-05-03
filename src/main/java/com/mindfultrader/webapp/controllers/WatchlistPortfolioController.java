@@ -2,6 +2,7 @@ package com.mindfultrader.webapp.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mindfultrader.webapp.algorithm.Algorithm;
+import com.mindfultrader.webapp.algorithm.RequestData;
 import com.mindfultrader.webapp.models.Company;
 import com.mindfultrader.webapp.models.User;
 import com.mindfultrader.webapp.models.WatchlistPortfolio;
@@ -328,7 +331,70 @@ public class WatchlistPortfolioController {
 			return model;
 		}
 		
+		
 		@RequestMapping(value="/runAlgoWatchlist", method=RequestMethod.POST)
+		public ModelAndView runAlgoWatchlist(@AuthenticationPrincipal CustomUserDetails principal)
+		{
+			List<String> company_names = new ArrayList<String>();
+			List<String> conclusions1 = new ArrayList<String>();
+			List<String> advices1 = new ArrayList<String>();
+			
+			User user = userRepo.findByEmail(principal.getUsername());
+			List<WatchlistPortfolio> entry = wpRepo.findByUseridAndType(user.getId(), "w");
+			
+			for (int i=0;i<entry.size();i++) {
+				
+				Long id = entry.get(i).getCompanyid();
+				Optional<Company> cmp = companyRepo.findById(id);
+				String symbol = cmp.get().getCompanySymbol();
+				
+		        double [][] data = RequestData.dataRequest(symbol);
+				
+				
+				
+				System.out.println("Creating algorithm objects...");
+				Algorithm algo1 = new Algorithm(data);
+				
+				int[] torun = {1,2,3,4};
+				
+				
+				algo1.runAlgo(torun);
+				//System.out.println("Algo1 run.");
+				//System.out.println(algo1.solution.getListOfResults());
+				//System.out.println(algo1.solution.getFinalAdvice());
+				//System.out.println(data[0][89]);
+				
+				company_names.add("Algorithm result for company " + cmp.get().getCompanyName());
+				conclusions1.add("Conclusion from algorithm run 1 is: " + algo1.solution.getFinalAdvice());
+				advices1.add("Breakdown of advice from run 1 is: " + algo1.solution.getListOfResults());
+				//advices1.add(algo1.solution.getListOfResults());
+
+			}
+			
+			
+			
+			
+			
+			List<Integer> indices = new ArrayList<Integer>();
+			for (int i=0; i<company_names.size();i++) {
+	        	indices.add(i);
+			}
+			
+			//Create MVC object for webapp
+			ModelAndView mv = new ModelAndView();
+			mv.setViewName("algoresultMulti");
+			mv.addObject("indices",indices);
+			mv.addObject("company_names", company_names);
+			mv.addObject("conclusions1", conclusions1);
+			mv.addObject("advices1", advices1);
+			
+			
+			return mv;
+		}
+		
+		
+		
+		/*@RequestMapping(value="/runAlgoWatchlist", method=RequestMethod.POST)
 		public ModelAndView runAlgoWatchlist(ModelAndView model)
 		{
 			System.out.println("Algo run on Watchlist");
@@ -336,9 +402,71 @@ public class WatchlistPortfolioController {
 			model.setViewName("redirect:/portfoliowatchlist");
 			
 			return model;
-		}
+		}*/
+		
 		
 		@RequestMapping(value="runAlgoPortfolio", method=RequestMethod.POST)
+		public ModelAndView runAlgoPortfolio(@AuthenticationPrincipal CustomUserDetails principal)
+		{
+			List<String> company_names = new ArrayList<String>();
+			List<String> conclusions1 = new ArrayList<String>();
+			List<String> advices1 = new ArrayList<String>();
+			
+			User user = userRepo.findByEmail(principal.getUsername());
+			List<WatchlistPortfolio> entry = wpRepo.findByUseridAndType(user.getId(), "p");
+			
+			for (int i=0;i<entry.size();i++) {
+				
+				Long id = entry.get(i).getCompanyid();
+				Optional<Company> cmp = companyRepo.findById(id);
+				String symbol = cmp.get().getCompanySymbol();
+				
+		        double [][] data = RequestData.dataRequest(symbol);
+				
+				
+				
+				System.out.println("Creating algorithm objects...");
+				Algorithm algo1 = new Algorithm(data);
+				
+				int[] torun = {1,2,3,4};
+				
+				
+				algo1.runAlgo(torun);
+				//System.out.println("Algo1 run.");
+				//System.out.println(algo1.solution.getListOfResults());
+				//System.out.println(algo1.solution.getFinalAdvice());
+				//System.out.println(data[0][89]);
+				
+				company_names.add("Algorithm result for company " + cmp.get().getCompanyName());
+				conclusions1.add("Conclusion from algorithm run 1 is: " + algo1.solution.getFinalAdvice());
+				//advices1.add("Breakdown of advice from run 1 is: " + algo1.solution.getListOfResults());
+				advices1.add("Breakdown of advice from run 1 is: " + algo1.solution.getListOfResults());
+
+			}
+			
+			
+			
+			
+			
+			List<Integer> indices = new ArrayList<Integer>();
+			for (int i=0; i<company_names.size();i++) {
+	        	indices.add(i);
+			}
+			
+			//Create MVC object for webapp
+			ModelAndView mv = new ModelAndView();
+			mv.setViewName("algoresultMulti");
+			mv.addObject("indices",indices);
+			mv.addObject("company_names", company_names);
+			mv.addObject("conclusions1", conclusions1);
+			mv.addObject("advices1", advices1);
+			
+			
+			return mv;
+		}
+		
+		
+		/*@RequestMapping(value="runAlgoPortfolio", method=RequestMethod.POST)
 		public ModelAndView runAlgoPortfolio(ModelAndView model)
 		{
 			System.out.println("Algo run on portfolio");
@@ -347,5 +475,5 @@ public class WatchlistPortfolioController {
 			
 			return model;
 			
-		}
+		}*/
 }

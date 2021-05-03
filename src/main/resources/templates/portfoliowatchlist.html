@@ -159,8 +159,8 @@ th {
 					</form>
 				</td>
 				<td>
-					<form th:action="@{/runAlgoCompany}" method="post">
-						<input type="hidden" th:value="${company.Company_ID}" name="Company_ID">
+					<form th:action="@{/algorithm/run}" method="post">
+						<input type="hidden" th:value="${company.Company_ID}" name="cmp_id">
 						<button type="submit" style="width:100%">Give me advice!</button>
 					</form>
 				</td>

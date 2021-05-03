@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Algorithm Result</title>
+</head>
+<body>
+
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+th, td {
+  text-align: center;
+}
+
+th {
+  padding: 15px;
+}
+
+.table-text{
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+</style>
+
+
+<div>
+		<table>
+		
+			<tr>
+				<th>Company Name</th>
+				<th>Conclusion for the company</th>
+				<th>Result Advice</th>
+				
+			</tr> 
+			<tr th:each="ind: ${indices}">
+				<td 
+				
+				th:text="${company_names.get(ind)}" class="table-text">Company
+				
+				</td>
+				<td th:text="${conclusions1.get(ind)}" class="table-text">Symbol</td>
+				<td th:text="${advices1.get(ind)}" class="table-text">Symbol</td>
+				
+		</table>
+	</div>
+
+
+<!-- 
+<p>
+<b>
+Algorithm result for company <span th:text="${company_name}"></span>
+</b>
+</p>
+
+<p>
+Algorithm has only been run of first example data set here
+</p>
+
+<p>
+	Conclusion from algorithm run 1 is: <span th:text="${conclusion1}"></span>
+</p>
+<p>	
+	Breakdown of advice from run 1 is: <span th:text="${advice1}"></span>
+</p> -->
+
+
+
+<form action="/users">
+	<input type="submit" value="return to users">
+</form>
+<br>
+<form action="/portfoliowatchlist">
+	<input type="submit" value="return to your portfolio/watchlist">
+</form>
+
+
+</body>
+</html>

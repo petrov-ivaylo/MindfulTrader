@@ -243,12 +243,12 @@ public class AppController {
     		Model model) {
     	List<User> listUsers = userRepo.findAll();
         model.addAttribute("listUsers", listUsers);
-        List<Integer> kkk = new ArrayList<Integer>();
+        List<Integer> indices = new ArrayList<Integer>();
 
         List<String> sub = new ArrayList<String>();
         for (int i=0; i<listUsers.size();i++) {
         	
-        	kkk.add(i);
+        	indices.add(i);
         	
         	User user = listUsers.get(i);
             Roles role = new Roles();
@@ -264,7 +264,7 @@ public class AppController {
             	//model.addAttribute("subscriber", "NO");
             }
         }
-        model.addAttribute("kkk", kkk);
+        model.addAttribute("indices", indices);
 
         model.addAttribute("subscriber",sub);
     	return "listUsers";

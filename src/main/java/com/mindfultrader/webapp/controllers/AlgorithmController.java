@@ -4,6 +4,7 @@ package com.mindfultrader.webapp.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mindfultrader.webapp.algorithm.Algorithm;
@@ -23,10 +24,9 @@ public class AlgorithmController {
 	private CompanyRepository companyRepo;
 	
 	@RequestMapping("/algorithm/run")
-	public ModelAndView run(String cmp_name)
+	public ModelAndView run(@RequestParam("cmp_id") Company cmp)
 	{
 		
-		Company cmp = companyRepo.findByCompanyName(cmp_name);
 		String symbol = cmp.getCompanySymbol();
 		
         double [][] data = RequestData.dataRequest(symbol);
@@ -53,6 +53,7 @@ public class AlgorithmController {
 		//Create MVC object for webapp
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("algoresult");
+		mv.addObject("company_name", cmp.getCompanyName());
 		mv.addObject("conclusion1", algo1.solution.getFinalAdvice());
 		mv.addObject("advice1", algo1.solution.getListOfResults());
 		
