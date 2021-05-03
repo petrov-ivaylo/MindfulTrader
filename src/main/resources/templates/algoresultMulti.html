@@ -38,11 +38,7 @@ th {
 				
 			</tr> 
 			<tr th:each="ind: ${indices}">
-				<td 
-				
-				th:text="${company_names.get(ind)}" class="table-text">Company
-				
-				</td>
+				<td	th:text="${company_names.get(ind)}" class="table-text">Company</td>
 				<td th:text="${conclusions1.get(ind)}" class="table-text">Symbol</td>
 				<td th:text="${advices1.get(ind)}" class="table-text">Symbol</td>
 				
