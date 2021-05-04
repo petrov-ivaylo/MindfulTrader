@@ -2,7 +2,6 @@ package com.mindfultrader.webapp.algorithm;
 
 import org.json.JSONArray;
 
-
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
@@ -35,7 +34,7 @@ public class RequestData {
          double[] lows = new double[90];
          double[] closes = new double[90];
          
-        
+        //System.out.println(jSonPrices.getJSONObject(0));
         
         Double x =1.0;
         for(int i=90; i>0 ; i-- ) {

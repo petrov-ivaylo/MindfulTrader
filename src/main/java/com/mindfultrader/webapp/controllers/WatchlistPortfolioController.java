@@ -288,8 +288,12 @@ public class WatchlistPortfolioController {
 				)
 		{
 			
-			deteleFromWP(principal,company);
-			
+			//deteleFromWP(principal,company);
+			List<WatchlistPortfolio> entity = wpRepo.findByCompanyid(company.getCompany_ID());
+			//wpRepo.deleteAll(entity.get());//.get().getList_ID();
+			//wpRepo.de
+			//wpRepo.deleteByCompanyid(company.getCompany_ID());
+			wpRepo.deleteInBatch(entity);
 			companyRepo.delete(company);
 			
 			return "redirect:/changeCompanies";
