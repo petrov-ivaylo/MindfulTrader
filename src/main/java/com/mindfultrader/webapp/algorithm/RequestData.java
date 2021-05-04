@@ -38,14 +38,28 @@ public class RequestData {
         
         Double x =1.0;
         for(int i=90; i>0 ; i-- ) {
-            x = jSonPrices.getJSONObject(i).getDouble("open");
-            opens[90-i] = x;
+        	System.out.println(91-i);
+        	if (jSonPrices.getJSONObject(i).has("open")){
+        		x = jSonPrices.getJSONObject(i).getDouble("open");
+        		opens[90-i] = x;
+        		}
+        	else {
+        		i--;
+                x = jSonPrices.getJSONObject(i).getDouble("open");
+                opens[90-i] = x;
+                }
+        	if (jSonPrices.getJSONObject(i).has("high")){
             x = jSonPrices.getJSONObject(i).getDouble("high");
             highs[90-i] = x;
+        	}
+        	if (jSonPrices.getJSONObject(i).has("low")){
             x = jSonPrices.getJSONObject(i).getDouble("low");
             lows[90-i] = x;
+        	}
+        	if (jSonPrices.getJSONObject(i).has("close")){
             x = jSonPrices.getJSONObject(i).getDouble("close");
             closes[90-i] = x;
+        	}
         }
      
         double[][] data = {opens, highs, lows, closes};
