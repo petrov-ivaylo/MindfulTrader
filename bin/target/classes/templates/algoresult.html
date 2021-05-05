@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Algorithm Result</title>
+</head>
+<body>
+
+<p>
+Algorithm has only been run of first example data set here
+</p>
+
+<p>
+	Conclusion from algorithm run 1 is : <span th:text="${conclusion1}"></span>
+</p>
+<p>	
+	Breakdown of advice from run 1 is : <span th:text="${advice1}"></span>
+</p>
+
+<p>
+	Conclusion from algorithm run 2 is : <span th:text="${conclusion2}"></span>
+</p>
+<p>	
+	Breakdown of advice from run 2 is : <span th:text="${advice2}"></span>
+</p>
+
+<p>
+	Conclusion from algorithm run 3 is : <span th:text="${conclusion3}"></span>
+</p>
+<p>	
+	Breakdown of advice from run 3 is : <span th:text="${advice3}"></span>
+</p>
+
+
+
+
+<form action="/users">
+	<input type="submit" value="return to users">
+</form>
+<br>
+<form action="/algorithm">
+	<input type="submit" value="return to algorithm">
+</form>
+
+
+</body>
+</html>

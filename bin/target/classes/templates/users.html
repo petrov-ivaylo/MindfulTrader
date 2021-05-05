@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>List Users</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="container text-center">
+    <div>
+        <form th:action="@{/logout}" method="post">
+            <p>
+                Welcome <b>[[${#request.userPrincipal.principal.fullName}]]</b>
+            </p>
+            <input type="submit" value="Sign Out" />
+        </form>
+    </div>
+    <div>
+        <h1>List of Users</h1>
+    </div>
+     
+    <div>
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>User ID</th>
+                    <th>E-mail</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="user: ${listUsers}">
+                    <td th:text="${user.id}">User ID</td>
+                    <td th:text="${user.email}">E-mail</td>
+                    <td th:text="${user.firstName}">First Name</td>
+                    <td th:text="${user.lastName}">Last Name</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div>
+	    <h2>Algorithm</h2>
+		<p>Here you will be able to run the algorithm, currently we have 2 analysis functions and run on test data</p>
+		
+		<!-- <p>To run the algorithm on the company A (a doomed company), click the following button:</p>
+		<form action="/users/run">
+			<input type="submit" value="run algorithm">
+		</form>
+		-->
+		
+		
+		<form action="/algorithm">
+			<input type="submit" value="go to algorithm">		
+		</form>
+    </div>
+    
+    
+</div>
+</body>
+</html>
