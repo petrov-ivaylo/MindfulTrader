@@ -15,17 +15,20 @@ public class Trend {
 		double[] opens = data[0];
 		//we create a 'weight indicator' that will determine the importance of the derivative of the day we are looking at.
 		double reversedIndex = 0.0;
+		double relativeDerivatives =  0.0;
 		
 		//we look at all the days in the data and add their derivative according to their weight.
 		for (int i = 0; i < (opens.length - 1); i++) {
 			reversedIndex = opens.length - i;
 			derivative = opens[i+1] - opens[i];
 			totalDerivatives = totalDerivatives + (derivative * (1/(reversedIndex) ));
+			relativeDerivatives = totalDerivatives/opens[opens.length -1];
+			relativeDerivatives = relativeDerivatives*100;
 		}
 		
 		//Modify result of full stock analysis according to findings
-		System.out.println(totalDerivatives);
-		solution.modifyCounter(totalDerivatives, true);
+		System.out.println("trend modified the count by : " + relativeDerivatives);
+		solution.modifyCounter(relativeDerivatives, true);
 		
 	}
 

@@ -45,7 +45,7 @@ public class BouncingCurve {
 	        	nbsummits += 1;
 	    	}
 		if ( (data[2][data[1].length-2]<data[2][data[1].length-3])&&(data[2][data[1].length-2]<data[2][data[1].length-4])&& (data[2][data[1].length-2]<data[2][data[1].length-1])){
-	        	indexlow[nblow] = data[1].length-2;
+	        	indexlow[nblow] = data[2].length-2;
 	        	nblow += 1;
 	    	}
     	//done
@@ -127,9 +127,8 @@ public class BouncingCurve {
 	
 	
 	//Analysis Function that tries to find a pattern of ceiling or floor repeating itslef, to find a 'safety net' to know where the value is most likely going to go up or down.
-	//(WORK UNFINISHED 60% I'd say)
+
 	public static void readBouncing (double[][] data, Results solution){
-		//I'm planning on doing multiple functions that look at the summits/low on diffrent scales. here is only the most basic one.
 		Limits estimation1= bouncing1(data);
 		 
 		 
@@ -141,7 +140,7 @@ public class BouncingCurve {
 	    	int actionToTake = reactionPattern(estimation1,data);
 	    	
 	    	System.out.println("the value of the actionToTake " + actionToTake);
-	    	solution.modifyCounter(actionToTake, false);
+	    	solution.modifyCounter(actionToTake, true);
 		}
 		 
 		else {

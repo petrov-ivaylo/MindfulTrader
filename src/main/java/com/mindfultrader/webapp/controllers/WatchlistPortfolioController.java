@@ -359,7 +359,7 @@ public class WatchlistPortfolioController {
 				System.out.println("Creating algorithm objects...");
 				Algorithm algo1 = new Algorithm(data);
 				
-				int[] torun = {1,2,3,4};
+				int[] torun = {1,2,3,4,5};
 				
 				
 				algo1.runAlgo(torun);
@@ -432,7 +432,7 @@ public class WatchlistPortfolioController {
 				System.out.println("Creating algorithm objects...");
 				Algorithm algo1 = new Algorithm(data);
 				
-				int[] torun = {1,2,3,4};
+				int[] torun = {1,2,3,4,5};
 				
 				
 				algo1.runAlgo(torun);

@@ -36,30 +36,35 @@ public class RequestData {
          
         //System.out.println(jSonPrices.getJSONObject(0));
         
-        Double x =1.0;
-        for(int i=90; i>0 ; i-- ) {
-        	System.out.println(91-i);
-        	if (jSonPrices.getJSONObject(i).has("open")){
-        		x = jSonPrices.getJSONObject(i).getDouble("open");
-        		opens[90-i] = x;
+        double x =1.0;
+        
+        //j represents the number of days to exclude, it has only a testing purpose (and also making sure we do not add weird values to the list)
+        int j = 15;
+        for(int i=0; i<90 ; i++ ) {
+        	
+        
+        	while (!jSonPrices.getJSONObject(j).has("open")){
+        		j++;
         		}
-        	else {
-        		i--;
-                x = jSonPrices.getJSONObject(i).getDouble("open");
-                opens[90-i] = x;
-                }
-        	if (jSonPrices.getJSONObject(i).has("high")){
-            x = jSonPrices.getJSONObject(i).getDouble("high");
-            highs[90-i] = x;
-        	}
-        	if (jSonPrices.getJSONObject(i).has("low")){
-            x = jSonPrices.getJSONObject(i).getDouble("low");
-            lows[90-i] = x;
-        	}
-        	if (jSonPrices.getJSONObject(i).has("close")){
-            x = jSonPrices.getJSONObject(i).getDouble("close");
-            closes[90-i] = x;
-        	}
+        	
+        	x = jSonPrices.getJSONObject(j).getDouble("open");
+            opens[opens.length-1 - i] = x;
+            
+        	
+            x = jSonPrices.getJSONObject(j).getDouble("high");
+            highs[opens.length-1 -i] = x;
+        	
+        	
+            x = jSonPrices.getJSONObject(j).getDouble("low");
+            lows[opens.length-1 -i] = x;
+        	
+        	
+            x = jSonPrices.getJSONObject(j).getDouble("close");
+            closes[opens.length-1 -i] = x;
+        	
+            j++;
+            
+            
         }
      
         double[][] data = {opens, highs, lows, closes};

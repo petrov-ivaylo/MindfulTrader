@@ -30,36 +30,43 @@ public class Algorithm
 	private void analysisFunctions(int[] functionsToRun) {
 		for (int i = 0; i < functionsToRun.length; i++) {
 			if (functionsToRun[i] == 1) {
-				Trend.readTrend(data, solution);
 				System.out.println("Running trend analysis...");
+				Trend.readTrend(data, solution);
+				
 			}
 			if (functionsToRun[i] == 2) {
-				ShootingStar.readShootingStar(this.data, this.solution);
 				System.out.println("Running shooting star analysis...");
+				ShootingStar.readShootingStar(this.data, this.solution);
+				
 			}
 			if (functionsToRun[i] == 3) {
-				Hammers.readHammer(this.data, this.solution);
 				System.out.println("Running hammer analysis...");
+				Hammers.readHammer(this.data, this.solution);
+				
 			}
 			if (functionsToRun[i] == 4) {
-				BouncingCurve.readBouncing(this.data, this.solution);
 				System.out.println("Running bouncing curve analysis...");
-			}			
-			if (functionsToRun[i] > 4) {
-				System.out.println("Sorry, we don't have so many functions implemented yet.");
+				BouncingCurve.readBouncing(this.data, this.solution);
+				
 			}
+			if (functionsToRun[i] == 5) {
+				System.out.println("Running moving average analysis analysis...");
+				MovingAverage.readMovingAverage(this.data, this.solution);
+				
+			}
+			
 		}
 	}
 	
 	public void runAlgo(int[] functionsToRun) {
 		analysisFunctions(functionsToRun);
-		if (this.solution.counter < -5) {
+		if (this.solution.counter <= -5) {
 			solution.finalAdvice = "You should sell your shares if you own some in this company.";
 		}
-	    if ((solution.counter>-4) && (solution.counter<8)){
+	    if ((solution.counter>-5) && (solution.counter<7)){
 	    	solution.finalAdvice = "There is not enough information to choose between selling and buying.";
     	}
-    	if (solution.counter>7){
+    	if (solution.counter>=7){
 	    	solution.finalAdvice = "This stock seems to be increasing its value, we recommend you to buy a share in this company.";
 	    }
 	}

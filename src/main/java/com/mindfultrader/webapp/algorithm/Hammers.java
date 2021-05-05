@@ -9,7 +9,7 @@ package com.mindfultrader.webapp.algorithm;
 
 public class Hammers {
 	
-	static int weight = 10;
+	static int weight = 7;
 
 	public static void readHammer(double[][] data, Results solution) 
 	{
@@ -18,15 +18,15 @@ public class Hammers {
     	double open  = data[0][data[0].length - 1];
     	double close = data[3][data[0].length - 1];
 
-    	if ( (close > open) && (open > (min + 2*max)/3) ){
+    	if ( (close > open) && (open > (min + 2*max)/3) && ((max - min)/close > 0.01)){
     		//Increase counter and add advice if hammer found
          	solution.modifyCounter(weight, true);
          	solution.addResultToList("There is a Hammer, this is a simple indicator that the price will most likely go up.");
-         	System.out.println("+10");
+         	System.out.println("Hammer modified count by +7");
         } 
     	else {
     		solution.addResultToList("There is no hammer pattern");
-    		System.out.println("+0");
+    		System.out.println("Hammer modified count by +0");
     	}
 	}
 
