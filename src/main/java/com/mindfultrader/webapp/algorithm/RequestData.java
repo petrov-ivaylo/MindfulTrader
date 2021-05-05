@@ -11,7 +11,6 @@ public class RequestData {
 	
 	
 	
-	
 	public static double[][] dataRequest (String symbol){
 		
 		
