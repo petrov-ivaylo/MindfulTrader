@@ -39,6 +39,8 @@ public class RequestData {
         double x =1.0;
         
         //j represents the number of days to exclude, it has only a testing purpose (and also making sure we do not add weird values to the list)
+        //In the final state of the algo, it will be set correctly to 0, if it is not right now, then it means someone is testing the software accuracy
+        
         int j = 15;
         for(int i=0; i<90 ; i++ ) {
         	
