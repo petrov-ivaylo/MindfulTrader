@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>List Users</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    
+    <style>
+
+		body{
+			background: url('C:\Users\user\git\MindfulTrader\src\main\resources\templates\logo.jpg');
+		}
+
+</style>
+</head>
+
+
+
+<body>
+	<div class="container text-center">
+    <div>
+        <form th:action="@{/logout}" method="post">
+            <p>
+                Welcome <b>[[${#request.userPrincipal.principal.fullName}]]</b>
+            </p>
+            <input type="submit" value="Sign Out" />
+        </form>
+    </div>
+    
+    <!-- 
+    <div>
+        <h1>List of Users</h1>
+    </div>
+     
+     
+    <div>
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>User ID</th>
+                    <th>E-mail</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="user: ${listUsers}">
+                    <td th:text="${user.id}">User ID</td>
+                    <td th:text="${user.email}">E-mail</td>
+                    <td th:text="${user.firstName}">First Name</td>
+                    <td th:text="${user.lastName}">Last Name</td>
+                    <td> <input type="submit" value="Submit"> </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+-->
+
+<!-- 
+    <div>
+	    <h1>Algorithm</h1>
+		<p>Here you will be able to run the algorithm, currently we have 2 analysis functions and run on test data</p>
+		
+		
+		<form th:action="@{/algorithm/run}" method="post">
+            <div><label> Enter company name: <input type="cmp_name" name="cmp_name"/> </label></div>
+            <div><input type="submit" value="Make a request for a specific stock"/></div>
+    </form>
+		
+    
+    </div>
+    
+    -->
+    
+    <!-- 
+    <div>
+	    <h1>Click the button below if you want to subscribe and to get an exclusive access!</h1>		
+		
+		<form action="/subscription">
+			<input type="submit" value="Subscription page">		
+		</form>
+    </div>
+    -->
+    
+    <div>
+	    <h1>Click the button below to go to your portfolio and watchlist page</h1>		
+		
+		<form action="/portfoliowatchlist">
+			<input type="submit" value="View/edit your portfolio and watchlist">		
+		</form>
+    </div>
+    
+    <div>
+    	<h1>Click the button below to go to theory behind the advices</h1>
+    	<form action="/theory">
+    	<input type="submit" value="Theory">
+		</form>
+				
+		
+    </div>
+        <div>
+	    <h1>Click the button below to edit your account</h1>
+		<form action="/account">
+			<input type="submit" value="Go to your account">		
+		</form>
+    </div>
+    
+    
+</div>
+</body>
+</html>

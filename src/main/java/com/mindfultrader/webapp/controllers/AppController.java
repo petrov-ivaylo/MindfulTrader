@@ -218,7 +218,7 @@ public class AppController {
         }
     }*/
     
-    @GetMapping("/users")
+    @GetMapping("/homee")
     public String listUsers(
     		@AuthenticationPrincipal CustomUserDetails principal) {
         
@@ -229,10 +229,10 @@ public class AppController {
         role = rolesRepo.findByname("ADMIN");
         
         if(user.getRoles().contains(role)) {
-        	return "usersAdmin";
+        	return "homeAdmin";
         }
         else {
-        	return "users";
+        	return "home";
         }
         
     }
