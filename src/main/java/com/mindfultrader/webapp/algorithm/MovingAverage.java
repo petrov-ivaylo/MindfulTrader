@@ -43,7 +43,7 @@ public class MovingAverage {
 		double shortDerivative = (data[0][data[0].length-1] - data[0][data[0].length-4]);
 		
 		
-		System.out.println("Derivative = " + shortDerivative);
+		//System.out.println("Derivative = " + shortDerivative);
 		//System.out.println("Moving average is " + movingAverage[data[0].length-1]);
 		//System.out.println("Last day's open is " + data[0][data[0].length-1]);
 		
@@ -55,17 +55,17 @@ public class MovingAverage {
 			if(data[0][data[0].length -1] > movingAverage[data[0].length-1]) {
 				solution.addResultToList("Going down to the moving average of " + scale);
 				solution.modifyCounter(-1, true);
-				//System.out.println("going down to ma -1");
+				System.out.println("going down to ma -1");
 			}
 			if((data[0][data[0].length -3]>movingAverage[data[0].length -3] || data[0][data[0].length-2] > movingAverage[data[0].length -2]) && data[0][data[0].length -1] < movingAverage[data[0].length-1] ) {
 				solution.addResultToList("Broke by above the moving average of scale " + scale);
 				solution.modifyCounter(-3, true);
-				//System.out.println("broken ma by above -3");
+				System.out.println("broken ma by above -3");
 			}
 			if(data[0][data[0].length -1] < movingAverage[data[0].length-1] && data[0][data[0].length -2] < movingAverage[data[0].length-2] && data[0][data[0].length -3] < movingAverage[data[0].length-3])  {
 				solution.addResultToList("Going down below the moving average of " + scale);
 				solution.modifyCounter(-2, true);
-				//System.out.println("going down away from ma -1");
+				System.out.println("going down away from ma -1");
 			}
 			
 		}
@@ -78,17 +78,17 @@ public class MovingAverage {
 			if(data[0][data[0].length -1] < movingAverage[data[0].length-1]) {
 				solution.addResultToList("Going up to the moving average of " + scale);
 				solution.modifyCounter(2, true);
-				//System.out.println("going up to ma +2");
+				System.out.println("going up to ma +2");
 			}
 			if((data[0][data[0].length -3]<movingAverage[data[0].length -3] || data[0][data[0].length-2] < movingAverage[data[0].length -2]) && data[0][data[0].length -1] > movingAverage[data[0].length-1] ) {
 				solution.addResultToList("Broke by below the moving average of scale " + scale);
 				solution.modifyCounter(3, true);
-				//System.out.println("broken ma by below +3");
+				System.out.println("broken ma by below +3");
 			}
 			if(data[0][data[0].length -1] > movingAverage[data[0].length-1] && data[0][data[0].length -2] > movingAverage[data[0].length-2] && data[0][data[0].length -3] > movingAverage[data[0].length-3])  {
 				solution.addResultToList("Going up above the moving average of " + scale);
 				solution.modifyCounter(1, true);
-				//System.out.println("going up above ma +1");
+				System.out.println("going up above ma +1");
 			}
 			
 		}
@@ -130,11 +130,11 @@ public class MovingAverage {
 			movingAverage15[i] =movingAverage15[i]/15;
 			
 		}
-		System.out.println("Last day's open is " + data[0][data[0].length-1]);
-		System.out.println("moving average 5 is " + movingAverage5[data[0].length-2]);
-		System.out.println("moving average 10 is " + movingAverage10[data[0].length-2]);
-		System.out.println("moving average 15 is " + movingAverage15[data[0].length-2]);
-		System.out.println("opens = " + data[0][data[0].length-4] + " " +  data[0][data[0].length-3] + " " + data[0][data[0].length-2] + " " + data[0][data[0].length-1]);
+		//System.out.println("Last day's open is " + data[0][data[0].length-1]);
+		//System.out.println("moving average 5 is " + movingAverage5[data[0].length-2]);
+		//System.out.println("moving average 10 is " + movingAverage10[data[0].length-2]);
+		//System.out.println("moving average 15 is " + movingAverage15[data[0].length-2]);
+		//System.out.println("opens = " + data[0][data[0].length-4] + " " +  data[0][data[0].length-3] + " " + data[0][data[0].length-2] + " " + data[0][data[0].length-1]);
 		
 		
 		
