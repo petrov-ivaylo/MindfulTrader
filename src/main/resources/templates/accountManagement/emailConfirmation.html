@@ -5,7 +5,20 @@
 <meta charset="ISO-8859-1">
 <title>Mindful Trader App</title>
 </head>
+
+<style>
+body{
+		background-image: url('https://github.com/petrov-ivaylo/MindfulTrader/blob/main/src/main/resources/templates/images/logo.jpg?raw=true');
+			background-repeat: no-repeat;
+			background-position: top right;
+			background-size: 12.5% 75%;
+	}
+</style>
+
 <body>
+
+<center>
+<div style="margin-top:150px;">
 	Your email was successfully changed to <span th:text="${email}">your chosen email</span>. Click below to log in again.
 	
 	<form action="/account">
@@ -15,5 +28,7 @@
 	<form action="/homee">
 		<input type="submit" value="return to home page">		
 	</form>
+</div>
+</center>
 </body>
 </html>

@@ -5,7 +5,16 @@
 <title>Algorithm Result</title>
 </head>
 <body>
+<style>
+body{
+		background-image: url('https://github.com/petrov-ivaylo/MindfulTrader/blob/main/src/main/resources/templates/images/logo.jpg?raw=true');
+			background-repeat: no-repeat;
+			background-position: top right;
+			background-size: 12.5% 37.5%;
+	}
+</style>
 
+<div style="margin-top:150px;">
 <p>
 <b>
 Algorithm result for company <span th:text="${company_name}"></span>
@@ -31,6 +40,6 @@ Algorithm has only been run of first example data set here
 <form action="/portfoliowatchlist">
 	<input type="submit" value="return to your portfolio/watchlist">
 </form>
-
+</div>
 </body>
 </html>

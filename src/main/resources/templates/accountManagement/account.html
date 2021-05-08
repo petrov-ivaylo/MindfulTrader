@@ -17,8 +17,21 @@
 <meta charset="ISO-8859-1">
 <title>Account Management</title>
 </head>
+
+<style>
+
+body{
+		background-image: url('https://github.com/petrov-ivaylo/MindfulTrader/blob/main/src/main/resources/templates/images/logo.jpg?raw=true');
+			background-repeat: no-repeat;
+			background-position: top right;
+			background-size: 12.5% 20%;
+	}
+
+</style>
+
+
 <body>
-<div>
+<div style="margin-top:50px;">
 	<!-- sec:authentication="principal.fullName" accesses principal object (user in spring security) and getter in custom user details -->
 	<h2><span sec:authentication="principal.fullName">Fullname</span></h2>
 	<p> Hello! You can view and edit your account below. </p>

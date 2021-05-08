@@ -12,15 +12,25 @@
 	<meta charset="ISO-8859-1">
 	<taglib prefix="form" uri="http://www.springframework.org/tags/form">
     <title>Adding a new company to the database</title>
-    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
-    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <style>
+
+		body{
+			background-image: url('https://github.com/petrov-ivaylo/MindfulTrader/blob/main/src/main/resources/templates/images/logo.jpg?raw=true');
+			background-repeat: no-repeat;
+			background-position: top right;
+			background-size: 15% 45%;
+		}
+
+</style>
 </head>
 
 <body>
+	<center>
+	<div style="margin-top:150px;">
 	<p>
                 Welcome <b>[[${#request.userPrincipal.principal.fullName}]]</b>
             </p>
+   	</div>
 	<div>
 		
 		<table>
@@ -28,22 +38,17 @@
 		<tr>
 		<td>
 			<form th:action="@{/addingCompany}" method="post">
-            <div><label> Enter company name: <input type="cmp_name" name="cmp_name"/> </label></div>
-           	<div><label> Enter company symbol: <input type="cmp_symbol" name="cmp_symbol"/> </label></div>
-            <div><input type="submit" value="Submit"/></div>
+            <div style="margin-top:25px;"><label> Enter company name: <input type="cmp_name" name="cmp_name"/> </label></div>
+           	<div style="margin-top:25px;"><label> Enter company symbol: <input type="cmp_symbol" name="cmp_symbol"/> </label></div>
+            <center>
+            <div style="margin-top:15px;"><input type="submit" value="Submit"/></div>
+            <div style="margin-top:5px;"><button type="submit" formaction="/homee">Return to home page</button></div>
+            </center>
         	</form>
         </td>
         </tr>
-        
-		
 		</table>
 		
-    </div>
-    
-    <center>
-    <form action="/homee">
-			<button type="submit">Return to home page</button>
-		</form>
 	</center>
 </body>
 

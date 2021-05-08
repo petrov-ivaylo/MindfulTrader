@@ -1,26 +1,32 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="ISO-8859-1">
-    <title>List Users</title>
-    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
-    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+<style>
+
+		body{
+			background-image: url('https://github.com/petrov-ivaylo/MindfulTrader/blob/main/src/main/resources/templates/images/logo.jpg?raw=true');
+			background-repeat: no-repeat;
+			background-position: top right;
+			background-size: 12.5% 22.5%;
+		}
+
+</style>
 </head>
 <body>
-	<div class="container text-center">
+<center>
+	<div class="container text-center" style="margin-top:50px;">
     <div>
         <form th:action="@{/logout}" method="post">
-            <p>
-                Welcome <b>[[${#request.userPrincipal.principal.fullName}]]</b>
+            <h1>
+                Welcome <b>[[${#request.userPrincipal.principal.fullName}]]</h1>
             </p>
             <input type="submit" value="Sign Out" />
         </form>
     </div>
     
-    <div> 
+    <div style="margin-top:50px;"> 
     <form action="/listUsers">
-		<p><b> Click here to see check all the registered users</b></p>
+		<h2><b> Click here to see check all the registered users</b></h2>
 		<input type="submit" value="List of users">		
 	</form>
 	</div>
@@ -51,8 +57,8 @@
     </div>
     -->
     
-    <div>
-	    <h1>Click the button below to go to change the available companies</h1>		
+    <div style="margin-top:50px;">
+	    <h2>Click the button below to go to change the available companies</h2>		
 		
 		<form action="/changeCompanies">
 			<input type="submit" value="Change companies">		
@@ -60,8 +66,8 @@
 		
     </div>
     
-    <div>
-	    <h1>Click the button below to go to your portfolio and watchlist page</h1>		
+    <div style="margin-top:50px;">
+	    <h2>Click the button below to go to your portfolio and watchlist page</h2>		
 		
 		<form action="/portfoliowatchlist">
 			<input type="submit" value="View/edit your portfolio and watchlist">		
@@ -71,16 +77,16 @@
     
     
     
-    <div>
-    	<h1>Click the button below to go to theory behind the advices</h1>
+    <div style="margin-top:50px;">
+    	<h2>Click the button below to go to theory behind the advices</h2>
     	<form action="/theory">
     	<input type="submit" value="Theory">
 		</form>
 				
 		
     </div>
-        <div>
-	    <h1>Click the button below to edit your account</h1>
+        <div style="margin-top:50px;">
+	    <h2>Click the button below to edit your account</h2>
 		<form action="/account">
 			<input type="submit" value="Go to your account">		
 		</form>
@@ -88,5 +94,6 @@
     
     
 </div>
+</center>
 </body>
 </html>

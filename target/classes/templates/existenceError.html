@@ -3,7 +3,21 @@
     <head>
         <title>Registration Success</title>
     </head>
+    
+    <style>
+
+		body{
+			background-image: url('https://github.com/petrov-ivaylo/MindfulTrader/blob/main/src/main/resources/templates/images/logo.jpg?raw=true');
+			background-repeat: no-repeat;
+			background-position: top right;
+			background-size: 12.5% 35%;
+		}
+
+</style>
+    
     <body>
+    
+    	<div style="margin-top:150px;">
         <center>
             <span th:text="${message}"></span>
         </center>
@@ -21,7 +35,7 @@
         <center>
 			<b> Please click <a href="register">here</a> to return to the register page or click <a href="/">here</a> to return to the home page
 		</center>
-       
+       </div>
         
     </body>
 </html>

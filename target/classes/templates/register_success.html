@@ -5,9 +5,21 @@
     <title>Registration Success</title>
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
 </head>
+
+<style>
+
+		body{
+			background-image: url('https://github.com/petrov-ivaylo/MindfulTrader/blob/main/src/main/resources/templates/images/logo.jpg?raw=true');
+			background-repeat: no-repeat;
+			background-position: top right;
+			background-size: 12.5% 65%;
+		}
+
+</style>
+
 <body>
- 
-    <div class="container text-center">
+ <center>
+    <div class="container text-center" style="margin-top:150px;">
         <h3>You have signed up successfully!</h3>
         <h4><a th:href="@{/login}">Click here to Login</a></h4>
     </div>
@@ -19,6 +31,6 @@
     <h4><a th:href="@{/login}">Click here to Login</a></h4>
 </div>
 -->
-     
+     </center>
 </body>
 </html>

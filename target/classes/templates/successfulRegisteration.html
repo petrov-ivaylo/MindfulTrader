@@ -3,9 +3,23 @@
     <head>
         <title>Registration Success</title>
     </head>
+    
+    <style>
+
+		body{
+			background-image: url('https://github.com/petrov-ivaylo/MindfulTrader/blob/main/src/main/resources/templates/images/logo.jpg?raw=true');
+			background-repeat: no-repeat;
+			background-position: top right;
+			background-size: 12.5% 35%;
+		}
+
+</style>
+
     <body>
         <center>
+        <div style="margin-top:150px;">
             <b><span th:text="'A verification email has been sent to: ' + ${email}"></b></span>
+       	</div>
         </center>
     </body>
 </html>

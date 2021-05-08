@@ -4,14 +4,26 @@
 <meta charset="ISO-8859-1">
 <title>Update your password</title>
 </head>
+<style>
+body{
+		background-image: url('https://github.com/petrov-ivaylo/MindfulTrader/blob/main/src/main/resources/templates/images/logo.jpg?raw=true');
+			background-repeat: no-repeat;
+			background-position: top right;
+			background-size: 12.5% 75%;
+	}
+</style>
+
 <body>
+
+<center>
+<div style="margin-top:150px;">
 
 <span th:text="${message}">Ups, something went wrong! Please try again.</span>
 
 <form action="/account">
 	<input type="submit" value="Return to account page">	
 </form>
-
-
+</div>
+</center>
 </body>
 </html>
