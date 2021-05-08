@@ -60,6 +60,8 @@ public class Algorithm
 	
 	public void runAlgo(int[] functionsToRun) {
 		analysisFunctions(functionsToRun);
+		System.out.println("count is = " + this.solution.counter + "\n");
+		
 		if (this.solution.counter <= -5) {
 			solution.finalAdvice = "You should sell your shares if you own some in this company.";
 		}

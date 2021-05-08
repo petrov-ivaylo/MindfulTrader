@@ -325,16 +325,16 @@ public class AppController {
     @GetMapping("/403")
     public String accessDenied(@AuthenticationPrincipal CustomUserDetails principal) {
     	User user = userRepo.findByEmail(principal.getUsername());
-    	Roles role = new Roles();
+    	Roles role1 = new Roles();
+    	role1 = rolesRepo.findByname("ADMIN");
+    	Roles role2 = new Roles();
+    	role2 = rolesRepo.findByname("SUBSCRIBER1");
+    	Set<Roles> user_roles = user.getRoles();
     
-    
-    	role = rolesRepo.findByname("ADMIN");
-    
-    	if(user.getRoles().contains(role)) {
-    		return "adminAccessOnly";
+    	if(!user_roles.contains(role1)) {
+    		return "403";
     	}
-    	
-    	return "403";
+    	return "adminAccessOnly";
     	
     }
 }
