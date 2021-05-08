@@ -66,6 +66,11 @@ public class CustomUserDetails implements UserDetails {
         return true;
     }
  
+    //method used in the email verification process
+    /*@Override
+    public boolean isEnabled() {
+        return user.isEnabled();
+    }*/
     @Override
     public boolean isEnabled() {
         return true;

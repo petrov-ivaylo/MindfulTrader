@@ -16,6 +16,7 @@ import com.mindfultrader.webapp.models.User;
 import com.mindfultrader.webapp.repositories.ConfirmationTokenRepository;
 import com.mindfultrader.webapp.repositories.UserRepository;
 
+//This class was used for the email verification process (currently not being used as we couldn't manage to make it work on Heroku)
 @Service
 public class UserServices {
  
