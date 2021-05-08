@@ -331,7 +331,7 @@ public class AppController {
     	role2 = rolesRepo.findByname("SUBSCRIBER1");
     	Set<Roles> user_roles = user.getRoles();
     
-    	if(!user_roles.contains(role1)) {
+    	if(!user_roles.contains(role2)) {
     		return "403";
     	}
     	return "adminAccessOnly";
