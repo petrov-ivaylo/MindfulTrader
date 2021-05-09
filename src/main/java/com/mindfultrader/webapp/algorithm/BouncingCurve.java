@@ -1,4 +1,16 @@
+/* webapp.algorithm.BouncingCurve
+ * 
+ * One of the analysis functions called in Algorithm.java. Searches the data to find a 'ceiling' and a 'floor'. Both of which are very important values in stock market analysis.
+ * Finds a recurring maximum/minimum value in the 'high'/low values and if those are present more than three times, considers it a ceiling/floor.
+ * 
+ * Author : team Golf 2020-2021 Aberdeen
+ * */
+
+
 package com.mindfultrader.webapp.algorithm;
+
+
+
 
 public class BouncingCurve {
 	
@@ -7,25 +19,22 @@ public class BouncingCurve {
 		double floor   = 0;
 	}
 
-	//This is a subfunction from the next Analysis Function. I'd advice you to look at the next one first to understand everything.
-	//We look at the small scale summits and floors. We use this information to determine the 'safety net' and ceiling of the stock values. According advice not yet implemented, here I only they if there is such ceiling or floor.
+	//Subfunction from the main bouncingCurve function. I'd advice you to look at the next one first to understand everything.
+	//We look at the small scale summits and floors. We use this information to determine the 'safety net' and ceiling of the stock values.
 	
 	
 	public static Limits bouncing1 (double[][] data){
+		// variables to keep track of the index of the peaks/lows I find.
 		int[] indexsummits = new int[90];
 		int[] indexlow = new int[90];
 		int nbsummits = 0;
 		int nblow = 0;
 		Limits limit = new Limits();
 		 
-		//I created variables, a list of the days where I found a summit/floor and their number. I only keep 10 values here (and use only three) 'cause I will add different scales again.
-		 
 		
-		 
-		 
-		//That's Hell you're walking into.
+		// the next for loop looks at every high/low value and compares it to its neighbours. If they are superior/inferior to both, the index is added to the list. 
 		for (int i =2; i<data[0].length - 2; i++){
-	    	// I check everyday if its neighbours (two days before, two days after) are superior or inferior. If it is superior/inferior to all of them then it is listed as a summit/low.
+	    	
 	    	if ( (data[1][i]>data[1][i-1])&&(data[1][i]>data[1][i-2])&&(data[1][i]>data[1][i+1])&&(data[1][i]>data[1][i+2]) ){
 	        	if(nbsummits<10){
 	            	//I add its index to the table and increase the count by one
@@ -48,9 +57,9 @@ public class BouncingCurve {
 	        	indexlow[nblow] = data[2].length-2;
 	        	nblow += 1;
 	    	}
-    	//done
+    	
 		 
-		//If I found enough summits/low I compare them, and if I find that they have less than 10% of difference in value I consider this a floor/ceiling
+		//If I found enough summits/low I compare them, and if I find that they have less than 10% of difference in value I consider this a floor/ceiling. Using a 10% difference makes this analysis more reliable on small companies as for values over 3000 USD a 300 dollar makes a huge difference.
 		if (nbsummits > 2){
 	    	if ( 
 	    			   ( (data[1][indexsummits[nbsummits-1]]/data[1][indexsummits[nbsummits-2]])<1.1) 
@@ -82,7 +91,7 @@ public class BouncingCurve {
 	    	}
 		}  
 		 
-		// I return the values of a potential floor or ceiling.
+		// I return the values of a potential floor or ceiling. It is 0 if none if found.
 		 
 		return limit;
 		 
@@ -91,7 +100,8 @@ public class BouncingCurve {
 	public static int reactionPattern (Limits estimation, double[][]data){
 	        int length = data[1].length;
 
-	        //if values are strange, 0 is returned immediately
+	        //Compares last days value to the floor and ceiling. If it breaks the ceiling, then it can stop anytime and no advice can be given via bouncing curves. 
+	        // If the last day breaks the floor, this is a very good hint that the price will probably crahs down, as the resistance that kept the price up disappeared.
 	        if(  (data[1][length-1] > estimation.ceiling)  ) {return 0;}
 	        if( (data[2][length-1] < estimation.floor)  ) {return -10;}
 	        else { 
@@ -110,7 +120,7 @@ public class BouncingCurve {
 	            distance = distance/2;
 	            // I see in which % the value is (relative to the distance to the middle of the ceiling-floor) and modify the value more or less given how far it is from it.
 	            double distanceToBetweenCeilingAndFloor = relativeActualValue/distance;
-	if(distanceToBetweenCeilingAndFloor < 0.1) {return actionToTake*0;}
+	            if(distanceToBetweenCeilingAndFloor < 0.1) {return actionToTake*0;}
 	            if(distanceToBetweenCeilingAndFloor < 0.2) {return actionToTake*1;}
 	            if(distanceToBetweenCeilingAndFloor < 0.3) {return actionToTake*2;}
 	            if(distanceToBetweenCeilingAndFloor < 0.4) {return actionToTake*3;}
@@ -131,7 +141,7 @@ public class BouncingCurve {
 	public static void readBouncing (double[][] data, Results solution){
 		Limits estimation1= bouncing1(data);
 		 
-		 
+		 // ceiling is != 0 if a ceiling was found. Same for the floor. 
 		if (estimation1.ceiling != 0 && estimation1.floor != 0){
 	    	
 			String advice = "Recurring pattern found. Ceiling found at " + estimation1.ceiling + " and floor at " + estimation1.floor;
@@ -142,7 +152,7 @@ public class BouncingCurve {
 	    	System.out.println("the value of the actionToTake " + actionToTake);
 	    	solution.modifyCounter(actionToTake, true);
 		}
-		 
+		// only having a ceiling/floor value is not enough to make deductions about the stock market as there is no good comparison scale (no way to know if we are far or close to the ceiling/floor)
 		else {
 	    	if (estimation1.ceiling != 0 ){
 		    	String advice = "There is a ceiling at " + estimation1.ceiling;

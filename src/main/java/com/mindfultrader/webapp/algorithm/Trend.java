@@ -1,8 +1,11 @@
 package com.mindfultrader.webapp.algorithm;
 
-/* Third function, it reads the actual trend of the data, is it likely going up or down, and on which scale?
+/* webapp.algorithm.Trend.java
+ * 
+ * Reads the actual trend of the data, is it likely going up or down?
  * The function takes the derivative at each day and sums everything to determine the actual tendency. Recent days have a higher weight in the computation.
- * (WORK UNFINISHED 50% I'd say but I don't really know, should not be too hard)
+ * 
+ * Author : team Golf 2020-2021 Aberdeen
  */
 
 public class Trend {

@@ -1,3 +1,13 @@
+/* 		webapp.algorithm.Algorithm 
+ * 
+ * Main file of the analysis algorithm used to predict the stock market.
+ * Consists of constructor + analysis function caller and runAlgo function
+ * 
+ *  Author : team Golf 2020-2021 Aberdeen*/
+
+
+
+
 package com.mindfultrader.webapp.algorithm;
 
 import org.springframework.stereotype.Component;
@@ -16,9 +26,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class Algorithm
 {
-	
+	//solution contains the counter and the string of advice.
 	public Results solution;
-	
+	//data contains four columns, each one being in this order the value of the 90 last day's 'open', 'high', 'low and 'close'.
 	double[][] data;
 	
 	public Algorithm(double[][] data) {
@@ -26,7 +36,8 @@ public class Algorithm
 		this.data = data;
 	}
 	
-	// function to run analysis functions
+	// calls the different analysis functions on the data, according to the list of 'functionsToRun'. A 1 in the list given runs shootingStar, a 2 runs hammer etc... inputting twice a number runs the function twice.
+	// inputing different lists is used for testing purposes mainly. 
 	private void analysisFunctions(int[] functionsToRun) {
 		for (int i = 0; i < functionsToRun.length; i++) {
 			if (functionsToRun[i] == 1) {
@@ -58,6 +69,8 @@ public class Algorithm
 		}
 	}
 	
+	
+	// Main function of the analysis algorithm. Runs a data analysis and returns decision (buy/sell/nothing) based on counter.
 	public void runAlgo(int[] functionsToRun) {
 		analysisFunctions(functionsToRun);
 		System.out.println("count is = " + this.solution.counter + "\n");

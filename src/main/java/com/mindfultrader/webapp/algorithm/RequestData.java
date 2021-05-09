@@ -1,4 +1,11 @@
 package com.mindfultrader.webapp.algorithm;
+/* webapp.algorithm.RequestData.java
+ * 
+ * Method to make a request to the API and get the historical data from given company
+ * 
+ * Author: team Golf 2020-2021 Aberdeen
+ *  */
+
 
 import org.json.JSONArray;
 
@@ -13,7 +20,7 @@ public class RequestData {
 	
 	public static double[][] dataRequest (String symbol){
 		
-		
+		//unirest request
         String uri = "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v3/get-historical-data?symbol=" + symbol + "&region=US";
         HttpResponse<JsonNode> response = null;
         System.out.println("Requesting data from " + symbol);
@@ -34,14 +41,14 @@ public class RequestData {
          double[] lows = new double[90];
          double[] closes = new double[90];
          
-        //System.out.println(jSonPrices.getJSONObject(0));
+       
         
         double x =1.0;
         
         //j represents the number of days to exclude, it has only a testing purpose (and also making sure we do not add weird values to the list)
         //In the final state of the algo, it will be set correctly to 0, if it is not right now, then it means someone is testing the software accuracy
         
-        int j = 20;
+        int j = 0;
         for(int i=0; i<90 ; i++ ) {
         	
         
