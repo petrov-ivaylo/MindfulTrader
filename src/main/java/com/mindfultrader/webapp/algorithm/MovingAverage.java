@@ -1,25 +1,24 @@
 package com.mindfultrader.webapp.algorithm;
 
+/* webapp.algorithm.MovingAverage.java
+ * 
+ *  Calculates the moving average at each day over a 5,10 and 15 time span. Returns advice if the tendency of the last three days indicates a likely evolution.
+ *  
+ *  
+ *  Author : Team Golf 2020-2021 Aberdeen
+ *  */
+
+
+
+
 public class MovingAverage {
 	
-	//private static double[] runMovingAverage(double[][] data, int scale) {
-	//	double average = 0.0;
-	//	double[] movingAverage = data[0];
-	//	for(int i=scale; i<data[0].length ; i++) {
-	//		average=0;
-	//		for(int j=scale; j>0 ; j--) {
-	//			average=(data[1][i-j]+data[2][i-j])/2;
-	//			movingAverage[i] += average;
-	//		}
-	//		movingAverage[i] =movingAverage[i]/scale;
-	//		
-	//	}
-	//	return movingAverage;
-	//}
+	
 	
 	private static void reactingToMovingAverage(double[] movingAverage,double[][] data, Results solution, int scale) {
-		//first if the open value is always above the moving Average it is a good sign of strength
+		//first if the open value is always above the moving Average it is a good sign of strength (the price is almost always increasing).
 		int i = scale ;
+		// the while loop goes through the whole list of days even if it found to go under at some point. This is bad efficiency but not a problem right now with a small number of functions.
 		while(movingAverage[i]<data[0][i]){
 			i++;
 			if (i==movingAverage.length-1) {
@@ -39,29 +38,25 @@ public class MovingAverage {
 				return;
 			}
 		}
-		
+		// calculates the tendency over the last three days. 
 		double shortDerivative = (data[0][data[0].length-1] - data[0][data[0].length-4]);
-		
-		
-		//System.out.println("Derivative = " + shortDerivative);
-		//System.out.println("Moving average is " + movingAverage[data[0].length-1]);
-		//System.out.println("Last day's open is " + data[0][data[0].length-1]);
-		
 		
 		
 		//case where the three last days go down in average
 		if(shortDerivative <0) {
-			//System.out.println("negative derivative entered");
+			// if we are above the moving average and going down, then it is likely going to drop until the ma
 			if(data[0][data[0].length -1] > movingAverage[data[0].length-1]) {
 				solution.addResultToList("Going down to the moving average of " + scale);
 				solution.modifyCounter(-1, true);
 				System.out.println("going down to ma -1");
 			}
+			//If the last day's value if below ma, but was higher before, then the ma line is broken, and is again a sign that the resitance disappeared.
 			if((data[0][data[0].length -3]>movingAverage[data[0].length -3] || data[0][data[0].length-2] > movingAverage[data[0].length -2]) && data[0][data[0].length -1] < movingAverage[data[0].length-1] ) {
 				solution.addResultToList("Broke by above the moving average of scale " + scale);
 				solution.modifyCounter(-3, true);
 				System.out.println("broken ma by above -3");
 			}
+			// if the price is going down again below the ma, then it is unpredictable and therefore a bad time to invest.
 			if(data[0][data[0].length -1] < movingAverage[data[0].length-1] && data[0][data[0].length -2] < movingAverage[data[0].length-2] && data[0][data[0].length -3] < movingAverage[data[0].length-3])  {
 				solution.addResultToList("Going down below the moving average of " + scale);
 				solution.modifyCounter(-2, true);
@@ -73,18 +68,21 @@ public class MovingAverage {
 		//case where the price is going up
 		if(shortDerivative >0) {
 			
-			//System.out.println("positive derivative entered");
 			
+			// if we are under the moving average and going up, then it is likely going to go until the ma
+
 			if(data[0][data[0].length -1] < movingAverage[data[0].length-1]) {
 				solution.addResultToList("Going up to the moving average of " + scale);
 				solution.modifyCounter(2, true);
 				System.out.println("going up to ma +2");
 			}
+			//If the last day's value if above ma, but was lower before, then the ma line is broken, and is again a sign of strength.
 			if((data[0][data[0].length -3]<movingAverage[data[0].length -3] || data[0][data[0].length-2] < movingAverage[data[0].length -2]) && data[0][data[0].length -1] > movingAverage[data[0].length-1] ) {
 				solution.addResultToList("Broke by below the moving average of scale " + scale);
 				solution.modifyCounter(3, true);
 				System.out.println("broken ma by below +3");
 			}
+			// if the price is going up again above the ma, then it is a sign of strength, but less reliable.
 			if(data[0][data[0].length -1] > movingAverage[data[0].length-1] && data[0][data[0].length -2] > movingAverage[data[0].length-2] && data[0][data[0].length -3] > movingAverage[data[0].length-3])  {
 				solution.addResultToList("Going up above the moving average of " + scale);
 				solution.modifyCounter(1, true);

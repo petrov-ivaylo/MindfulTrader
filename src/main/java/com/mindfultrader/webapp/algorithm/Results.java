@@ -1,15 +1,21 @@
 package com.mindfultrader.webapp.algorithm;
+/* webapp.algorithm.Results
+ * 
+ * Utility file giving the basic functions to modify the counter.add advice etc...
+ *
+ *Author : team Golf 2020-2021 Aberdeen
+ */
 
 public class Results {
 
 	int counter;
-	//ArrayList<String> ListOfResults;
+	
 	String ListOfResults;
 	String finalAdvice;
 	
 	public Results () {
 		this.counter = 0;
-		//this.ListOfResults = new ArrayList<>();
+		
 		this.ListOfResults = new String();
 
 	}
@@ -21,7 +27,7 @@ public class Results {
 	}
 	
 	public void addResultToList(String adviceToAdd) {
-		//ListOfResults.add(adviceToAdd);
+	
 		ListOfResults += adviceToAdd;
 		ListOfResults += ". ";
 	}
@@ -32,9 +38,6 @@ public class Results {
 		return counter;
 	}
 
-	/*public ArrayList<String> getListOfResults() {
-		return ListOfResults;
-	}*/
 	
 	public String getListOfResults() {
 		return ListOfResults;
