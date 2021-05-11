@@ -23,7 +23,6 @@ public class RequestData {
 		//unirest request
         String uri = "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v3/get-historical-data?symbol=" + symbol + "&region=US";
         HttpResponse<JsonNode> response = null;
-        System.out.println("Requesting data from " + symbol);
         try {
             response = Unirest.get(uri)
                     .header("x-rapidapi-key", "ae107f19eamsh243b1c0d79c570bp1e7f3cjsn221a321d5935")
