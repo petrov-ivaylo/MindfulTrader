@@ -37,6 +37,7 @@ public class SubscriptionController {
     @Autowired
 	private RolesRepository rolesRepo;
 
+    //Function to make the current user a subscriber of type1 - the only type for the demo of the product
 	@RequestMapping(value="/subscription1", method=RequestMethod.POST)
     public String subscription1(@AuthenticationPrincipal CustomUserDetails principal,
 			HttpServletRequest request, 

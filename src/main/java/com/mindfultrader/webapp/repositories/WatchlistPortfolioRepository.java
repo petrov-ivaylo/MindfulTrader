@@ -35,7 +35,5 @@ public interface WatchlistPortfolioRepository extends JpaRepository<WatchlistPor
 	public void deleteByCompanyid(Long company_ID);
 
 	public List<WatchlistPortfolio> findByCompanyid(Long company_ID);
-
-	//public void deleteAll(List<Company> entity);
 	
 }

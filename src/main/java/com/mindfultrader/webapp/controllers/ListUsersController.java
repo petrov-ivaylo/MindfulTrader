@@ -33,6 +33,7 @@ public class ListUsersController {
 	@Autowired
     private WatchlistPortfolioRepository wpRepo;
     
+	//Function to delete a user account
 	@RequestMapping(value="/deleteUser", method=RequestMethod.POST)
 	public String deleteUserFromDB(@RequestParam("user") User user){
 		

@@ -14,11 +14,7 @@ import com.mindfultrader.webapp.models.Company;
 
 public interface CompanyRepository extends JpaRepository<Company, Long> {
 
+	// Want to look up entries by company name
 	public Company findByCompanyName(String name);
-	
-	//public Company findById(Long id);
-	
-	// Do not need any manually defined access methods, but the interface is still necessary
-	// to access the companies.
 	
 }

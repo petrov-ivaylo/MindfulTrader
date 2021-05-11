@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.mindfultrader.webapp.models.ConfirmationToken;
 
 public interface ConfirmationTokenRepository extends JpaRepository<ConfirmationToken, Long> {
+	
+	// Want to look up entries by confirmation token
     ConfirmationToken findByConfirmationToken(String confirmationToken);
-    
-    //ConfirmationToken findById(Long id);
 }

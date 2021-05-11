@@ -14,8 +14,7 @@ import com.mindfultrader.webapp.models.Roles;
 
 public interface RolesRepository extends JpaRepository<Roles, Long>{
 
-	
-	
+	// Want to look up entries by role name
 	public Roles findByname(String name);
 
 }

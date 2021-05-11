@@ -15,10 +15,10 @@ import com.mindfultrader.webapp.models.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 	
-	// Custom query so we can look up users by email (NOTE: ?1 is a postgreSQL expression, and 
-	// I am fairly sure it means to only pull obj if the email exists. CAN WE CHANGE THIS TO MYSQL?!)
+	// Custom query so we can look up users by email
 	@Query("SELECT u FROM User u WHERE u.email = ?1")
     public User findByEmail(String email);
 	
+	// Want to find whether the given object of type User exists in the database
 	public boolean existsUserByEmail(String email);
 }
