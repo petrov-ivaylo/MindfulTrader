@@ -1,6 +1,8 @@
 package com.mindfultrader.webapp.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
+//A service file planned to be used for the email verification process
+
+/*import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
@@ -20,4 +22,4 @@ public class EmailSenderService{
     public void sendEmail(SimpleMailMessage email) {
         javaMailSender.send(email);
     }
-}
+}*/

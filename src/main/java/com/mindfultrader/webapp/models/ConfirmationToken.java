@@ -1,5 +1,6 @@
 package com.mindfultrader.webapp.models;
 
+//Entity class to represent the confirmation_token table in our code - It was used in the email verification process
 import java.util.Date;
 import java.util.UUID;
 

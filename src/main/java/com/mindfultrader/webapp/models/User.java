@@ -15,8 +15,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-//import javax.persistence.CascadeType;
-
 /*
  * JPA representation of customers table
  * 
@@ -33,16 +31,6 @@ import javax.persistence.Table;
  *     Updated-by: Emma
  * 
  */
-
-/*import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;*/
 
 @Entity
 @Table(name = "customers")

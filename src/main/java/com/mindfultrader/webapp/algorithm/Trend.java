@@ -30,7 +30,6 @@ public class Trend {
 		}
 		
 		//Modify result of full stock analysis according to findings
-		System.out.println("trend modified the count by : " + relativeDerivatives);
 		solution.modifyCounter(relativeDerivatives, true);
 		
 	}

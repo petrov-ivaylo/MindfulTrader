@@ -23,7 +23,6 @@ public class MovingAverage {
 			i++;
 			if (i==movingAverage.length-1) {
 				solution.addResultToList("The stock is always increasing over a scale of " + scale + "days");
-				System.out.println("always above ma +5");
 				solution.modifyCounter(5, true);
 				return;
 			}
@@ -34,7 +33,6 @@ public class MovingAverage {
 			if (j==movingAverage.length-1) {
 				solution.addResultToList("The stock is always decreasing over a scale of " + scale + "days");
 				solution.modifyCounter(-5, true);
-				System.out.println("always below ma -5");
 				return;
 			}
 		}
@@ -48,19 +46,16 @@ public class MovingAverage {
 			if(data[0][data[0].length -1] > movingAverage[data[0].length-1]) {
 				solution.addResultToList("Going down to the moving average of " + scale);
 				solution.modifyCounter(-1, true);
-				System.out.println("going down to ma -1");
 			}
 			//If the last day's value if below ma, but was higher before, then the ma line is broken, and is again a sign that the resitance disappeared.
 			if((data[0][data[0].length -3]>movingAverage[data[0].length -3] || data[0][data[0].length-2] > movingAverage[data[0].length -2]) && data[0][data[0].length -1] < movingAverage[data[0].length-1] ) {
 				solution.addResultToList("Broke by above the moving average of scale " + scale);
 				solution.modifyCounter(-3, true);
-				System.out.println("broken ma by above -3");
 			}
 			// if the price is going down again below the ma, then it is unpredictable and therefore a bad time to invest.
 			if(data[0][data[0].length -1] < movingAverage[data[0].length-1] && data[0][data[0].length -2] < movingAverage[data[0].length-2] && data[0][data[0].length -3] < movingAverage[data[0].length-3])  {
 				solution.addResultToList("Going down below the moving average of " + scale);
 				solution.modifyCounter(-2, true);
-				System.out.println("going down away from ma -1");
 			}
 			
 		}
@@ -74,19 +69,16 @@ public class MovingAverage {
 			if(data[0][data[0].length -1] < movingAverage[data[0].length-1]) {
 				solution.addResultToList("Going up to the moving average of " + scale);
 				solution.modifyCounter(2, true);
-				System.out.println("going up to ma +2");
 			}
 			//If the last day's value if above ma, but was lower before, then the ma line is broken, and is again a sign of strength.
 			if((data[0][data[0].length -3]<movingAverage[data[0].length -3] || data[0][data[0].length-2] < movingAverage[data[0].length -2]) && data[0][data[0].length -1] > movingAverage[data[0].length-1] ) {
 				solution.addResultToList("Broke by below the moving average of scale " + scale);
 				solution.modifyCounter(3, true);
-				System.out.println("broken ma by below +3");
 			}
 			// if the price is going up again above the ma, then it is a sign of strength, but less reliable.
 			if(data[0][data[0].length -1] > movingAverage[data[0].length-1] && data[0][data[0].length -2] > movingAverage[data[0].length-2] && data[0][data[0].length -3] > movingAverage[data[0].length-3])  {
 				solution.addResultToList("Going up above the moving average of " + scale);
 				solution.modifyCounter(1, true);
-				System.out.println("going up above ma +1");
 			}
 			
 		}
@@ -128,17 +120,6 @@ public class MovingAverage {
 			movingAverage15[i] =movingAverage15[i]/15;
 			
 		}
-		//System.out.println("Last day's open is " + data[0][data[0].length-1]);
-		//System.out.println("moving average 5 is " + movingAverage5[data[0].length-2]);
-		//System.out.println("moving average 10 is " + movingAverage10[data[0].length-2]);
-		//System.out.println("moving average 15 is " + movingAverage15[data[0].length-2]);
-		//System.out.println("opens = " + data[0][data[0].length-4] + " " +  data[0][data[0].length-3] + " " + data[0][data[0].length-2] + " " + data[0][data[0].length-1]);
-		
-		
-		
-		// double[] movingAverage5 = runMovingAverage(data,5);
-		// double[] movingAverage10 = runMovingAverage(data,10);
-		// double[] movingAverage15 = runMovingAverage(data,15);
 		
 		reactingToMovingAverage(movingAverage5, data, solution, 5);
 		reactingToMovingAverage(movingAverage10, data, solution, 10);

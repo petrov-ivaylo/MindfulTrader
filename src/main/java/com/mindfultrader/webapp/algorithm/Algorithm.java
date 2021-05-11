@@ -3,7 +3,7 @@
  * Main file of the analysis algorithm used to predict the stock market.
  * Consists of constructor + analysis function caller and runAlgo function
  * 
- *  Author : team Golf 2020-2021 Aberdeen*/
+ *  Author: team Golf 2020-2021 Aberdeen*/
 
 
 
@@ -41,27 +41,22 @@ public class Algorithm
 	private void analysisFunctions(int[] functionsToRun) {
 		for (int i = 0; i < functionsToRun.length; i++) {
 			if (functionsToRun[i] == 1) {
-				System.out.println("Running trend analysis...");
 				Trend.readTrend(data, solution);
 				
 			}
 			if (functionsToRun[i] == 2) {
-				System.out.println("Running shooting star analysis...");
 				ShootingStar.readShootingStar(this.data, this.solution);
 				
 			}
 			if (functionsToRun[i] == 3) {
-				System.out.println("Running hammer analysis...");
 				Hammers.readHammer(this.data, this.solution);
 				
 			}
 			if (functionsToRun[i] == 4) {
-				System.out.println("Running bouncing curve analysis...");
 				BouncingCurve.readBouncing(this.data, this.solution);
 				
 			}
 			if (functionsToRun[i] == 5) {
-				System.out.println("Running moving average analysis analysis...");
 				MovingAverage.readMovingAverage(this.data, this.solution);
 				
 			}
@@ -73,7 +68,6 @@ public class Algorithm
 	// Main function of the analysis algorithm. Runs a data analysis and returns decision (buy/sell/nothing) based on counter.
 	public void runAlgo(int[] functionsToRun) {
 		analysisFunctions(functionsToRun);
-		System.out.println("count is = " + this.solution.counter + "\n");
 		
 		if (this.solution.counter <= -5) {
 			solution.finalAdvice = "You should sell your shares if you own some in this company.";

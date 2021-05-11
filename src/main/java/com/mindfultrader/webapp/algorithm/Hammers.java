@@ -23,11 +23,9 @@ public class Hammers {
     		//Increase counter and add advice if hammer found
          	solution.modifyCounter(weight, true);
          	solution.addResultToList("There is a Hammer, this is a simple indicator that the price will most likely go up.");
-         	System.out.println("Hammer modified count by +7");
         } 
     	else {
     		solution.addResultToList("There is no hammer pattern");
-    		System.out.println("Hammer modified count by +0");
     	}
 	}
 

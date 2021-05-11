@@ -148,8 +148,6 @@ public class BouncingCurve {
 			solution.addResultToList(advice);
 	    	
 	    	int actionToTake = reactionPattern(estimation1,data);
-	    	
-	    	System.out.println("the value of the actionToTake " + actionToTake);
 	    	solution.modifyCounter(actionToTake, true);
 		}
 		// only having a ceiling/floor value is not enough to make deductions about the stock market as there is no good comparison scale (no way to know if we are far or close to the ceiling/floor)

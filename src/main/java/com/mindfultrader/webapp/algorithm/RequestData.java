@@ -75,7 +75,6 @@ public class RequestData {
             
             
         }
-        System.out.println("Last open is " + opens[opens.length-1] );
         double[][] data = {opens, highs, lows, closes};
         return data;
 	}

@@ -24,24 +24,17 @@ public class ListUsersController {
 	
 	@Autowired
     private WatchlistPortfolioRepository wpRepo;
-	
-	//@Autowired
-    //private UsersRolesRepository users_rolesRepo;
     
 	@RequestMapping(value="/deleteUser", method=RequestMethod.POST)
 	public String deleteUserFromDB(@RequestParam("user") User user){
 		
-		//Long id = user.getId();
 		Set<Roles> roles = new HashSet<>();
 		user.setRoles(roles);
-		//find the entry in the WatchlistPortfolio table that we want to delete
+		//find all the entries in the WatchlistPortfolio table that we want to delete - the ones connected with the user to be deleted
 		List<WatchlistPortfolio> entry = wpRepo.findByUserid(user.getId());
 		wpRepo.deleteAll(entry);
+		//After clearing the database from the user's records in the watchlist/portfolio, then simply delete their account
 		userRepo.delete(user);
-		//List<UsersRoles> entry = users_rolesRepo.findByUserid(id);
-		
-		//users_rolesRepo.deleteAll(entry);
-		//userRepo.delete(user);
 		
 		return "redirect:/listUsers";
 	}

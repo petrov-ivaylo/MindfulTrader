@@ -43,10 +43,11 @@ import com.mindfultrader.webapp.services.CustomUserDetails;
  * BB Tested 27-04-2021
  * 		User cannot change email to an email already existing in db
  * 		User cannot change email with mismatching confirmation entry
+ * 		Password must be above some length - it should be between 6 and 10 symbols
  * 
  * For future development:
  * 		Email must be a valid email address
- * 		Password must be above some length
+ * 		Password must be above some length - it should be between 6 and 10 symbols
  */
 
 @Controller
@@ -59,6 +60,7 @@ public class EditAccountController {
 	WatchlistPortfolioRepository wpRepo;
 	
 	//A function to remove the whitespaces at the beginning and at the end of a string
+	//Initially, we used the strip() method but it does not allow us to upload the project on Heroku
 	public String removeSpaces(String s) {
 		String st = new String();
 		int i = 0;
@@ -177,7 +179,6 @@ public class EditAccountController {
 			mv.setViewName("accountManagement/error");
 		}
 		
-		//888
 		else if (checkSpaces(email) == true) {
 			// email must not contain any spaces
 			mv.addObject("message", "The email should not contain any spaces. Please enter another email.");
@@ -256,8 +257,6 @@ public class EditAccountController {
 			
 			mv.setViewName("accountManagement/passwordConfirmation");
 			
-			// FOR TESTING PURPOSES
-			System.out.println("\n\nEditAccountController: Password Updated!\n\n");
 		}
 		
 		return mv;

@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.mindfultrader.webapp.services.CustomUserDetailsService;
+
+//We are using spring security for better security in our application
  
 @Configuration
 @EnableWebSecurity
@@ -42,6 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
  
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         http.authorizeRequests()
         
         	.antMatchers("/homee", "/portfoliowatchlist", "/algorithm", "/algorithm/*", "/portfoliowatchlist/*", "/theory", "/account","/account/*", "/changeCompanies", "/listUsers", "/subscription1", "/subscription").authenticated()
@@ -54,10 +57,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("email")
                 .defaultSuccessUrl("/homee")
                 .permitAll()
+                /*.successHandler((httpServletRequest, httpServletResponse, authentication) -> {              // login success handler
+                    HttpSessionManager httpSessionManager = (HttpSessionManager) httpServletRequest
+                            .getAttribute(HttpSessionManager.class.getName());              
+                    String url = httpSessionManager
+                            .encodeURL("loginSuccess", httpSessionManager.getCurrentSessionAlias(httpServletRequest));  // on login success add session alias in url
+                    httpServletResponse.sendRedirect(url);
+                })*/
             .and()
             .logout().logoutSuccessUrl("/").permitAll()
         	.and()
         	.exceptionHandling().accessDeniedPage("/403");
+        	//.and()  
+            //.sessionManagement()
+            //.invalidSessionUrl("/homee?invalid-session=true");
     }
      
 }

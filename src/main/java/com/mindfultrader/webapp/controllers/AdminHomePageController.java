@@ -17,6 +17,7 @@ import com.mindfultrader.webapp.repositories.RolesRepository;
 import com.mindfultrader.webapp.repositories.UserRepository;
 import com.mindfultrader.webapp.services.CustomUserDetails;
 
+//Controller to handle the processes available for admins only - all differences between admins and users are available at the home page
 @Controller
 public class AdminHomePageController {
 	
@@ -28,7 +29,8 @@ public class AdminHomePageController {
     
     @Autowired
 	private CompanyRepository companyRepo;
-
+    
+    //Admins can add and/or delete companies from the database
 	@GetMapping("/changeCompanies")
     public String chnageCompanies(Model model) {
     	List<Company> companies = companyRepo.findAll();
@@ -36,6 +38,7 @@ public class AdminHomePageController {
     	return "changeCompanies";
     }
     
+	//Admins have access to all users in the system and can delete profiles
     @GetMapping("/listUsers")
     public String list_users(@AuthenticationPrincipal CustomUserDetails principal,
     		Model model) {
@@ -55,11 +58,9 @@ public class AdminHomePageController {
             
             if(user.getRoles().contains(role)) {
             	sub.add("YES");
-            	//model.addAttribute("subscriber", "YES");
             }
             else {
             	sub.add("NO");
-            	//model.addAttribute("subscriber", "NO");
             }
         }
         model.addAttribute("indices", indices);

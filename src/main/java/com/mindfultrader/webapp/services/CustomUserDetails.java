@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.mindfultrader.webapp.models.Roles;
 import com.mindfultrader.webapp.models.User;
  
+//Class of subtype UserDetails (defined by Spring Security) to represent an authentication user
 public class CustomUserDetails implements UserDetails {
  
     private static User user;
@@ -19,11 +20,6 @@ public class CustomUserDetails implements UserDetails {
     public CustomUserDetails(User user) {
         this.user = user;
     }
- 
-//    @Override
-  //  public Collection<? extends GrantedAuthority> getAuthorities() {
-    //    return null;
-    //}
     
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

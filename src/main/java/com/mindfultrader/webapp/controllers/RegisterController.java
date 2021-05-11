@@ -12,12 +12,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.mindfultrader.webapp.models.Roles;
 import com.mindfultrader.webapp.models.User;
-import com.mindfultrader.webapp.repositories.ConfirmationTokenRepository;
 import com.mindfultrader.webapp.repositories.RolesRepository;
 import com.mindfultrader.webapp.repositories.UserRepository;
-import com.mindfultrader.webapp.services.EmailSenderService;
-import com.mindfultrader.webapp.services.UserServices;
 
+//Controller handling the registering process
 @Controller
 public class RegisterController {
 	
@@ -27,14 +25,16 @@ public class RegisterController {
     @Autowired
 	private RolesRepository rolesRepo;
     
-    @Autowired
+    //Repositories used in the process of email verification
+    
+    /*@Autowired
     private ConfirmationTokenRepository confirmationTokenRepo;
     
     @Autowired
     private EmailSenderService emailSenderService;
     
     @Autowired
-    private UserServices service;
+    private UserServices service;*/
 
 	@GetMapping("/register")
     public String showRegistrationForm(Model model) {

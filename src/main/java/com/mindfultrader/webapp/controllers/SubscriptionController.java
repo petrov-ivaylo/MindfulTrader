@@ -11,7 +11,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -21,6 +20,7 @@ import com.mindfultrader.webapp.repositories.RolesRepository;
 import com.mindfultrader.webapp.repositories.UserRepository;
 import com.mindfultrader.webapp.services.CustomUserDetails;
 
+//Controller handling the process of subscription - our users should be subscribed in order to use our service
 @Controller
 public class SubscriptionController {
 	
@@ -51,12 +51,12 @@ public class SubscriptionController {
 		}
 		
 		return "subscriptionConfirmation";
-    	//return "users";
     }
     
-    @GetMapping("/subscription2")
+	//We plan to have different types of subscriptions in the future
+    /*@GetMapping("/subscription2")
     public String subscription2() {
     	return "subscription2";
-    }
+    }*/
 	
 }

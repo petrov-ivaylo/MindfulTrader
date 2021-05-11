@@ -1,22 +1,21 @@
 package com.mindfultrader.webapp.services;
 
-import java.io.UnsupportedEncodingException;
+
+//This class (service) was used for the email verification process (currently not being used as we couldn't manage to make it work on Heroku)
+
+/*import java.io.UnsupportedEncodingException;
 
 import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
+//import org.springframework.mail.javamail.JavaMailSender;
+//import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.mindfultrader.webapp.models.ConfirmationToken;
 import com.mindfultrader.webapp.models.User;
-import com.mindfultrader.webapp.repositories.ConfirmationTokenRepository;
 import com.mindfultrader.webapp.repositories.UserRepository;
 
-//This class was used for the email verification process (currently not being used as we couldn't manage to make it work on Heroku)
 @Service
 public class UserServices {
  
@@ -74,13 +73,13 @@ public class UserServices {
         
         
 
-        /*if(token != null)
+        if(token != null)
         {
             User user = userRepo.findByEmail(token.getUser().getEmail());
             user.setEnabled(true);
             userRepo.save(user);
             modelAndView.setViewName("accountVerified");
-        }*/
+        }
         
         String verifyURL = siteURL + "/verify?code=" + token.getConfirmationToken();
          
@@ -120,4 +119,4 @@ public class UserServices {
          
     }
          
-}
+}*/

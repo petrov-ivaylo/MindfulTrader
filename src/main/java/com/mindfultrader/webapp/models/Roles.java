@@ -1,5 +1,7 @@
 package com.mindfultrader.webapp.models;
 
+//Entity class to represent the Roles table in our code
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
