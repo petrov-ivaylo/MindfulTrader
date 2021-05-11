@@ -3,11 +3,9 @@ package com.mindfultrader.webapp.repositories;
 /*
  * Repository to work with watchlistPortfolio entity (WatchlistPortfolio table)
  * 
- * created: 5th April 2021
- * updated: 5th April 2021
+ * Date: 14 May 2021
  * 
- * Author: Emma
- * 
+ * Author: team Golf 2020-2021 Aberdeen
  */
 
 import java.util.List;

@@ -29,25 +29,9 @@ import com.mindfultrader.webapp.services.CustomUserDetails;
 /*
  * Controller for user account management functionality
  * 
- * User must be able to delete their account
- * User must be able to change their email
- * User must be able to change their password
+ * Date: 14 May 2021
  * 
- * Tutorials used: 
- * https://www.codejava.net/frameworks/spring-boot/get-logged-in-user-details
- * 
- * Created: 24 Mar 2021
- * Updated 27 Apr 2021
- * 
- * 
- * BB Tested 27-04-2021
- * 		User cannot change email to an email already existing in db
- * 		User cannot change email with mismatching confirmation entry
- * 		Password must be above some length - it should be between 6 and 10 symbols
- * 
- * For future development:
- * 		Email must be a valid email address
- * 		Password must be above some length - it should be between 6 and 10 symbols
+ * Author: team Golf 2020-2021 Aberdeen
  */
 
 @Controller

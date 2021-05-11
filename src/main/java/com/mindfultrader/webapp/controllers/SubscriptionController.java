@@ -1,5 +1,13 @@
 package com.mindfultrader.webapp.controllers;
 
+/*
+ * Controller handling the process of subscription - our users should be subscribed in order to use our service
+ * 
+ * Date: 14 May 2021
+ * 
+ * Author: team Golf 2020-2021 Aberdeen
+ */
+
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +28,6 @@ import com.mindfultrader.webapp.repositories.RolesRepository;
 import com.mindfultrader.webapp.repositories.UserRepository;
 import com.mindfultrader.webapp.services.CustomUserDetails;
 
-//Controller handling the process of subscription - our users should be subscribed in order to use our service
 @Controller
 public class SubscriptionController {
 	

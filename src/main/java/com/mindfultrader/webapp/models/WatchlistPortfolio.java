@@ -3,19 +3,9 @@ package com.mindfultrader.webapp.models;
 /*
  * JPA representation of watchlistportfolio table 
  * 
- * Created: 5th Mar 2021
- * Updated: 5th Apr 2021
+ * Date: 14 May 2021
  * 
- * Author: Ivaylo 
- * Updated-by: Emma
- * 
- *  Notes:
- *  - Name parameter inside @Column annotation must match DB attribute name
- *  - The name specified after Private <type> <name> is the field name we work with in the java code - ie can be set arbitrarily as suits our purpose
- *  - for id, email and password the name of the java object field matches the name of the db relation attribute, and so spring JPA figures out the db name 
- *     from that. 	
- *  - INTs in database are represented in Java as Longs, VARCHAR as strings
- * 
+ * Author: team Golf 2020-2021 Aberdeen
  */
 
 import javax.persistence.Column;

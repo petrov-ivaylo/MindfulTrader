@@ -1,5 +1,13 @@
 package com.mindfultrader.webapp.controllers;
 
+/*
+ * Controller handling the registering process
+ * 
+ * Date: 14 May 2021
+ * 
+ * Author: team Golf 2020-2021 Aberdeen
+ */
+
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +23,6 @@ import com.mindfultrader.webapp.models.User;
 import com.mindfultrader.webapp.repositories.RolesRepository;
 import com.mindfultrader.webapp.repositories.UserRepository;
 
-//Controller handling the registering process
 @Controller
 public class RegisterController {
 	

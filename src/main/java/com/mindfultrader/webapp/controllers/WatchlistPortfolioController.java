@@ -1,5 +1,13 @@
 package com.mindfultrader.webapp.controllers;
 
+/*
+ * Controller used for Watchlist-Portfolio page
+ * 
+ * Date: 14 May 2021
+ * 
+ * Author: team Golf 2020-2021 Aberdeen
+ */
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,28 +27,6 @@ import com.mindfultrader.webapp.repositories.CompanyRepository;
 import com.mindfultrader.webapp.repositories.UserRepository;
 import com.mindfultrader.webapp.repositories.WatchlistPortfolioRepository;
 import com.mindfultrader.webapp.services.CustomUserDetails;
-
-/*
- * Controller used for Watchlist-Portfolio page
- * 	
- * 
- * 	User must be able to view their portfolio
- * 	User must be able to view their watchlist
- *  User must be able to add and remove companies from an admin defined list of options to/from their portfolio
- *  User must be able to add and remove companies from an admin defined list of options to/from their watchlist
- *  User must be able to move a company from their watchlist to their portfolio and vice versa
- *  A Company must only be able to be on either a users watchlist or their portfolio, and never both
- *  
- *  Created: 4th April 2021
- *  Updated: 5th April 2021
- *  
- *  Author: Emma
- *  
- *  Tested:
- *  - All use stories above passed
- *  - No matter how vigourously i tried (ie how frantically I tapped various buttons), I could not create a double entry of a company for the same user. 
- * 
- */
 
 @Controller
 public class WatchlistPortfolioController {

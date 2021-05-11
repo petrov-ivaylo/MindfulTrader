@@ -1,6 +1,13 @@
 package com.mindfultrader.webapp.models;
 
-//Entity class to represent the confirmation_token table in our code - It was used in the email verification process
+/*
+ * JPA representation of the confirmation_token table in our code - It was used in the email verification process
+ * 
+ * Date: 14 May 2021
+ * 
+ * Author: team Golf 2020-2021 Aberdeen
+ */
+
 import java.util.Date;
 import java.util.UUID;
 

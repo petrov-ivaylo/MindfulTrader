@@ -1,6 +1,12 @@
 package com.mindfultrader.webapp.models;
 
-//Entity class to represent the Roles table in our code
+/*
+ * JPA representation of Roles table in our code
+ * 
+ * Date: 14 May 2021
+ * 
+ * Author: team Golf 2020-2021 Aberdeen
+ */
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

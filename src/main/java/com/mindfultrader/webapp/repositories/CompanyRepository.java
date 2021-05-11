@@ -3,12 +3,10 @@ package com.mindfultrader.webapp.repositories;
 /*
  * Repository to work with company entity, ie access companies table in database
  * 
- * Created: 5th April 2021
- * Updated: 5th April 2021
- * Author: Emma
+ * Date: 14 May 2021
  * 
+ * Author: team Golf 2020-2021 Aberdeen
  */
-
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -2,6 +2,10 @@ package com.mindfultrader.webapp.repositories;
 
 /*
  * Repository to work with user entity (customers table in db)
+ * 
+ * Date: 14 May 2021
+ * 
+ * Author: team Golf 2020-2021 Aberdeen
  */
 
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,6 +1,12 @@
 package com.mindfultrader.webapp.services;
 
-//A service file planned to be used for the email verification process
+/*
+ * A service file planned to be used for the email verification process
+ * 
+ * Date: 14 May 2021
+ * 
+ * Author: team Golf 2020-2021 Aberdeen
+ */
 
 /*import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;

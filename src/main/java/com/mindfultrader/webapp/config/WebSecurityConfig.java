@@ -1,5 +1,13 @@
 package com.mindfultrader.webapp.config;
 
+/*
+ * We are using spring security for better security in our application
+ * 
+ * Date: 14 May 2021
+ * 
+ * Author: team Golf 2020-2021 Aberdeen
+ */
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -11,8 +19,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.mindfultrader.webapp.services.CustomUserDetailsService;
-
-//We are using spring security for better security in our application
  
 @Configuration
 @EnableWebSecurity

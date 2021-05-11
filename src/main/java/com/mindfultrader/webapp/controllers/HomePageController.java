@@ -1,5 +1,13 @@
 package com.mindfultrader.webapp.controllers;
 
+/*
+ * Controller to handle the requests happening in the main (home) page of the application
+ * 
+ * Date: 14 May 2021
+ * 
+ * Author: team Golf 2020-2021 Aberdeen
+ */
+
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +22,6 @@ import com.mindfultrader.webapp.repositories.RolesRepository;
 import com.mindfultrader.webapp.repositories.UserRepository;
 import com.mindfultrader.webapp.services.CustomUserDetails;
 
-//Controller to handle the requests happening in the main (home) page of the application
 @Controller
 public class HomePageController {
 	

@@ -1,5 +1,13 @@
 package com.mindfultrader.webapp.controllers;
 
+/*
+ * Controller handling the list of users page, available only to admins
+ * 
+ * Date: 14 May 2021
+ * 
+ * Author: team Golf 2020-2021 Aberdeen
+ */
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

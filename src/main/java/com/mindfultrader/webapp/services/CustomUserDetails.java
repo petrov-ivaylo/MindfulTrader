@@ -1,5 +1,13 @@
 package com.mindfultrader.webapp.services;
 
+/*
+ * Class of subtype UserDetails (defined by Spring Security) to represent an authentication user
+ * 
+ * Date: 14 May 2021
+ * 
+ * Author: team Golf 2020-2021 Aberdeen
+ */
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -12,7 +20,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.mindfultrader.webapp.models.Roles;
 import com.mindfultrader.webapp.models.User;
  
-//Class of subtype UserDetails (defined by Spring Security) to represent an authentication user
 public class CustomUserDetails implements UserDetails {
  
     private static User user;

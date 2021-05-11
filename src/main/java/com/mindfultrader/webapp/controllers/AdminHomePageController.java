@@ -1,5 +1,13 @@
 package com.mindfultrader.webapp.controllers;
 
+/*
+ * Controller to handle the processes available for admins only - all differences between admins and users are available at the home page
+ * 
+ * Date: 14 May 2021
+ * 
+ * Author: team Golf 2020-2021 Aberdeen
+ */
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +25,6 @@ import com.mindfultrader.webapp.repositories.RolesRepository;
 import com.mindfultrader.webapp.repositories.UserRepository;
 import com.mindfultrader.webapp.services.CustomUserDetails;
 
-//Controller to handle the processes available for admins only - all differences between admins and users are available at the home page
 @Controller
 public class AdminHomePageController {
 	

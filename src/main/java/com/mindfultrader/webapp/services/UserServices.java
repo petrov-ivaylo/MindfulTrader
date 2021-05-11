@@ -1,7 +1,12 @@
 package com.mindfultrader.webapp.services;
 
-
-//This class (service) was used for the email verification process (currently not being used as we couldn't manage to make it work on Heroku)
+/*
+ * This class (service) was used for the email verification process (currently not being used as we couldn't manage to make it work on Heroku)
+ * 
+ * Date: 14 May 2021
+ * 
+ * Author: team Golf 2020-2021 Aberdeen
+ */
 
 /*import java.io.UnsupportedEncodingException;
 
