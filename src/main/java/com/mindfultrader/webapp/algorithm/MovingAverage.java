@@ -44,17 +44,17 @@ public class MovingAverage {
 		if(shortDerivative <0) {
 			// if we are above the moving average and going down, then it is likely going to drop until the ma
 			if(data[0][data[0].length -1] > movingAverage[data[0].length-1]) {
-				solution.addResultToList("Going down to the moving average of " + scale);
+				solution.addResultToList("Stock decreasing toward the moving average of " + scale+ " days");
 				solution.modifyCounter(-1, true);
 			}
 			//If the last day's value if below ma, but was higher before, then the ma line is broken, and is again a sign that the resitance disappeared.
 			if((data[0][data[0].length -3]>movingAverage[data[0].length -3] || data[0][data[0].length-2] > movingAverage[data[0].length -2]) && data[0][data[0].length -1] < movingAverage[data[0].length-1] ) {
-				solution.addResultToList("Broke by above the moving average of scale " + scale);
+				solution.addResultToList("Broke by above the moving average of scale " + scale+ " days");
 				solution.modifyCounter(-3, true);
 			}
 			// if the price is going down again below the ma, then it is unpredictable and therefore a bad time to invest.
 			if(data[0][data[0].length -1] < movingAverage[data[0].length-1] && data[0][data[0].length -2] < movingAverage[data[0].length-2] && data[0][data[0].length -3] < movingAverage[data[0].length-3])  {
-				solution.addResultToList("Going down below the moving average of " + scale);
+				solution.addResultToList("Stock decreasing below the moving average of " + scale+ " days");
 				solution.modifyCounter(-2, true);
 			}
 			
@@ -67,17 +67,17 @@ public class MovingAverage {
 			// if we are under the moving average and going up, then it is likely going to go until the ma
 
 			if(data[0][data[0].length -1] < movingAverage[data[0].length-1]) {
-				solution.addResultToList("Going up to the moving average of " + scale);
+				solution.addResultToList("Stock increasing toward the moving average of " + scale + " days");
 				solution.modifyCounter(2, true);
 			}
 			//If the last day's value if above ma, but was lower before, then the ma line is broken, and is again a sign of strength.
 			if((data[0][data[0].length -3]<movingAverage[data[0].length -3] || data[0][data[0].length-2] < movingAverage[data[0].length -2]) && data[0][data[0].length -1] > movingAverage[data[0].length-1] ) {
-				solution.addResultToList("Broke by below the moving average of scale " + scale);
+				solution.addResultToList("Broke by below the moving average of scale " + scale + " days");
 				solution.modifyCounter(3, true);
 			}
 			// if the price is going up again above the ma, then it is a sign of strength, but less reliable.
 			if(data[0][data[0].length -1] > movingAverage[data[0].length-1] && data[0][data[0].length -2] > movingAverage[data[0].length-2] && data[0][data[0].length -3] > movingAverage[data[0].length-3])  {
-				solution.addResultToList("Going up above the moving average of " + scale);
+				solution.addResultToList("Stock increasing above the moving average of " + scale+ " days");
 				solution.modifyCounter(1, true);
 			}
 			
