@@ -25,7 +25,7 @@ public class RequestData {
         HttpResponse<JsonNode> response = null;
         try {
             response = Unirest.get(uri)
-                    .header("x-rapidapi-key", "ae107f19eamsh243b1c0d79c570bp1e7f3cjsn221a321d5935")
+                    .header("x-rapidapi-key", "76d5c3d181mshc1abb52f84e6736p1fa3a3jsn9ae070055c14")
                     .header("x-rapidapi-host", "apidojo-yahoo-finance-v1.p.rapidapi.com")
                     .asJson();
         } catch (UnirestException e) {
